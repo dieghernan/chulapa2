@@ -4,8 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>chulapa2</title>
+    <script src="https://dieghernan.github.io/chulapa2/assets/js/color-mode.js"></script>
     <link rel="stylesheet" href="https://dieghernan.github.io/chulapa2/assets/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="https://dieghernan.github.io/chulapa2/assets/css/brand.css">
+    
   </head>
   <body>
     <a class="visually-hidden-focusable" href="#main-content">Skip to content</a>
@@ -33,6 +35,14 @@
           </li>
           
         </ul>
+        <div class="mt-3 md:mt-0 md:ms-auto" id="site-color-mode-control" hidden>
+          <label class="visually-hidden" for="site-color-mode">Color mode</label>
+          <select class="form-control form-control-sm" id="site-color-mode">
+            <option value="">System theme</option>
+            <option value="light">Light theme</option>
+            <option value="dark">Dark theme</option>
+          </select>
+        </div>
       </div>
     </dialog>
   </div>
