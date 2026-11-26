@@ -1,0 +1,8 @@
+color-mode-selector: false
+chulapa-skin:
+  autothemer: true
+  use-dual-mode: true
+  vars:
+    primary: "#285d70"
+chulapa-skin-dark:
+  autothemer: true

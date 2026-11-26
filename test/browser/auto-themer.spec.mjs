@@ -165,6 +165,7 @@ test("uses the configured site palettes with the native color-mode selector", as
   await expect(link).toHaveCSS("color", "rgb(100, 24, 33)");
   await mode.hover();
 
+  await mode.selectOption("");
   await page.emulateMedia({ colorScheme: "dark" });
   await expect(root).toHaveCSS("--bs-primary-base", "#906");
   await expect(link).toHaveCSS("color", "rgb(255, 217, 168)");
@@ -203,14 +204,66 @@ test("offers the configured palette selector at small, medium and large widths",
   }
 });
 
+for (const mode of ["light", "dark"]) {
+  test(`keeps site-wide ${mode} components readable and keyboard accessible`, async ({ page }) => {
+    await page.goto("test/themed/test/auto-themer/components/");
+    await page.getByRole("combobox", { name: "Color mode" }).selectOption(mode);
+    await expect(page.locator("html")).toHaveAttribute("data-bs-theme", mode);
+    const content = page.getByRole("main");
+    const field = content.getByRole("textbox", { name: "Email address" });
+    const radio = content.getByRole("radio", { name: "Weekly" });
+    const toggle = content.getByRole("switch", { name: "Include a summary" });
+    const switchIndicator = content.locator(".switch");
+    const button = content.getByRole("button", { name: "Save preferences" });
+
+    for (const [element, name] of [
+      [content.locator(".alert"), "alert"],
+      [content.getByText("Subscription", { exact: true }), "badge"],
+      [field, "text field"],
+      [button, "button"],
+    ]) {
+      expect((await readContrast(element)).text, `${mode} ${name}`).toBeGreaterThanOrEqual(4.5);
+    }
+
+    async function expectVisibleFocus(element) {
+      await expect(element).toHaveCSS("outline-style", "solid");
+      expect((await readContrast(element)).focus, `${mode} focus ring`).toBeGreaterThanOrEqual(3);
+    }
+
+    await page.keyboard.press("Tab");
+    await field.focus();
+    await expectVisibleFocus(field);
+    await page.keyboard.press("Tab");
+    await expect(content.getByRole("radio", { name: "Daily" })).toBeFocused();
+    await page.keyboard.press("ArrowDown");
+    await expect(radio).toBeFocused();
+    await expect(radio).toBeChecked();
+    await expectVisibleFocus(radio);
+    expect((await readContrast(radio)).mark, `${mode} radio indicator`).toBeGreaterThanOrEqual(3);
+
+    await page.keyboard.press("Tab");
+    await expect(toggle).toBeFocused();
+    await page.keyboard.press("Space");
+    await expect(toggle).toBeChecked();
+    await expectVisibleFocus(switchIndicator);
+    const checked = await readContrast(switchIndicator);
+    expect(checked.mark, `${mode} switch indicator`).toBeGreaterThanOrEqual(3);
+    expect(checked.fill, `${mode} checked switch fill`).toBeGreaterThanOrEqual(3);
+
+    await page.keyboard.press("Tab");
+    await expect(button).toBeFocused();
+    await expectVisibleFocus(button);
+  });
+}
+
 test.describe("without JavaScript", () => {
   test.use({ javaScriptEnabled: false });
 
-  test("applies the configured site palette from the system preference", async ({ page }) => {
+  test("applies the primary configuration across system preferences", async ({ page }) => {
     await page.emulateMedia({ colorScheme: "dark" });
     await page.goto("test/themed/");
     const root = page.locator("html");
-    await expect(root).toHaveCSS("--bs-primary-base", "#906");
+    await expect(root).toHaveCSS("--bs-primary-base", "#285d70");
     await page.emulateMedia({ colorScheme: "light" });
     await expect(root).toHaveCSS("--bs-primary-base", "#285d70");
   });

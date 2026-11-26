@@ -59,7 +59,7 @@ test("supports desktop keyboard navigation and skips to the main content", async
 
 test("opens and dismisses the mobile drawer with the keyboard", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("./");
+  await page.goto("test/themed/");
 
   const toggle = page.getByRole("button", { name: "Toggle navigation" });
   const drawer = page.getByRole("dialog", { name: "Menu" });

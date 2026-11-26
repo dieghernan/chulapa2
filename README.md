@@ -11,7 +11,7 @@ bundle install
 bundle exec jekyll serve
 ```
 
-Open <http://127.0.0.1:4000/>. Jekyll rebuilds as you edit source files.
+Open <http://localhost:4000/chulapa2/>. Jekyll rebuilds as you edit source files.
 Run `bundle exec jekyll build` to generate the site in `_site/`.
 To include drafts in the local preview, run
 `bundle exec jekyll serve --drafts --destination _site_test`.
@@ -56,13 +56,24 @@ chulapa-skin:
     primary: "#285d70"
 ```
 
-Both modes use this primary by default. To configure dark mode separately,
-add `chulapa-skin-dark` with its own `autothemer` flag and optional
-`vars.primary`. A dark configuration without a primary shares the light
-primary. Set the flag to `false` or omit it within a configured mode to keep
-Bootstrap's palette for that mode.
+By default the site uses the primary configuration and hides the color mode
+selector. Set the top-level `color-mode-selector: true` to offer the
+Bootstrap color modes. Set `use-dual-mode: true` within `chulapa-skin` to
+generate a matching dark palette from the same primary color.
+
+To configure dark mode separately, add `chulapa-skin-dark`. That
+configuration takes precedence over the matching dark palette and shows
+the selector even when `color-mode-selector` is `false`. The first visit
+uses the primary appearance.
+Visitors can choose System to follow their device preference.
+To generate a palette from the separate configuration, set its
+`autothemer` flag to `true`. It uses its own `vars.primary` or the Bootstrap
+default. To share a custom primary between both configurations, set the
+same `vars.primary` in each.
 
 The supported color values are quoted three- or six-digit hex colors.
+An explicit `vars.primary` sets the primary color even when `autothemer`
+is disabled. The flag controls generation of the related tones.
 The Auto Themer falls back to Bootstrap's primary when it has no valid
 configured primary. Explicit `vars.link-color` and `vars.link-hover-color`
 apply in their own mode, even when generation is off. When only `link-color`
@@ -70,9 +81,11 @@ is set, the link keeps that color on hover.
 
 ## Deploy to GitHub Pages
 
-Set the Pages publishing source to GitHub Actions. The
-[deployment workflow](.github/workflows/deploy-pages.yml) uses the Pages
-origin and base path for local asset URLs, runs Jekyll, and publishes
+Set the Pages publishing source to GitHub Actions. In `_config.yml`, set
+`url` to the public origin, such as `https://example.com`, and `baseurl` to
+the site's path, such as `/chulapa2` for this repository. The
+[deployment workflow](.github/workflows/build-chulapa-gh-pages.yml) builds
+with Jekyll using the configured Pages base path and publishes
 `_site/` from `main`. It also pushes a copy of the same build to the
 `gh-pages` branch.
 

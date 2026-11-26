@@ -1,0 +1,20 @@
+{%- assign main_theme_settings = site['chulapa-skin'] -%}
+{%- assign dark_theme_settings = site['chulapa-skin-dark'] -%}
+{%- assign has_dark_theme = false -%}
+{%- assign dark_skin = dark_theme_settings.skin | strip -%}
+{%- assign dark_highlight = dark_theme_settings.highlight | strip -%}
+{%- if dark_skin != empty or dark_highlight != empty or dark_theme_settings.autothemer == true -%}
+  {%- assign has_dark_theme = true -%}
+{%- else -%}
+  {%- for variable in dark_theme_settings.vars -%}
+    {%- assign value = variable[1] | strip -%}
+    {%- unless value == empty -%}
+      {%- assign has_dark_theme = true -%}
+      {%- break -%}
+    {%- endunless -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- assign show_color_mode_selector = false -%}
+{%- if has_dark_theme or site['color-mode-selector'] == true -%}
+  {%- assign show_color_mode_selector = true -%}
+{%- endif -%}
