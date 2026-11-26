@@ -6,3 +6,12 @@
 .quarto
 *.Rproj
 .posit/assistant
+
+# Site build and browser tests
+/.bundle/
+/.jekyll-cache/
+/_site/
+/_site_test/
+/node_modules/
+/playwright-report/
+/test-results/

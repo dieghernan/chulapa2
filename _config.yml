@@ -1,0 +1,24 @@
+title: chulapa2
+lang: en
+baseurl: ""
+
+navbar:
+  nav:
+    - title: Home
+      url: /
+    - title: About
+      url: /#about
+
+exclude:
+  - "*.Rproj"
+  - AGENTS.md
+  - README.md
+  - node_modules
+  - package.json
+  - package-lock.json
+  - playwright.config.mjs
+  - playwright-report
+  - scripts
+  - skills-lock.json
+  - test/browser
+  - test-results

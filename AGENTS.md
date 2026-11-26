@@ -24,7 +24,7 @@ Reconstruct features using modern technologies and native Bootstrap 6 capabiliti
 
 ## 3. Technical foundation
 
-- Bootstrap 6.
+- [Bootstrap 6](https://getbootstrap.com/docs/6.0/getting-started/install/).
 - Jekyll 4 or a later suitable stable version.
 - Dart Sass, where Sass compilation is required.
 - Modern CSS and native browser capabilities.
@@ -44,9 +44,26 @@ Until Bootstrap 6 reaches a stable release, treat its APIs and implementation de
 
 Use native Bootstrap 6 classes, components, utilities, design tokens and color modes wherever possible.
 
+Check examples against the Bootstrap 6 version used by chulapa2. Use Bootstrap
+4 and 5 references only to understand legacy chulapa behavior or document how
+to migrate existing sites to Bootstrap 6.
+
 Before implementing custom functionality, determine whether Bootstrap 6 already provides an appropriate solution.
 
 Custom CSS, Sass and JavaScript must address a concrete requirement that cannot reasonably be fulfilled using native functionality.
+
+### Vendor dependencies and skins
+
+- Treat `vendor` and other vendored third-party files as read-only. Put
+  chulapa2 customizations in project-owned files.
+- Preserve Bootstrap 6's baseline appearance in every skin. Keep its component
+  styling, including buttons, typography, spacing, borders, and corner radii.
+  Apply skin colors through Bootstrap 6's theming APIs.
+- Obtain explicit user approval before creating or modifying a skin, including
+  changes to shared styles or tokens that change a skin's appearance.
+- Changes scoped to chulapa2's own components require no skin approval. Keep
+  those styles within the component so they leave skins and Bootstrap 6's global
+  defaults intact.
 
 ### Clean-slate implementation
 
@@ -125,7 +142,7 @@ Reimplement it using the modern theming capabilities available in Bootstrap 6.
 Investigate and prioritize:
 
 - CSS custom properties.
-- Bootstrap design tokens.
+- Bootstrap 6 design tokens.
 - Modern CSS color functions.
 - OKLCH color spaces.
 - Dynamic color generation.
@@ -258,8 +275,8 @@ Do not introduce additional browser compatibility workarounds without a document
 
 ### Phase 1 — Technical foundation
 
-- Read <https://getbootstrap.com/llms.txt> and install skills with
-  `npx skills add twbs/bootstrap` in the corresponding `.github` folder.
+- Consult the [Bootstrap 6 documentation index](https://getbootstrap.com/llms.txt)
+  and the [Bootstrap 6 skills in `.agents/skills`](.agents/skills).
 - Establish the repository structure.
 - Configure Jekyll and Bootstrap 6.
 - Establish the build and deployment workflows.
@@ -314,6 +331,12 @@ Release chulapa2 when:
 - Temporary development content is excluded from the release.
 
 ## 13. Instructions for development agents
+
+Use the Bootstrap 6 skills in `.agents/skills` as upstream reference material.
+For chulapa2, follow the sections for application code and keep customizations
+in project-owned files. Steps for contributing components or utilities to
+Bootstrap itself apply to upstream development. Follow the vendor and skin
+rules above when applying Sass, CSS, or token examples.
 
 Before implementing a feature:
 
