@@ -1,19 +1,22 @@
 ---
 ---
-{%- assign light_settings = site['chulapa-skin'] -%}
-{%- assign dark_settings = site['chulapa-skin-dark'] -%}
-{%- assign dark_generate = light_settings.autothemer -%}
-{%- assign light_primary = light_settings.vars.primary -%}
-{%- if dark_settings -%}
-  {%- assign dark_generate = dark_settings.autothemer -%}
+{%- include theme-options.html -%}
+{%- assign use_dual_mode = main_theme_settings['use-dual-mode'] -%}
+{%- assign dark_primary = dark_theme_settings.vars.primary -%}
+{%- assign dark_generate = false -%}
+{%- if has_dark_theme -%}
+  {%- assign dark_generate = dark_theme_settings.autothemer -%}
+{%- elsif use_dual_mode == true -%}
+  {%- assign dark_primary = main_theme_settings.vars.primary -%}
+  {%- assign dark_generate = true -%}
 {%- endif -%}
 {%- assign modes = 'light,dark' | split: ',' -%}
 {%- for mode in modes -%}
   {%- capture declarations -%}
     {%- if mode == 'light' -%}
-      {%- include auto-themer/mode.css settings=light_settings generate=light_settings.autothemer -%}
+      {%- include auto-themer/mode.css settings=main_theme_settings generate=main_theme_settings.autothemer primary=main_theme_settings.vars.primary -%}
     {%- else -%}
-      {%- include auto-themer/mode.css settings=dark_settings generate=dark_generate default_primary=light_primary -%}
+      {%- include auto-themer/mode.css settings=dark_theme_settings generate=dark_generate primary=dark_primary -%}
     {%- endif -%}
   {%- endcapture -%}
   {%- assign declarations = declarations | strip -%}

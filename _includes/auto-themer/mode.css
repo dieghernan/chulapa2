@@ -1,28 +1,25 @@
-{%- assign configured_primary = include.settings.vars.primary -%}
 {%- assign configured_link = include.settings.vars['link-color'] -%}
 {%- assign configured_hover = include.settings.vars['link-hover-color'] -%}
 {%- capture mode_primary -%}
-  {%- include auto-themer/hex-color.html value=configured_primary -%}
+  {%- include auto-themer/hex-color.html value=include.primary -%}
 {%- endcapture -%}
-{%- if mode_primary == empty -%}
-  {%- capture mode_primary -%}
-    {%- include auto-themer/hex-color.html value=include.default_primary -%}
-  {%- endcapture -%}
-{%- endif -%}
 {%- capture mode_link -%}
   {%- include auto-themer/hex-color.html value=configured_link -%}
 {%- endcapture -%}
 {%- capture mode_link_hover -%}
   {%- include auto-themer/hex-color.html value=configured_hover -%}
 {%- endcapture -%}
+{%- if mode_primary != empty %}
+  --bs-primary-base: {{ mode_primary }};
+{%- endif -%}
 {%- if include.generate == true %}
-  {% if mode_primary == empty %}
-    --auto-themer-primary: var(--bs-primary-base);
-  {% else %}
-    --auto-themer-primary: {{ mode_primary }};
-    --bs-primary-base: var(--auto-themer-primary);
-  {% endif %}
+  --auto-themer-primary: var(--bs-primary-base);
   {% include auto-themer/palette.css %}
+{%- elsif mode_primary != empty %}
+  --bs-primary-bg: var(--bs-primary-base);
+  @supports (color: contrast-color(white)) {
+    --bs-primary-contrast: contrast-color(var(--bs-primary-bg));
+  }
 {% endif -%}
 {%- if mode_link != empty %}
   --bs-link-color: {{ mode_link }};

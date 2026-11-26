@@ -56,13 +56,24 @@ chulapa-skin:
     primary: "#285d70"
 ```
 
-Both modes use this primary by default. To configure dark mode separately,
-add `chulapa-skin-dark` with its own `autothemer` flag and optional
-`vars.primary`. A dark configuration without a primary shares the light
-primary. Set the flag to `false` or omit it within a configured mode to keep
-Bootstrap's palette for that mode.
+By default the site uses the primary configuration and hides the color mode
+selector. Set the top-level `color-mode-selector: true` to offer the
+Bootstrap color modes. Set `use-dual-mode: true` within `chulapa-skin` to
+generate a matching dark palette from the same primary color.
+
+To configure dark mode separately, add `chulapa-skin-dark`. That
+configuration takes precedence over the matching dark palette and shows
+the selector even when `color-mode-selector` is `false`. The first visit
+uses the primary appearance.
+Visitors can choose System to follow their device preference.
+To generate a palette from the separate configuration, set its
+`autothemer` flag to `true`. It uses its own `vars.primary` or the Bootstrap
+default. To share a custom primary between both configurations, set the
+same `vars.primary` in each.
 
 The supported color values are quoted three- or six-digit hex colors.
+An explicit `vars.primary` sets the primary color even when `autothemer`
+is disabled. The flag controls generation of the related tones.
 The Auto Themer falls back to Bootstrap's primary when it has no valid
 configured primary. Explicit `vars.link-color` and `vars.link-hover-color`
 apply in their own mode, even when generation is off. When only `link-color`

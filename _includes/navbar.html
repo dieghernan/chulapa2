@@ -17,6 +17,7 @@
           </li>
           {% endfor %}
         </ul>
+        {% if show_color_mode_selector %}
         <div class="mt-3 md:mt-0 md:ms-auto" id="site-color-mode-control" hidden>
           <label class="visually-hidden" for="site-color-mode">Color mode</label>
           <select class="form-control form-control-sm" id="site-color-mode">
@@ -25,6 +26,7 @@
             <option value="dark">Dark theme</option>
           </select>
         </div>
+        {% endif %}
       </div>
     </dialog>
   </div>

@@ -1,4 +1,5 @@
 chulapa-skin:
+  use-dual-mode: true
   autothemer: true
   vars:
     primary: "#285d70"

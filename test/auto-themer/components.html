@@ -1,0 +1,37 @@
+---
+layout: default
+title: Themed components
+permalink: /test/auto-themer/components/
+published: false
+---
+
+<div class="not-prose">
+  <p class="alert theme-primary">Choose how to receive article updates.</p>
+  <span class="badge theme-primary">Subscription</span>
+
+  <div class="form-field mt-3">
+    <label for="delivery-address">Email address</label>
+    <input class="form-control" id="delivery-address" type="email" value="reader@example.com">
+  </div>
+
+  <fieldset class="mt-3">
+    <legend>Frequency</legend>
+    <div class="form-field">
+      <input class="radio" id="daily-updates" type="radio" name="frequency" checked>
+      <label for="daily-updates">Daily</label>
+    </div>
+    <div class="form-field">
+      <input class="radio" id="weekly-updates" type="radio" name="frequency">
+      <label for="weekly-updates">Weekly</label>
+    </div>
+  </fieldset>
+
+  <div class="form-field mt-3">
+    <div class="switch theme-primary">
+      <input id="send-summary" type="checkbox" role="switch" switch>
+    </div>
+    <label for="send-summary">Include a summary</label>
+  </div>
+
+  <button class="btn-solid theme-primary mt-3" type="button">Save preferences</button>
+</div>

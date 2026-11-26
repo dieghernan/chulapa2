@@ -5,7 +5,7 @@
   function applyMode(mode) {
     if (mode === "light" || mode === "dark") {
       root.dataset.bsTheme = mode;
-    } else {
+    } else if (mode === "system") {
       delete root.dataset.bsTheme;
     }
   }
@@ -13,7 +13,7 @@
   try {
     applyMode(localStorage.getItem(storageKey));
   } catch {
-    // Bootstrap follows the system preference when storage is unavailable.
+    // Keep the site's primary mode when storage is unavailable.
   }
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -23,13 +23,10 @@
 
     select.value = root.dataset.bsTheme ?? "";
     select.addEventListener("change", () => {
-      applyMode(select.value);
+      const mode = select.value || "system";
+      applyMode(mode);
       try {
-        if (select.value) {
-          localStorage.setItem(storageKey, select.value);
-        } else {
-          localStorage.removeItem(storageKey);
-        }
+        localStorage.setItem(storageKey, mode);
       } catch {
         // The selected mode still applies to the current page.
       }

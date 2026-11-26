@@ -1,0 +1,10 @@
+chulapa-skin:
+  autothemer: true
+  vars:
+    primary: "#285d70"
+chulapa-skin-dark:
+  skin:
+  highlight:
+  autothemer: false
+  vars:
+    primary:
