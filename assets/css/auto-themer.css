@@ -1,34 +1,48 @@
 ---
 ---
 {%- include theme-options.html -%}
-{%- assign use_dual_mode = main_theme_settings['use-dual-mode'] -%}
-{%- assign dark_primary = dark_theme_settings.vars.primary -%}
+{%- assign light_generate = main_theme_settings.autothemer -%}
+{%- if main_skin_name == 'auto' -%}
+  {%- assign light_generate = true -%}
+{%- endif -%}
 {%- assign dark_generate = false -%}
+{%- assign dual_base_vars = nil -%}
 {%- if has_dark_theme -%}
   {%- assign dark_generate = dark_theme_settings.autothemer -%}
+  {%- if dark_skin_name == 'auto' -%}
+    {%- assign dark_generate = true -%}
+  {%- endif -%}
 {%- elsif use_dual_mode == true -%}
-  {%- assign dark_primary = main_theme_settings.vars.primary -%}
+  {%- assign dual_base_vars = main_theme_settings.vars -%}
   {%- assign dark_generate = true -%}
+  {%- if dark_skin -%}
+    {%- assign dark_generate = main_theme_settings.autothemer -%}
+  {%- endif -%}
 {%- endif -%}
+
+/* Bootstrap's root defaults are unlayered. Keep these rules at :root specificity. */
+{%- assign stages = 'generated,skin,base,explicit' | split: ',' -%}
 {%- assign modes = 'light,dark' | split: ',' -%}
-{%- for mode in modes -%}
-  {%- capture declarations -%}
-    {%- if mode == 'light' -%}
-      {%- include auto-themer/mode.css settings=main_theme_settings generate=main_theme_settings.autothemer primary=main_theme_settings.vars.primary -%}
-    {%- else -%}
-      {%- include auto-themer/mode.css settings=dark_theme_settings generate=dark_generate primary=dark_primary -%}
-    {%- endif -%}
-  {%- endcapture -%}
-  {%- assign declarations = declarations | strip -%}
-  {%- unless declarations == empty %}
-:root[data-bs-theme="{{ mode }}"] {
+{%- for stage in stages -%}
+  {%- for mode in modes -%}
+    {%- capture declarations -%}
+      {%- if mode == 'light' -%}
+        {%- include auto-themer/mode.css settings=main_theme_settings skin=main_skin generate=light_generate stage=stage -%}
+      {%- else -%}
+        {%- include auto-themer/mode.css settings=dark_theme_settings skin=dark_skin generate=dark_generate shared_vars=dual_base_vars stage=stage -%}
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- assign declarations = declarations | strip -%}
+    {%- unless declarations == empty %}
+:root:where([data-bs-theme="{{ mode }}"]) {
   {{ declarations }}
 }
 
 @media (prefers-color-scheme: {{ mode }}) {
-  :root:not([data-bs-theme]) {
+  :root:where(:not([data-bs-theme])) {
     {{ declarations }}
   }
 }
-  {% endunless -%}
+    {% endunless -%}
+  {%- endfor -%}
 {%- endfor -%}

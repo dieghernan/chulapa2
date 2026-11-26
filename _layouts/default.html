@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ bootstrap_dist }}/css/bootstrap.min.css"
           integrity="sha384-MKn5NWVBEuQXJE7TSKSgPUmMiSCmVTfCsR+VSSeQpHnoyJQZZFn/kBn+Ht5jZDPQ" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ '/assets/css/brand.css' | absolute_url }}">
+    {% include font-styles.html %}
     {% if site['chulapa-skin'] or site['chulapa-skin-dark'] %}
     <link rel="stylesheet" href="{{ '/assets/css/auto-themer.css' | absolute_url }}">
     {% endif %}

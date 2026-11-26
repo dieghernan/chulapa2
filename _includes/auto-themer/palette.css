@@ -1,23 +1,29 @@
+{%- assign palette_role = include.role | default: 'primary' -%}
 /* Leave room for Bootstrap's own hover and active color adjustments. */
---auto-themer-strong: light-dark(
-  oklch(from var(--auto-themer-primary) min(l, 0.42) min(c, 0.14) h),
-  oklch(from var(--auto-themer-primary) max(l, 0.78) min(c, 0.14) h)
+--auto-themer-{{ palette_role }}-strong: light-dark(
+  oklch(from var(--auto-themer-{{ palette_role }}) min(l, 0.42) min(c, 0.14) h),
+  oklch(from var(--auto-themer-{{ palette_role }}) max(l, 0.78) min(c, 0.14) h)
 );
---auto-themer-edge: light-dark(
-  oklch(from var(--auto-themer-primary) 0.50 min(c, 0.13) h),
-  oklch(from var(--auto-themer-primary) 0.71 min(c, 0.13) h)
+--auto-themer-{{ palette_role }}-edge: light-dark(
+  oklch(from var(--auto-themer-{{ palette_role }}) 0.50 min(c, 0.13) h),
+  oklch(from var(--auto-themer-{{ palette_role }}) 0.71 min(c, 0.13) h)
 );
---bs-primary-bg: var(--auto-themer-strong);
---bs-primary-bg-subtle: color-mix(in oklab, var(--auto-themer-primary) 16%, var(--bs-bg-body));
---bs-primary-bg-muted: color-mix(in oklab, var(--auto-themer-primary) 24%, var(--bs-bg-body));
---bs-primary-fg: var(--auto-themer-strong);
---bs-primary-fg-emphasis: var(--auto-themer-strong);
---bs-primary-contrast: light-dark(white, black);
---bs-primary-border: var(--auto-themer-edge);
---bs-primary-focus-ring: var(--auto-themer-edge);
---bs-focus-ring-color: var(--bs-primary-focus-ring);
---bs-focus-ring: var(--bs-focus-ring-width) solid var(--bs-focus-ring-color);
+--bs-{{ palette_role }}-bg: var(--auto-themer-{{ palette_role }}-strong);
+--bs-{{ palette_role }}-bg-subtle: color-mix(in oklab, var(--auto-themer-{{ palette_role }}) 16%, var(--bs-bg-body));
+--bs-{{ palette_role }}-bg-muted: color-mix(in oklab, var(--auto-themer-{{ palette_role }}) 24%, var(--bs-bg-body));
+--bs-{{ palette_role }}-fg: var(--auto-themer-{{ palette_role }}-strong);
+--bs-{{ palette_role }}-fg-emphasis: var(--bs-{{ palette_role }}-fg);
+--bs-{{ palette_role }}-contrast: light-dark(white, black);
+--bs-{{ palette_role }}-border: var(--auto-themer-{{ palette_role }}-edge);
+--bs-{{ palette_role }}-focus-ring: var(--auto-themer-{{ palette_role }}-edge);
+{% if palette_role == 'primary' -%}
 --bs-control-checked-bg: var(--bs-primary-bg);
---bs-control-checked-border-color: var(--bs-control-checked-bg);
 --bs-link-color: var(--bs-primary-fg);
 --bs-link-hover-color: var(--bs-primary-fg-emphasis);
+{% if include.scope == 'preview' -%}
+/* These native aliases would otherwise be inherited after resolution on :root. */
+--bs-focus-ring-color: var(--bs-primary-focus-ring);
+--bs-focus-ring: var(--bs-focus-ring-width) solid var(--bs-focus-ring-color);
+--bs-control-checked-border-color: var(--bs-control-checked-bg);
+{% endif -%}
+{% endif -%}

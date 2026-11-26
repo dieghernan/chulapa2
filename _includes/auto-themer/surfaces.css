@@ -1,0 +1,18 @@
+/* Tint semantic surfaces while retaining Bootstrap's primitive scales. */
+--bs-bg-body: light-dark(
+  color-mix(in oklab, var(--bs-white) 96%, var(--bs-primary-base)),
+  color-mix(in oklab, var(--bs-gray-975) 94%, var(--bs-primary-base))
+);
+{% assign light_surfaces = '025,050,100,200' | split: ',' %}
+{% assign dark_surfaces = '950,900,800,700' | split: ',' %}
+{% for light_surface in light_surfaces %}
+  {% assign dark_surface = dark_surfaces[forloop.index0] %}
+--bs-bg-{{ forloop.index }}: light-dark(
+  color-mix(in oklab, var(--bs-gray-{{ light_surface }}) 94%, var(--bs-primary-base)),
+  color-mix(in oklab, var(--bs-gray-{{ dark_surface }}) 92%, var(--bs-primary-base))
+);
+{% endfor %}
+--bs-fg-body: light-dark(
+  color-mix(in oklab, var(--bs-gray-900) 95%, var(--bs-primary-base)),
+  color-mix(in oklab, var(--bs-gray-050) 95%, var(--bs-primary-base))
+);

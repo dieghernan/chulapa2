@@ -1,0 +1,6 @@
+chulapa-skin:
+  skin: gitdev
+  highlight: github
+chulapa-skin-dark:
+  skin: gitdev-dark
+  highlight: github.dark

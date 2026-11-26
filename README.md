@@ -45,6 +45,13 @@ palette generation is off. Restart the preview after editing the file.
 The GitHub Pages workflow publishes only `_site/` from the regular build.
 Keep drafts that need to stay private out of the public Git repository.
 
+The home page includes a Bootstrap 6 kitchen sink. Compare the
+[default preview](http://127.0.0.1:4173/chulapa2/) with the
+[Auto Themer preview](http://127.0.0.1:4173/chulapa2/test/dual/) and the
+[GitDev preview](http://127.0.0.1:4173/chulapa2/test/gitdev/).
+The [standalone kitchen sink](http://127.0.0.1:4173/chulapa2/test/dual/test/auto-themer/kitchen-sink/)
+shows the same components on their own page.
+
 ## Generate a primary palette
 
 Enable the Auto Themer in `_config.yml` and set a primary color.
@@ -59,7 +66,8 @@ chulapa-skin:
 By default the site uses the primary configuration and hides the color mode
 selector. Set the top-level `color-mode-selector: true` to offer the
 Bootstrap color modes. Set `use-dual-mode: true` within `chulapa-skin` to
-generate a matching dark palette from the same primary color.
+use its bundled dark variant when available. The Auto Themer generates a
+dark palette from the same primary color when the skin has no dark variant.
 
 To configure dark mode separately, add `chulapa-skin-dark`. That
 configuration takes precedence over the matching dark palette and shows
@@ -71,13 +79,56 @@ To generate a palette from the separate configuration, set its
 default. To share a custom primary between both configurations, set the
 same `vars.primary` in each.
 
-The supported color values are quoted three- or six-digit hex colors.
-An explicit `vars.primary` sets the primary color even when `autothemer`
-is disabled. The flag controls generation of the related tones.
-The Auto Themer falls back to Bootstrap's primary when it has no valid
-configured primary. Explicit `vars.link-color` and `vars.link-hover-color`
-apply in their own mode, even when generation is off. When only `link-color`
-is set, the link keeps that color on hover.
+Use native CSS values in `vars`, including quoted hex colors, font stacks,
+dimensions and CSS functions. A Bootstrap token such as `primary-base`
+can be written with or without the `--bs-` prefix. Explicit values apply
+with or without generation. Auto Themer uses Bootstrap's primary when
+the configuration supplies no primary. It derives neutral surfaces and
+status colors from the primary, while named skins and explicit tokens
+take precedence. Existing `skin: auto` configurations also enable generation. See the
+[theming architecture](docs/theming.md) for precedence, inheritance,
+component-level overrides and migration aliases.
+
+## Load fonts
+
+Declare Google Fonts stylesheet URLs in the top-level `googlefonts` list.
+Use the family tokens under `vars` to apply the loaded fonts.
+
+```yaml
+googlefonts:
+  - url: "https://fonts.googleapis.com/css2?family=Raleway&family=Rubik&display=swap"
+
+chulapa-skin:
+  vars:
+    body-font-family: "Rubik, sans-serif"
+    heading-font-family: "Raleway, sans-serif"
+```
+
+The legacy `font-family-base` and `headings-font-family` names also work.
+Each mode can select its own font families from the loaded stylesheets.
+Run `npm run preview:test` and open
+<http://127.0.0.1:4173/chulapa2/test/tokens/test/auto-themer/components/>
+to see both modes with configured fonts, colors and component tokens.
+
+## Choose a bundled skin
+
+The initial collection includes GitDev and GitDev Dark. Use the same
+skin names as in chulapa.
+
+```yaml
+chulapa-skin:
+  skin: gitdev
+chulapa-skin-dark:
+  skin: gitdev-dark
+```
+
+An explicit `chulapa-skin-dark` takes priority over the dark variant. Use
+`chulapa-skin.use-dual-mode: true` and `color-mode-selector: true` to offer
+GitDev Dark as the dark variant of GitDev without a separate dark block.
+GitDev and GitDev Dark use their original palette, Inter for text,
+Inter Tight for headings and navigation, and Roboto Mono for code.
+Explicit primary and link colors in `vars` take precedence over skin defaults.
+The separate syntax-highlighting setting from chulapa is still pending.
 
 ## Deploy to GitHub Pages
 

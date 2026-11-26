@@ -1,0 +1,18 @@
+    {% assign googlefonts_count = site.googlefonts | size %}
+    {% if main_skin_fonts or dark_skin_fonts or googlefonts_count > 0 %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    {% endif %}
+    {% if main_skin_fonts %}
+      {% include {{ main_skin_fonts }} %}
+    {% endif %}
+    {% if dark_skin_fonts and dark_skin_fonts != main_skin_fonts %}
+      {% include {{ dark_skin_fonts }} %}
+    {% endif %}
+    {% for font in site.googlefonts %}
+      {% assign font_url = font.url | strip %}
+      {% assign font_origin = font_url | slice: 0, 29 %}
+      {% if font_origin == 'https://fonts.googleapis.com/' %}
+    <link rel="stylesheet" href="{{ font_url | escape }}">
+      {% endif %}
+    {% endfor %}

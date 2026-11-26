@@ -1,0 +1,4 @@
+color-mode-selector: true
+chulapa-skin:
+  skin: gitdev
+  use-dual-mode: true

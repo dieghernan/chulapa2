@@ -210,14 +210,14 @@ for (const mode of ["light", "dark"]) {
     await page.getByRole("combobox", { name: "Color mode" }).selectOption(mode);
     await expect(page.locator("html")).toHaveAttribute("data-bs-theme", mode);
     const content = page.getByRole("main");
-    const field = content.getByRole("textbox", { name: "Email address" });
+    const field = content.getByRole("textbox", { name: "Email address", exact: true });
     const radio = content.getByRole("radio", { name: "Weekly" });
     const toggle = content.getByRole("switch", { name: "Include a summary" });
     const switchIndicator = content.locator(".switch");
     const button = content.getByRole("button", { name: "Save preferences" });
 
     for (const [element, name] of [
-      [content.locator(".alert"), "alert"],
+      [content.locator(".alert.theme-primary"), "alert"],
       [content.getByText("Subscription", { exact: true }), "badge"],
       [field, "text field"],
       [button, "button"],
@@ -255,6 +255,262 @@ for (const mode of ["light", "dark"]) {
     await expectVisibleFocus(button);
   });
 }
+
+test("applies the GitDev pair and keeps Bootstrap button geometry", async ({ page }) => {
+  const properties = [
+    "font-size", "font-weight", "padding-block-start",
+    "padding-inline-end", "border-top-width", "border-top-left-radius",
+  ];
+  const button = page.getByRole("button", { name: "Save preferences" });
+  await page.goto("test/auto-themer/components/");
+  const bootstrap = await button.evaluate(
+    (element, names) => names.map((name) => getComputedStyle(element).getPropertyValue(name)),
+    properties,
+  );
+
+  await page.goto("test/gitdev/test/auto-themer/components/");
+  await expect(page.locator('link[href^="https://fonts.googleapis.com/"]')).toHaveCount(1);
+  const selector = page.getByRole("combobox", { name: "Color mode" });
+  await expect(selector).toHaveValue("light");
+  for (const [mode, primary, surface, link] of [
+    ["light", "#22272e", "rgb(255, 255, 255)", "#0969da"],
+    ["dark", "#373e47", "rgb(36, 41, 47)", "#79b8ff"],
+  ]) {
+    await selector.selectOption(mode);
+    await expect(page.locator("body")).toHaveCSS("background-color", surface);
+    await expect(page.locator("body")).toHaveCSS("font-family", /^Inter,/);
+    await expect(page.locator("html")).toHaveCSS("--bs-primary-base", primary);
+    await expect(page.locator("html")).toHaveCSS("--bs-link-color", link);
+    for (const [index, property] of properties.entries()) {
+      await expect(button).toHaveCSS(property, bootstrap[index]);
+    }
+    const components = page.getByRole("main");
+    for (const element of [button, components.locator(".alert.theme-primary"), components.locator(".badge")]) {
+      expect((await readContrast(element)).text, mode).toBeGreaterThanOrEqual(4.5);
+    }
+    await page.keyboard.press("Tab");
+    await button.focus();
+    await expect(button).toHaveCSS("outline-style", "solid");
+    expect((await readContrast(button)).focus, mode).toBeGreaterThanOrEqual(3);
+  }
+});
+
+test("applies GitDev typography, navigation and editorial styles", async ({ page }) => {
+  await page.goto("test/gitdev/test/markdown/");
+  const heading = page.getByRole("heading", { name: "Markdown fixture" });
+  const nav = page.getByRole("navigation", { name: "Primary" });
+  const brand = nav.getByRole("link", { name: "chulapa2" });
+  const quote = page.locator("blockquote");
+  const code = page.locator("main pre code");
+  await expect(heading).toHaveCSS("font-family", /^"Inter Tight"/);
+  await expect(heading).toHaveCSS("font-weight", "800");
+  await expect(nav).toHaveCSS("font-family", /^"Inter Tight", "GitDev navigation fallback"/);
+  await expect(brand).toHaveCSS("font-family", "Chulapa, sans-serif");
+  await expect(nav).toHaveCSS("background-color", "rgb(34, 39, 46)");
+  await expect(quote).toHaveCSS("border-inline-start-color", "rgb(9, 105, 218)");
+  await expect(quote).toHaveCSS("border-top-left-radius", "0px");
+  await expect(quote).toHaveCSS("padding-inline-start", "8px");
+  await expect(code).toHaveCSS("font-family", /^"Roboto Mono"/);
+  await expect(page.locator("html")).toHaveCSS("--bs-success-base", "#277f46");
+
+  await page.getByRole("combobox", { name: "Color mode" }).selectOption("dark");
+  await expect(nav).toHaveCSS("background-color", "rgb(36, 41, 47)");
+  await expect(quote).toHaveCSS("border-inline-start-color", "rgb(121, 184, 255)");
+  await expect(page.locator("html")).toHaveCSS("--bs-success-base", "#6fdd8c");
+});
+
+test("uses the authored GitDev Dark palette with dual mode", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.goto("test/gitdev-dual/");
+  const selector = page.getByRole("combobox", { name: "Color mode" });
+  await expect(selector).toHaveValue("light");
+  await expect(page.locator("html")).toHaveCSS("--bs-primary-base", "#22272e");
+  await selector.selectOption("");
+  const link = page.getByRole("main").getByRole("link", { name: "chulapa", exact: true });
+  await expect(link).toHaveCSS("color", "rgb(121, 184, 255)");
+  expect((await readContrast(link)).text).toBeGreaterThanOrEqual(4.5);
+  await expect(page.locator("html")).toHaveCSS("--bs-primary-base", "#373e47");
+  await expect(page.locator("html")).toHaveCSS("--auto-themer-primary", "");
+});
+
+test("keeps a dark primary skin and allows a separate light alternate", async ({ page }) => {
+  await page.goto("test/gitdev-alternate/");
+  const selector = page.getByRole("combobox", { name: "Color mode" });
+  await expect(selector.getByRole("option", { name: "Primary theme" })).toHaveAttribute("value", "light");
+  await expect(selector).toHaveValue("light");
+  const root = page.locator("html");
+  await expect(root).toHaveCSS("color-scheme", "dark");
+  await expect(root).toHaveCSS("--bs-primary-base", "#41516a");
+  await expect(root).toHaveCSS("--bs-link-color", "#b1dcff");
+
+  await selector.selectOption({ label: "Alternate theme" });
+  await expect(root).toHaveCSS("color-scheme", "light");
+  await expect(root).toHaveCSS("--bs-primary-base", "#22272e");
+  await expect(root).toHaveCSS("--bs-link-color", "#0969da");
+});
+
+test("loads configured fonts, colors and component overrides across both modes", async ({ page }) => {
+  await page.goto("test/tokens/test/auto-themer/components/");
+  const main = page.getByRole("main");
+  const heading = main.getByRole("heading", { name: "Themed components" });
+  const button = main.getByRole("button", { name: "Save preferences" });
+  const field = main.getByRole("textbox", { name: "Email address", exact: true });
+  const inactiveField = main.getByRole("textbox", { name: "Inactive email address" });
+  const link = main.getByRole("link", { name: "Read the preferences guide" });
+  const sample = main.getByText("Border and shadow sample");
+  const danger = main.locator(".alert.theme-danger");
+  const code = main.locator("code");
+  const body = page.locator("body");
+  await expect(page.locator('link[href*="IBM+Plex+Mono"]')).toHaveCount(1);
+  await expect(page.locator('[href^="javascript:"]')).toHaveCount(0);
+  const fonts = await page.evaluate(async () => {
+    const requests = ['400 1rem Rubik', '650 1rem Raleway', '400 1rem "IBM Plex Mono"'];
+    return Promise.all(requests.map(async (font) => ({
+      font,
+      loaded: (await document.fonts.load(font, "Theme sample")).some((face) => face.status === "loaded"),
+    })));
+  });
+  expect(fonts.filter((font) => !font.loaded)).toEqual([]);
+  await expect(body).toHaveCSS("font-family", "Rubik, sans-serif");
+  await expect(body).toHaveCSS("font-size", "18px");
+  await expect(body).toHaveCSS("line-height", "31.5px");
+  await expect(body).toHaveCSS("background-color", "rgb(245, 249, 255)");
+  await expect(body).toHaveCSS("color", "rgb(32, 52, 74)");
+  await expect(heading).toHaveCSS("font-family", "Raleway, sans-serif");
+  await expect(heading).toHaveCSS("font-weight", "650");
+  await expect(code).toHaveCSS("font-family", /^"IBM Plex Mono"/);
+  await expect(page.getByRole("navigation").getByRole("link", { name: "About" }))
+    .toHaveCSS("color", "rgb(240, 244, 248)");
+  await expect(button).toHaveCSS("background-color", "rgb(24, 69, 91)");
+  await expect(button).toHaveCSS("border-radius", "13px");
+  await expect(button).toHaveCSS("border-top-color", "rgb(18, 52, 86)");
+  await expect(button).toHaveCSS("padding-inline-start", "30px");
+  await expect(field).toHaveCSS("padding-inline-start", "30px");
+  await expect(field).toHaveCSS("border-top-width", "2px");
+  await expect(field).toHaveCSS("border-top-color", "rgb(52, 86, 120)");
+  await expect(field).toHaveCSS("border-radius", "11px");
+  await expect(field).toHaveCSS("box-shadow", /rgba\(17, 34, 51, 0.5\).*inset/);
+  await expect(inactiveField).toBeDisabled();
+  await expect(inactiveField).toHaveCSS("background-color", "rgb(227, 233, 241)");
+  await expect(sample).toHaveCSS("border-top-style", "dashed");
+  await expect(sample).toHaveCSS("border-top-width", "2px");
+  await expect(sample).toHaveCSS("border-top-color", "rgb(59, 86, 112)");
+  await expect(sample).toHaveCSS("box-shadow", /oklch\([^)]*\/ 0\.064\)/);
+  await expect(danger).toHaveCSS("background-color", /^color\(srgb /);
+  expect((await readContrast(danger)).text).toBeGreaterThanOrEqual(4.5);
+  await expect(link).toHaveCSS("color", "rgb(21, 78, 133)");
+  await link.hover();
+  await expect(link).toHaveCSS("color", "rgb(18, 55, 88)");
+  await page.keyboard.press("Tab");
+  await button.focus();
+  await expect(button).toHaveCSS("outline-width", "4px");
+  expect((await readContrast(button)).focus).toBeGreaterThanOrEqual(3);
+  expect((await readContrast(button)).text).toBeGreaterThanOrEqual(4.5);
+  const stylesheet = await page.request.get("test/tokens/assets/css/auto-themer.css");
+  expect(await stylesheet.text()).not.toMatch(/white; color: red|var\(--missing|\.invalid, body|1px2px/);
+
+  await page.getByRole("combobox", { name: "Color mode" }).selectOption("dark");
+  await expect(body).toHaveCSS("font-family", /^"IBM Plex Mono"/);
+  await expect(body).toHaveCSS("background-color", "rgb(32, 42, 54)");
+  await expect(body).toHaveCSS("color", "rgb(237, 244, 250)");
+  await expect(button).toHaveCSS("background-color", "rgb(35, 64, 99)");
+  await expect(button).toHaveCSS("padding-inline-start", "12px");
+  await expect(button).not.toHaveCSS("border-radius", "13px");
+  expect((await readContrast(button)).text).toBeGreaterThanOrEqual(4.5);
+  await page.keyboard.press("Tab");
+  await button.focus();
+  await expect(button).toHaveCSS("outline-color", "rgb(162, 213, 255)");
+});
+
+test("recomputes generated roles at their declaration scope and honors downstream CSS", async ({ page }) => {
+  await page.goto("test/tokens/test/auto-themer/components/");
+  const button = page.getByRole("button", { name: "Verify address" });
+  const initial = await button.evaluate((element) => getComputedStyle(element).backgroundColor);
+  expect(initial).toMatch(/^oklch\(/);
+  const rootOverride = await page.addStyleTag({ content: ":root { --bs-success-base: #ab2020; }" });
+  await expect(button).not.toHaveCSS("background-color", initial);
+  const changed = await button.evaluate((element) => getComputedStyle(element).backgroundColor);
+  expect((await readContrast(button)).text).toBeGreaterThanOrEqual(4.5);
+
+  await page.addStyleTag({ content: ".theme-success { --bs-success-base: #174d70; }" });
+  await expect(button).toHaveCSS("background-color", changed);
+  await page.addStyleTag({ content: ".theme-success { --bs-success-bg: #174d70; }" });
+  await expect(button).toHaveCSS("background-color", "rgb(23, 77, 112)");
+  await rootOverride.evaluate((element) => element.remove());
+});
+
+test("generates surfaces and status colors from one primary in the kitchen sink", async ({ page }) => {
+  const demo = "test/auto-themer/kitchen-sink/";
+  const roles = ["primary", "secondary", "success", "warning", "danger", "info"];
+  const buttonFor = (role) => page.getByRole("button", { name: `${role} button`, exact: false });
+  const body = page.locator("body");
+  const sample = page.getByText("Surface 1", { exact: true });
+  const background = (target) => target.evaluate((element) => getComputedStyle(element).backgroundColor);
+  await page.goto("./");
+  await expect(page.getByRole("heading", { name: "Bootstrap 6 kitchen sink", level: 2 })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Semantic colors", level: 3 })).toBeVisible();
+  const defaults = await Promise.all([body, sample, ...roles.map(buttonFor)].map(background));
+
+  await page.goto("test/dual/");
+  await expect(page.getByRole("heading", { name: "Bootstrap 6 kitchen sink", level: 2 })).toBeVisible();
+  const light = await Promise.all([body, sample, ...roles.map(buttonFor)].map(background));
+  for (const [index, color] of light.entries()) {
+    expect(color).not.toBe(defaults[index]);
+  }
+
+  await page.goto(`test/dual/${demo}`);
+  await expect(page.getByRole("heading", { name: "Bootstrap 6 kitchen sink", level: 1 })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Semantic colors", level: 2 })).toBeVisible();
+  expect(await Promise.all([body, sample, ...roles.map(buttonFor)].map(background))).toEqual(light);
+  const selector = page.getByRole("combobox", { name: "Color mode" });
+  for (const mode of ["light", "dark"]) {
+    await selector.selectOption(mode);
+    expect((await readContrast(body)).text, mode).toBeGreaterThanOrEqual(4.5);
+    for (const role of roles) {
+      expect((await readContrast(buttonFor(role))).text, `${mode} ${role}`).toBeGreaterThanOrEqual(4.5);
+    }
+  }
+  await expect(body).not.toHaveCSS("background-color", light[0]);
+  await expect(sample).not.toHaveCSS("background-color", light[1]);
+  await expect(buttonFor("success")).not.toHaveCSS("background-color", light[4]);
+
+  const originalSurface = await background(sample);
+  const originalSuccess = await background(buttonFor("success"));
+  await page.addStyleTag({ content: ":root { --bs-primary-base: #bb286a; }" });
+  await expect(sample).not.toHaveCSS("background-color", originalSurface);
+  await expect(buttonFor("success")).not.toHaveCSS("background-color", originalSuccess);
+
+  const trigger = page.getByRole("button", { name: "Open dialog" });
+  await trigger.focus();
+  await page.keyboard.press("Enter");
+  const dialog = page.getByRole("dialog", { name: "Confirm publication" });
+  await expect(dialog).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+  await expect(trigger).toBeFocused();
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
+
+test("keeps authored and explicit colors above generated defaults", async ({ page }) => {
+  await page.goto("test/gitdev/");
+  await expect(page.getByRole("heading", { name: "Bootstrap 6 kitchen sink", level: 2 })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Primary button" }))
+    .toHaveCSS("background-color", "rgb(34, 39, 46)");
+
+  await page.goto("test/tokens/");
+  await expect(page.getByRole("heading", { name: "Bootstrap 6 kitchen sink", level: 2 })).toBeVisible();
+  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(245, 249, 255)");
+  await expect(page.getByRole("button", { name: "Primary button" }))
+    .toHaveCSS("background-color", "rgb(24, 69, 91)");
+  await expect(page.getByRole("button", { name: "Warning button" }))
+    .toHaveCSS("background-color", "rgb(180, 83, 6)");
+  await expect(page.getByRole("button", { name: "Danger button" }))
+    .toHaveCSS("background-color", "rgb(139, 37, 53)");
+  await expect(page.getByRole("navigation", { name: "Primary" }))
+    .toHaveCSS("background-color", "rgb(40, 93, 112)");
+});
 
 test.describe("without JavaScript", () => {
   test.use({ javaScriptEnabled: false });

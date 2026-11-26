@@ -1,0 +1,15 @@
+{%- assign resolved_skin = nil -%}
+{%- assign resolved_scheme = nil -%}
+{%- assign resolved_dark_variant = nil -%}
+{%- assign resolved_skin_fonts = nil -%}
+{%- case include.name -%}
+  {%- when 'gitdev' -%}
+    {%- assign resolved_skin = 'skins/gitdev.css' -%}
+    {%- assign resolved_scheme = 'light' -%}
+    {%- assign resolved_dark_variant = 'gitdev-dark' -%}
+    {%- assign resolved_skin_fonts = 'skins/gitdev-fonts.html' -%}
+  {%- when 'gitdev-dark' -%}
+    {%- assign resolved_skin = 'skins/gitdev-dark.css' -%}
+    {%- assign resolved_scheme = 'dark' -%}
+    {%- assign resolved_skin_fonts = 'skins/gitdev-fonts.html' -%}
+{%- endcase -%}

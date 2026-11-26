@@ -1,30 +1,66 @@
-{%- assign configured_link = include.settings.vars['link-color'] -%}
-{%- assign configured_hover = include.settings.vars['link-hover-color'] -%}
-{%- capture mode_primary -%}
-  {%- include auto-themer/hex-color.html value=include.primary -%}
-{%- endcapture -%}
-{%- capture mode_link -%}
-  {%- include auto-themer/hex-color.html value=configured_link -%}
-{%- endcapture -%}
-{%- capture mode_link_hover -%}
-  {%- include auto-themer/hex-color.html value=configured_hover -%}
-{%- endcapture -%}
-{%- if mode_primary != empty %}
-  --bs-primary-base: {{ mode_primary }};
-{%- endif -%}
-{%- if include.generate == true %}
-  --auto-themer-primary: var(--bs-primary-base);
-  {% include auto-themer/palette.css %}
-{%- elsif mode_primary != empty %}
-  --bs-primary-bg: var(--bs-primary-base);
-  @supports (color: contrast-color(white)) {
-    --bs-primary-contrast: contrast-color(var(--bs-primary-bg));
-  }
-{% endif -%}
-{%- if mode_link != empty %}
-  --bs-link-color: {{ mode_link }};
-{% endif -%}
-{%- assign mode_link_hover = mode_link_hover | default: mode_link -%}
-{%- if mode_link_hover != empty %}
-  --bs-link-hover-color: {{ mode_link_hover }};
-{% endif -%}
+{%- case include.stage -%}
+  {%- when 'skin' -%}
+    {%- if include.skin %}
+      {% include {{ include.skin }} %}
+      --bs-primary-bg: var(--bs-primary-base);
+      --bs-primary-contrast: white;
+      --bs-primary-fg-emphasis: var(--bs-fg-body);
+      --bs-primary-focus-ring: var(--bs-link-color);
+      @supports (color: contrast-color(white)) {
+        --bs-primary-contrast: contrast-color(var(--bs-primary-bg));
+      }
+    {% endif -%}
+  {%- when 'base' -%}
+    {%- if include.shared_vars -%}
+      {%- include auto-themer/tokens.css vars=include.shared_vars stage='base' primary_only=true -%}
+    {%- endif -%}
+    {%- include auto-themer/tokens.css vars=include.settings.vars stage='base' -%}
+    {%- assign prefixed_primary = include.settings.vars['--bs-primary-base'] -%}
+    {%- assign native_primary = include.settings.vars['primary-base'] -%}
+    {%- assign legacy_primary = include.settings.vars.primary -%}
+    {%- capture primary -%}
+      {%- include auto-themer/token-value.html value=prefixed_primary -%}
+      {%- include auto-themer/token-value.html value=native_primary -%}
+      {%- include auto-themer/token-value.html value=legacy_primary -%}
+    {%- endcapture -%}
+    {%- if include.generate != true and primary != empty %}
+      --bs-primary-bg: var(--bs-primary-base);
+      @supports (color: contrast-color(white)) {
+        --bs-primary-contrast: contrast-color(var(--bs-primary-bg));
+      }
+    {% endif -%}
+  {%- when 'generated' -%}
+    {%- if include.generate == true -%}
+      {% include auto-themer/surfaces.css %}
+      {%- assign roles = 'primary,accent,secondary,success,warning,danger,info,inverse' | split: ',' -%}
+      {%- for role in roles -%}
+        {%- assign reference = nil -%}
+        {%- case role -%}
+          {%- when 'secondary' -%}{%- assign reference = 'gray-200' -%}
+          {%- when 'success' -%}{%- assign reference = 'green-500' -%}
+          {%- when 'warning' -%}{%- assign reference = 'yellow-500' -%}
+          {%- when 'danger' -%}{%- assign reference = 'red-500' -%}
+          {%- when 'info' -%}{%- assign reference = 'cyan-500' -%}
+        {%- endcase -%}
+        {%- assign base_token = role | append: '-base' -%}
+        {%- assign css_token = base_token | prepend: '--bs-' -%}
+        {%- if reference %}
+          {{ css_token }}: color-mix(in oklab, var(--bs-{{ reference }}) 86%, var(--bs-primary-base));
+        {% endif -%}
+        {%- if role == 'primary' or reference or include.settings.vars[base_token] or include.settings.vars[css_token] %}
+          --auto-themer-{{ role }}: var({{ css_token }});
+          {% include auto-themer/palette.css role=role %}
+        {% endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- when 'explicit' -%}
+    {%- assign configured_link = include.settings.vars['--bs-link-color'] | default: include.settings.vars['link-color'] -%}
+    {%- assign configured_hover = include.settings.vars['--bs-link-hover-color'] | default: include.settings.vars['link-hover-color'] -%}
+    {%- capture link_value -%}
+      {%- include auto-themer/token-value.html value=configured_link -%}
+    {%- endcapture -%}
+    {%- if link_value != empty and configured_hover == nil %}
+      --bs-link-hover-color: var(--bs-link-color);
+    {% endif -%}
+    {%- include auto-themer/tokens.css vars=include.settings.vars stage='explicit' -%}
+{%- endcase -%}

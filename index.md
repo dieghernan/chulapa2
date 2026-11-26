@@ -9,3 +9,7 @@ A Jekyll theme built with Bootstrap 6.
 
 chulapa2 is the independent successor to [chulapa](https://dieghernan.github.io/chulapa/).
 It keeps the Chulapa typeface and rebuilds the theme for Bootstrap 6.
+
+## Bootstrap 6 kitchen sink
+
+{% include demos/bootstrap-kitchen-sink.html section_level=3 %}

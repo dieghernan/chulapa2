@@ -1,0 +1,36 @@
+{%- assign css_value = include.value | append: '' | strip -%}
+{%- assign value_type = include.value | jsonify | slice: 0, 1 -%}
+{%- assign one_line = css_value | strip_newlines -%}
+{%- unless css_value == empty or css_value != one_line or value_type == '[' or value_type == '{'
+  or include.value == true or include.value == false
+  or css_value contains ';' or css_value contains '{' or css_value contains '}'
+  or css_value contains '/*' or css_value contains '*/' or css_value contains '\' -%}
+  {%- assign value_quote = '' -%}
+  {%- assign value_stack = '' -%}
+  {%- assign value_valid = true -%}
+  {%- assign value_chars = css_value | split: '' -%}
+  {%- for character in value_chars -%}
+    {%- if value_quote != empty -%}
+      {%- if character == value_quote -%}{%- assign value_quote = '' -%}{%- endif -%}
+    {%- elsif character == '"' or character == "'" -%}
+      {%- assign value_quote = character -%}
+    {%- elsif character == '(' or character == '[' -%}
+      {%- assign value_stack = value_stack | append: character -%}
+    {%- elsif character == ')' or character == ']' -%}
+      {%- assign value_open = value_stack | slice: -1, 1 -%}
+      {%- if character == ')' and value_open == '(' or character == ']' and value_open == '[' -%}
+        {%- assign value_length = value_stack.size | minus: 1 -%}
+        {%- assign value_stack = value_stack | slice: 0, value_length -%}
+      {%- else -%}
+        {%- assign value_valid = false -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- elsif character == '!' -%}
+      {%- assign value_valid = false -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if value_valid and value_quote == empty and value_stack == empty -%}
+    {{- css_value -}}
+  {%- endif -%}
+{%- endunless -%}
