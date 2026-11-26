@@ -277,6 +277,11 @@ Do not introduce additional browser compatibility workarounds without a document
 
 ## 12. Development roadmap
 
+Track implementation progress in [issue #3](https://github.com/dieghernan/chulapa2/issues/3).
+Check off verified work, link the relevant pull requests, and update the
+remaining checklist as the scope changes. Record local validation separately
+from merging or publishing.
+
 ### Phase 1 — Technical foundation
 
 - Consult the [Bootstrap 6 documentation index](https://getbootstrap.com/llms.txt)
@@ -364,6 +369,24 @@ When making changes:
 When requirements are ambiguous, prefer the solution that minimizes long-term maintenance without sacrificing essential functionality.
 
 Do not treat historical chulapa behavior as an unconditional requirement.
+
+### GitHub issue and pull request triage
+
+Group related changes into a single pull request around a feature, milestone,
+or maintenance objective. Keep incremental work in commits within that pull
+request, and batch small related changes before opening it to reduce repeated
+reviews. Open a separate pull request when the work has an independent purpose
+or requires urgent review.
+
+Assign at least one relevant label to every issue and pull request. Label
+items you open as part of creating them, and label incoming items at first
+triage. Before closing an issue or merging a pull request, verify that it is
+labeled.
+
+Use the [chulapa label catalog](https://github.com/dieghernan/chulapa/labels)
+as the baseline and preserve chulapa2-specific labels. Choose labels from the
+issue or pull request's purpose, discussion, and changed files. Add
+`ai-assisted :robot:` for AI-assisted development or review.
 
 ## 14. Guiding principle
 

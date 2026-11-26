@@ -11,7 +11,13 @@ navbar:
       url: /#about
 
 exclude:
+  - .Rproj.user
   - "*.Rproj"
+  - .claude
+  - .agents
+  - .git
+  - .grok
+  - .posit
   - AGENTS.md
   - README.md
   - node_modules
