@@ -1,0 +1,55 @@
+--bs-body-font-family: Inter, Roboto, sans-serif;
+--bs-heading-font-family: "Inter Tight", Roboto, sans-serif;
+--bs-heading-font-weight: 800;
+--bs-font-mono: "Roboto Mono", monospace;
+
+{% assign gitdev_roles = 'secondary,success,warning,danger,info' | split: ',' %}
+{% for role in gitdev_roles %}
+--bs-{{ role }}-bg: var(--bs-{{ role }}-base);
+--bs-{{ role }}-fg: color-mix(in srgb, var(--bs-{{ role }}-base) 75%, var(--bs-fg-body));
+--bs-{{ role }}-fg-emphasis: color-mix(in srgb, var(--bs-{{ role }}-base) 50%, var(--bs-fg-body));
+--bs-{{ role }}-bg-subtle: color-mix(in srgb, var(--bs-{{ role }}-base) 15%, var(--bs-bg-body));
+--bs-{{ role }}-bg-muted: color-mix(in srgb, var(--bs-{{ role }}-base) 25%, var(--bs-bg-body));
+--bs-{{ role }}-border: var(--bs-{{ role }}-fg);
+--bs-{{ role }}-focus-ring: var(--bs-{{ role }}-fg);
+--bs-{{ role }}-contrast: var(--gitdev-status-contrast);
+{% endfor %}
+
+& :where(h1, h2, h3, h4, h5, h6) {
+  font-weight: var(--bs-heading-font-weight);
+}
+
+& time {
+  font-family: var(--bs-font-mono);
+  font-style: normal;
+}
+
+& blockquote {
+  padding: 0.25rem 0.5rem;
+  background-color: var(--bs-bg-body);
+  color: var(--bs-fg-body);
+  border-radius: 0;
+  border-inline-start: medium solid var(--bs-link-color);
+}
+
+& :where(.chulapa-navbar) {
+  --bs-bg-1: var(--gitdev-navbar-bg);
+  --bs-navbar-color: #ffffff;
+  --bs-navbar-hover-color: var(--gitdev-navbar-hover);
+  --bs-navbar-active-color: color-mix(in srgb, #ffffff 80%, var(--gitdev-navbar-bg));
+  --bs-navbar-brand-color: #ffffff;
+  --bs-navbar-brand-hover-color: #ffffff;
+  font-family: "Inter Tight", "GitDev navigation fallback", Roboto, sans-serif;
+  font-weight: var(--bs-heading-font-weight);
+}
+
+& :where(.chulapa-navbar .drawer) {
+  --bs-drawer-bg: var(--gitdev-navbar-bg);
+  --bs-drawer-color: #ffffff;
+}
+
+& :where(.chulapa-navbar :is(.navbar-toggler, .btn-close)) {
+  --bs-btn-color: #ffffff;
+  --bs-btn-hover-color: var(--gitdev-navbar-hover);
+  --bs-btn-close-color: #ffffff;
+}

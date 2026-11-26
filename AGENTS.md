@@ -60,11 +60,16 @@ Custom CSS, Sass and JavaScript must address a concrete requirement that cannot 
 
 - Treat `vendor` and other vendored third-party files as read-only. Put
   chulapa2 customizations in project-owned files.
-- Preserve Bootstrap 6's baseline appearance in every skin. Keep its component
-  styling, including buttons, typography, spacing, borders, and corner radii.
-  Apply skin colors through Bootstrap 6's theming APIs.
-- Obtain explicit user approval before creating or modifying a skin, including
-  changes to shared styles or tokens that change a skin's appearance.
+- Skins can override Bootstrap 6 colors, typography, spacing, component
+  styling, borders, and corner radii. Apply these overrides through the
+  theming APIs and project-owned CSS.
+- Adapt or edit only maintainer-authored skins, with explicit maintainer
+  approval for the skin in scope. Preserve the original palette and carry
+  over authored typography, margins, spacing, and component styling. Use
+  Bootstrap defaults for properties the original skin leaves unspecified.
+- Defer third-party skins to a later phase. Incorporate them as supplied by
+  their authors, including their Bootstrap customizations. Leave their source
+  and appearance intact when changing shared styles or tokens.
 - Changes scoped to chulapa2's own components require no skin approval. Keep
   those styles within the component so they leave skins and Bootstrap 6's global
   defaults intact.

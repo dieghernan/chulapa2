@@ -1,0 +1,18 @@
+color-scheme: light;
+--bs-bg-body: #ffffff;
+--bs-fg-body: #24292f;
+--bs-fg-3: #6a788a;
+--bs-primary-base: #22272e;
+--bs-primary-fg: #22272e;
+--bs-link-color: #0969da;
+--bs-link-hover-color: #064691;
+--bs-secondary-base: #6c757d;
+--bs-success-base: #277f46;
+--bs-warning-base: #b45306;
+--bs-danger-base: #cf222e;
+--bs-info-base: #8250df;
+--gitdev-status-contrast: #ffffff;
+--gitdev-navbar-bg: var(--bs-primary-base);
+--gitdev-navbar-hover: #8b949e;
+
+{% include skins/gitdev-common.css %}

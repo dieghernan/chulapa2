@@ -1,0 +1,8 @@
+chulapa-skin:
+  skin: gitdev-dark
+  autothemer: true
+  vars:
+    primary: "#41516a"
+    link-color: "#b1dcff"
+chulapa-skin-dark:
+  skin: gitdev

@@ -1,0 +1,65 @@
+{%- for option in include.vars -%}
+  {%- assign option_key = option[0] | append: '' -%}
+  {%- if option_key == empty -%}{%- continue -%}{%- endif -%}
+  {%- assign option_prefix = option_key | slice: 0, 2 -%}
+  {%- assign option_initial = option_key | slice: 0, 1 -%}
+  {%- if option_initial == '.' -%}
+    {%- if include.stage == 'explicit' and include.root != false -%}
+      {%- assign class_candidate = option_key | remove_first: '.' -%}
+      {%- capture scoped_class -%}
+        {%- include auto-themer/token-name.html value=class_candidate -%}
+      {%- endcapture -%}
+      {%- unless scoped_class == empty -%}
+        {%- assign scoped_vars = option[1] -%}
+        {%- capture scoped_tokens -%}
+          {%- include auto-themer/tokens.css vars=scoped_vars stage='base' root=false -%}
+          {%- include auto-themer/tokens.css vars=scoped_vars stage='explicit' root=false -%}
+        {%- endcapture -%}
+        {%- unless scoped_tokens == empty %}
+  & :where(.{{ scoped_class }}) {
+    {{ scoped_tokens }}
+  }
+        {% endunless -%}
+      {%- endunless -%}
+    {%- endif -%}
+    {%- continue -%}
+  {%- endif -%}
+
+  {%- assign option_name = option_key -%}
+  {%- if option_prefix == '--' -%}
+    {%- assign option_name = option_name | remove_first: '--' -%}
+  {%- else -%}
+    {%- case option_name -%}
+      {%- when 'primary' -%}{%- assign option_name = 'primary-base' -%}
+      {%- when 'secondary', 'success', 'warning', 'danger', 'info' -%}
+        {%- assign option_name = option_name | append: '-base' -%}
+      {%- when 'body-bg' -%}{%- assign option_name = 'bg-body' -%}
+      {%- when 'body-color' -%}{%- assign option_name = 'fg-body' -%}
+      {%- when 'font-family-base' -%}{%- assign option_name = 'body-font-family' -%}
+      {%- when 'font-family-monospace' -%}{%- assign option_name = 'font-mono' -%}
+      {%- when 'headings-font-family' -%}{%- assign option_name = 'heading-font-family' -%}
+      {%- when 'headings-font-weight' -%}{%- assign option_name = 'heading-font-weight' -%}
+    {%- endcase -%}
+    {%- assign prefixed_name = option_name | prepend: '--bs-' -%}
+    {%- if include.vars[prefixed_name] != nil or option_name != option_key and include.vars[option_name] != nil -%}
+      {%- continue -%}
+    {%- endif -%}
+    {%- assign option_name = option_name | prepend: 'bs-' -%}
+  {%- endif -%}
+  {%- assign option_suffix = option_name | slice: -5, 5 -%}
+  {%- assign is_base = false -%}
+  {%- if option_suffix == '-base' -%}{%- assign is_base = true -%}{%- endif -%}
+  {%- if is_base and include.stage != 'base' -%}{%- continue -%}{%- endif -%}
+  {%- if is_base == false and include.stage == 'base' -%}{%- continue -%}{%- endif -%}
+  {%- if include.primary_only and option_name != 'bs-primary-base' -%}{%- continue -%}{%- endif -%}
+  {%- capture resolved_name -%}
+    {%- include auto-themer/token-name.html value=option_name -%}
+  {%- endcapture -%}
+  {%- assign option_value = option[1] -%}
+  {%- capture resolved_value -%}
+    {%- include auto-themer/token-value.html value=option_value -%}
+  {%- endcapture -%}
+  {%- if resolved_name != empty and resolved_value != empty %}
+  --{{ resolved_name }}: {{ resolved_value }};
+  {% endif -%}
+{%- endfor -%}

@@ -1,0 +1,15 @@
+{%- assign token_identifier = include.value | append: '' -%}
+{%- assign token_start = token_identifier | slice: 0, 1 -%}
+{%- assign token_alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_' -%}
+{%- assign token_alphabet_full = token_alphabet | append: '0123456789-' -%}
+{%- if token_identifier != empty and token_alphabet contains token_start -%}
+  {%- assign token_valid = true -%}
+  {%- assign token_chars = token_identifier | split: '' -%}
+  {%- for token_character in token_chars -%}
+    {%- unless token_alphabet_full contains token_character -%}
+      {%- assign token_valid = false -%}
+      {%- break -%}
+    {%- endunless -%}
+  {%- endfor -%}
+  {%- if token_valid -%}{{- token_identifier -}}{%- endif -%}
+{%- endif -%}

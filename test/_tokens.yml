@@ -1,0 +1,56 @@
+googlefonts:
+  - url: "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Raleway:wght@400..800&family=Rubik:wght@400..700&display=swap"
+  - url: "javascript:invalid"
+
+chulapa-skin:
+  skin: gitdev
+  autothemer: true
+  vars:
+    primary-base: "#285d70"
+    primary-bg: "#18455b"
+    success-base: "oklch(0.63 0.18 145)"
+    danger-base: "#8b2535"
+    link-color: "#154e85"
+    link-hover-color: "#123758"
+    font-family-base: "Rubik, sans-serif"
+    headings-font-family: "Raleway, sans-serif"
+    heading-font-weight: 650
+    font-mono: '"IBM Plex Mono", monospace'
+    body-font-size: "18px"
+    body-line-height: 1.75
+    bg-body: "#f5f9ff"
+    fg-body: "#20344a"
+    "--bs-border-width": "2px"
+    border-color: "#3b5670"
+    border-style: dashed
+    radius-5: "11px"
+    spacer: "20px"
+    btn-input-padding-x: "calc(var(--bs-spacer) * 1.5)"
+    box-shadow-inset: "inset 0 0 0 2px rgb(17 34 51 / 50%)"
+    shadow-color: "#173b56"
+    shadow-strength: 1.6
+    focus-ring-width: "4px"
+    ".btn-solid":
+      btn-border-radius: "13px"
+      btn-border-color: "#123456"
+    ".form-control":
+      control-border-color: "#345678"
+      control-disabled-bg: "#e3e9f1"
+    ".chulapa-navbar":
+      navbar-color: "#f0f4f8"
+    ".invalid, body":
+      bg-body: red
+    bg-2: 'white; color: red'
+    fg-3: "var(--missing"
+    radius-7: ['1px', '2px']
+chulapa-skin-dark:
+  autothemer: false
+  vars:
+    primary-base: "#809bb5"
+    primary-bg: "#234063"
+    body-font-family: '"IBM Plex Mono", monospace'
+    bg-body: "#202a36"
+    fg-body: "#edf4fa"
+    heading-font-family: "Raleway, sans-serif"
+    primary-focus-ring: "#a2d5ff"
+    "--bs-btn-input-padding-x": "12px"

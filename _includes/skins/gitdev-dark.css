@@ -1,0 +1,24 @@
+color-scheme: dark;
+--bs-bg-body: #24292f;
+--bs-fg-body: #ffffff;
+--bs-fg-3: #8b949e;
+--bs-primary-base: #373e47;
+--bs-primary-fg: #a8b3c1;
+--bs-link-color: #79b8ff;
+--bs-link-hover-color: #acd3ff;
+--bs-secondary-base: #a8b3c1;
+--bs-success-base: #6fdd8c;
+--bs-warning-base: #e3ba52;
+--bs-danger-base: #ee8f95;
+--bs-info-base: #b8a7e6;
+--bs-code-color: #ff8cc8;
+--gitdev-status-contrast: #24292f;
+--gitdev-navbar-bg: var(--bs-bg-body);
+--gitdev-navbar-hover: #8b949e;
+
+{% include skins/gitdev-common.css %}
+
+& .highlight pre {
+  background-color: color-mix(in srgb, var(--bs-bg-body) 5%, var(--bs-fg-body));
+  color: var(--bs-bg-body);
+}

@@ -1,3 +1,4 @@
 chulapa-skin:
-  autothemer: true
+  skin: auto
+  autothemer: false
   use-dual-mode: true
