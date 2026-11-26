@@ -1,0 +1,12 @@
+@font-face {
+  font-family: Chulapa;
+  src: url("../fonts/chulapa/Chulapa-Bold_vmod.otf") format("opentype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+.chulapa-brand {
+  font-family: Chulapa, sans-serif;
+  font-weight: 700;
+}
