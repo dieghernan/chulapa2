@@ -42,7 +42,8 @@ jobs:
           PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
       - name: Verify public asset URLs
         run: |
-          for asset in assets/bootstrap/bootstrap.min.css assets/css/brand.css assets/bootstrap/bootstrap.bundle.min.js; do
+          for asset in assets/bootstrap/bootstrap.min.css assets/css/brand.css \
+            assets/bootstrap/bootstrap.bundle.min.js assets/js/color-mode.js; do
             test -s "_site/$asset"
             grep -Fq "\"$PAGES_BASE_URL/$asset\"" _site/index.html
           done

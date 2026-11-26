@@ -1,0 +1,11 @@
+auto-themer-preview:
+  chulapa-skin:
+    autothemer: true
+    vars:
+      primary: "#285d70"
+      link-color: "#842029"
+      link-hover-color: "#641821"
+  chulapa-skin-dark:
+    autothemer: true
+    vars:
+      link-color: "#ffd9a8"

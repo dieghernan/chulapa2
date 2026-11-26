@@ -19,6 +19,7 @@ test("loads the local Bootstrap and Chulapa assets and renders Markdown", async 
   await expect(nav).toHaveCSS("display", "flex");
   const brand = nav.getByRole("link", { name: "chulapa2" });
   await expect(brand).toHaveCSS("font-family", "Chulapa, sans-serif");
+  await expect(brand).toHaveCSS("font-variant-ligatures", "common-ligatures discretionary-ligatures");
   expect(await page.evaluate(async () => {
     const fonts = await document.fonts.load('700 1rem "Chulapa"');
     return fonts.some((font) => font.status === "loaded");
@@ -63,6 +64,13 @@ test("opens and dismisses the mobile drawer with the keyboard", async ({ page })
   await expect(drawer.getByRole("button", { name: "Close menu" })).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(drawer.getByRole("link", { name: "Home" })).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(drawer.getByRole("link", { name: "About" })).toBeFocused();
+  await page.keyboard.press("Tab");
+  const select = drawer.getByRole("combobox", { name: "Color mode" });
+  await expect(select).toBeFocused();
+  await select.press("End");
+  await expect(page.locator("html")).toHaveAttribute("data-bs-theme", "dark");
   await page.keyboard.press("Escape");
   await expect(drawer).toBeHidden();
   await expect(toggle).toBeFocused();
