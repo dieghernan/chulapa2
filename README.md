@@ -82,8 +82,8 @@ is set, the link keeps that color on hover.
 ## Deploy to GitHub Pages
 
 Set the Pages publishing source to GitHub Actions. The
-[deployment workflow](.github/workflows/deploy-pages.yml) uses the Pages
-origin and base path for local asset URLs, runs Jekyll, and publishes
+[deployment workflow](.github/workflows/build-chulapa-gh-pages.yml) builds
+with Jekyll using the configured Pages base path and publishes
 `_site/` from `main`. It also pushes a copy of the same build to the
 `gh-pages` branch.
 

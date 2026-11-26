@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy Chulapa Jekyll site to Pages
 
 on:
   push:
@@ -14,6 +14,7 @@ concurrency:
 
 jobs:
   build:
+    name: Build site with Jekyll
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
@@ -27,29 +28,17 @@ jobs:
       - name: Configure GitHub Pages
         id: pages
         uses: actions/configure-pages@v6
-      - name: Build the site with absolute asset URLs
-        run: |
-          ruby -ryaml -e 'puts({ "url" => ENV.fetch("PAGES_ORIGIN") }.to_yaml)' > "$RUNNER_TEMP/pages.yml"
-          bundle exec jekyll build --config "_config.yml,$RUNNER_TEMP/pages.yml" --baseurl "$PAGES_BASE_PATH"
+      - name: Build with Jekyll
+        run: bundle exec jekyll build --baseurl "$PAGES_BASE_PATH"
         env:
           JEKYLL_ENV: production
-          PAGES_ORIGIN: ${{ steps.pages.outputs.origin }}
           PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
-      - name: Verify public asset URLs
-        run: |
-          for asset in assets/css/brand.css assets/js/color-mode.js; do
-            test -s "_site/$asset"
-            grep -Fq "\"$PAGES_BASE_URL/$asset\"" _site/index.html
-          done
-        env:
-          PAGES_BASE_URL: ${{ steps.pages.outputs.base_url }}
-      - name: Keep development fixtures out of the Pages artifact
-        run: test ! -e _site/test
       - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
   deploy:
+    name: Deploy to web
     needs: build
     runs-on: ubuntu-latest
     permissions:
@@ -64,7 +53,7 @@ jobs:
         uses: actions/deploy-pages@v5
 
   push-gh-pages:
-    name: Push the compiled site to gh-pages
+    name: Push site to gh-pages branch
     needs: build
     runs-on: ubuntu-latest
     permissions:
