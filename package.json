@@ -3,15 +3,11 @@
   "private": true,
   "scripts": {
     "build": "bundle exec jekyll build",
-    "postbuild": "node scripts/copy-bootstrap.mjs _site",
-    "preview": "npm run build && bundle exec jekyll serve --skip-initial-build --no-watch",
-    "build:test": "bundle exec jekyll build --config _config.yml,test/_config.yml --drafts --unpublished --baseurl /chulapa2 --destination _site_test && node scripts/copy-bootstrap.mjs _site_test",
-    "build:test:themed": "bundle exec jekyll build --config _config.yml,test/_themed.yml --baseurl /chulapa2/test/themed --destination _site_test/test/themed && node scripts/copy-bootstrap.mjs _site_test/test/themed",
+    "preview": "bundle exec jekyll serve",
+    "build:test": "bundle exec jekyll build --config _config.yml,test/_config.yml --drafts --unpublished --baseurl /chulapa2 --destination _site_test",
+    "build:test:themed": "bundle exec jekyll build --config _config.yml,test/_themed.yml --baseurl /chulapa2/test/themed --destination _site_test/test/themed",
     "preview:test": "npm run build:test && npm run build:test:themed && bundle exec jekyll serve --skip-initial-build --no-watch --host 127.0.0.1 --port 4173 --baseurl /chulapa2 --destination _site_test",
     "test": "playwright test"
-  },
-  "dependencies": {
-    "bootstrap": "6.0.0-alpha.2"
   },
   "devDependencies": {
     "@playwright/test": "1.65.1"

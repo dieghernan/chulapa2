@@ -4,20 +4,28 @@ An independent successor to chulapa, built with Jekyll 4 and Bootstrap 6.
 
 ## Develop locally
 
-Install Ruby 3.4 and Node.js 24, then run these commands from the repository root.
+Install Ruby 3.4 and run these commands from the repository root.
 
 ```sh
 bundle install
-npm ci
-npm run preview
+bundle exec jekyll serve
 ```
 
-Open <http://127.0.0.1:4000/>. Restart the preview after editing source files.
-Run `npm run build` to generate the site in `_site/`.
+Open <http://127.0.0.1:4000/>. Jekyll rebuilds as you edit source files.
+Run `bundle exec jekyll build` to generate the site in `_site/`.
+To include drafts in the local preview, run
+`bundle exec jekyll serve --drafts --destination _site_test`.
+
+The browser loads the pinned Bootstrap 6 CSS and JavaScript from jsDelivr.
+Viewing the Bootstrap styles and interactive components requires access to
+the CDN.
 
 ## Run the browser tests
 
+Install Node.js 24 for the Playwright tests.
+
 ```sh
+npm ci
 npx playwright install chromium
 npm test
 ```
@@ -64,7 +72,7 @@ is set, the link keeps that color on hover.
 
 Set the Pages publishing source to GitHub Actions. The
 [deployment workflow](.github/workflows/deploy-pages.yml) uses the Pages
-origin and base path for asset URLs, runs the npm build, and publishes
+origin and base path for local asset URLs, runs Jekyll, and publishes
 `_site/` from `main`. It also pushes a copy of the same build to the
 `gh-pages` branch.
 
