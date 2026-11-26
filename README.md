@@ -30,7 +30,8 @@ Markdown fixture and a `/chulapa2` base URL.
 Set the Pages publishing source to GitHub Actions. The
 [deployment workflow](.github/workflows/deploy-pages.yml) uses the Pages
 origin and base path for asset URLs, runs the npm build, and publishes
-`_site/` from `main`.
+`_site/` from `main`. It also pushes a copy of the same build to the
+`gh-pages` branch.
 
 ## Typeface
 
