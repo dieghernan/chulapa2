@@ -1,0 +1,8 @@
+---
+published: false
+---
+
+[data-autothemer="true"] .auto-themer-preview[data-generate-palette] {
+  --bs-primary-base: var(--auto-themer-primary);
+  {% include auto-themer/palette.css %}
+}
