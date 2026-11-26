@@ -1,6 +1,7 @@
 title: chulapa2
 lang: en
-baseurl: ""
+url: "https://dieghernan.github.io"
+baseurl: "/chulapa2"
 
 navbar:
   nav:

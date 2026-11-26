@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% if page.title and page.title != site.title %}{{ page.title | escape }} · {% endif %}{{ site.title | escape }}</title>
     {% if show_color_mode_selector %}
-    <script src="{{ '/assets/js/color-mode.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/color-mode.js' | absolute_url }}"></script>
     {% endif %}
     <link rel="stylesheet" href="{{ bootstrap_dist }}/css/bootstrap.min.css"
           integrity="sha384-MKn5NWVBEuQXJE7TSKSgPUmMiSCmVTfCsR+VSSeQpHnoyJQZZFn/kBn+Ht5jZDPQ" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ '/assets/css/brand.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/brand.css' | absolute_url }}">
     {% if site['chulapa-skin'] or site['chulapa-skin-dark'] %}
-    <link rel="stylesheet" href="{{ '/assets/css/auto-themer.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/auto-themer.css' | absolute_url }}">
     {% endif %}
   </head>
   <body>

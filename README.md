@@ -11,7 +11,7 @@ bundle install
 bundle exec jekyll serve
 ```
 
-Open <http://127.0.0.1:4000/>. Jekyll rebuilds as you edit source files.
+Open <http://localhost:4000/chulapa2/>. Jekyll rebuilds as you edit source files.
 Run `bundle exec jekyll build` to generate the site in `_site/`.
 To include drafts in the local preview, run
 `bundle exec jekyll serve --drafts --destination _site_test`.
@@ -81,7 +81,9 @@ is set, the link keeps that color on hover.
 
 ## Deploy to GitHub Pages
 
-Set the Pages publishing source to GitHub Actions. The
+Set the Pages publishing source to GitHub Actions. In `_config.yml`, set
+`url` to the public origin, such as `https://example.com`, and `baseurl` to
+the site's path, such as `/chulapa2` for this repository. The
 [deployment workflow](.github/workflows/build-chulapa-gh-pages.yml) builds
 with Jekyll using the configured Pages base path and publishes
 `_site/` from `main`. It also pushes a copy of the same build to the

@@ -39,7 +39,8 @@ Do not require compatibility with LibSass, Bootstrap 4, jQuery or the legacy Git
 Until Bootstrap 6 reaches a stable release, treat its APIs and implementation details as potentially subject to change.
 
 Use Jekyll's `absolute_url` filter for stylesheet and script references emitted
-by layouts. Set the production `url` and `baseurl` from GitHub Pages metadata.
+by layouts. Set `url` to the public origin and `baseurl` to the site's path
+in `_config.yml`. The deployment uses the base path reported by GitHub Pages.
 
 ## 4. Development philosophy
 
