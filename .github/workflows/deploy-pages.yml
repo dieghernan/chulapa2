@@ -32,11 +32,22 @@ jobs:
         id: pages
         uses: actions/configure-pages@v6
       - run: npm ci
-      - name: Build the site with its Pages base path
-        run: npm run build -- --baseurl "$PAGES_BASE_PATH"
+      - name: Build the site with absolute asset URLs
+        run: |
+          ruby -ryaml -e 'puts({ "url" => ENV.fetch("PAGES_ORIGIN") }.to_yaml)' > "$RUNNER_TEMP/pages.yml"
+          npm run build -- --config "_config.yml,$RUNNER_TEMP/pages.yml" --baseurl "$PAGES_BASE_PATH"
         env:
           JEKYLL_ENV: production
+          PAGES_ORIGIN: ${{ steps.pages.outputs.origin }}
           PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+      - name: Verify public asset URLs
+        run: |
+          for asset in assets/bootstrap/bootstrap.min.css assets/css/brand.css assets/bootstrap/bootstrap.bundle.min.js; do
+            test -s "_site/$asset"
+            grep -Fq "\"$PAGES_BASE_URL/$asset\"" _site/index.html
+          done
+        env:
+          PAGES_BASE_URL: ${{ steps.pages.outputs.base_url }}
       - name: Keep development fixtures out of the Pages artifact
         run: test ! -e _site/test
       - uses: actions/upload-pages-artifact@v5
