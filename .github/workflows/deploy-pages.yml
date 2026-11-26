@@ -67,3 +67,27 @@ jobs:
       - name: Publish the site
         id: deployment
         uses: actions/deploy-pages@v5
+
+  push-gh-pages:
+    name: Push the compiled site to gh-pages
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - name: Download the Pages artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: github-pages
+          path: pages-artifact
+      - name: Extract the site
+        run: |
+          mkdir -p published-site
+          tar -xf pages-artifact/artifact.tar -C published-site
+      - name: Push the site to gh-pages
+        uses: JamesIves/github-pages-deploy-action@fa24774553152dd7873cd16ebd8d959b010c5445 # v4.9.0
+        with:
+          branch: gh-pages
+          folder: published-site
+          force: false
