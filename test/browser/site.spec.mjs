@@ -1,13 +1,24 @@
 import { expect, test } from "@playwright/test";
 
-test("loads the local Bootstrap and Chulapa assets and renders Markdown", async ({ page }) => {
+test("loads Bootstrap from the CDN and renders Markdown with the Chulapa font", async ({ page }) => {
   const errors = [];
+  const loaded = new Set();
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("response", (response) => {
+    if (response.ok()) loaded.add(response.url());
     if (response.status() >= 400) errors.push(`${response.status()} ${response.url()}`);
   });
 
   await page.goto("test/markdown/");
+  const cdn = "https://cdn.jsdelivr.net/npm/bootstrap@";
+  const stylesheet = page.locator(`link[href^="${cdn}"][href$="/css/bootstrap.min.css"]`);
+  const script = page.locator(`script[src^="${cdn}"][src$="/js/bootstrap.bundle.min.js"]`);
+  for (const [element, attribute] of [[stylesheet, "href"], [script, "src"]]) {
+    await expect(element).toHaveAttribute("integrity", /^sha384-/);
+    await expect(element).toHaveAttribute("crossorigin", "anonymous");
+    expect(loaded.has(await element.getAttribute(attribute))).toBe(true);
+  }
+
   await expect(page).toHaveTitle("Markdown fixture · chulapa2");
   await expect(page.getByRole("heading", { level: 1, name: "Markdown fixture" })).toBeVisible();
   await expect(page.getByRole("heading", { level: 2, name: "Article content" })).toBeVisible();
