@@ -25,6 +25,12 @@ npm test
 The tests build a separate site in `_site_test/` with the unpublished
 Markdown fixture and a `/chulapa2` base URL.
 
+## Deploy to GitHub Pages
+
+Set the Pages publishing source to GitHub Actions. The
+[deployment workflow](.github/workflows/deploy-pages.yml) uses the Pages base
+path, runs the npm build, and publishes `_site/` from `main`.
+
 ## Typeface
 
 Chulapa is a typeface of the City Council of Madrid, designed and produced
