@@ -26,8 +26,9 @@ The original HTML compression layout remains a separate migration decision.
 The `base` page header keeps Chulapa's centered title and optional banner
 cropped to 20% of the viewport height. The banner is an image element with
 `object-fit: cover`. Set `header_img_alt` for a meaningful image and leave
-it empty for decoration. The title uses Bootstrap's fluid `fs-4xl` size.
-Project buttons wrap when space is limited.
+it empty for decoration. The title uses Bootstrap's fluid `fs-4xl` size
+and keeps Chulapa's 1.5rem space above it. Project buttons wrap when space
+is limited.
 
 The `post` page header shares the banner and title styles with `base`.
 It aligns titles, subtitles and project buttons to the start of the reading
@@ -42,10 +43,15 @@ height across the medium-to-large range. With no photo, the centered title
 and divider remain aligned with the editorial column.
 
 The `hero` header has a 40vh minimum height, centered text, a short divider
-and large, vertically arranged project links. Header sizes use Bootstrap 6
-fluid font utilities: base titles use `fs-4xl` and the hero uses `fs-5xl`,
-with `fs-lg` and `fs-2xl` subtitles. Chulapa's 3.5rem and 4.5rem titles
-become 3rem and 4rem at desktop widths, keeping their hierarchy. Titles use the
+and project links in a Bootstrap `.btn-group-vertical`, as in Chulapa.
+Bootstrap 6's `btn-lg` keeps the body font size, so the links are smaller
+than Chulapa's 1.25rem desktop buttons. Header sizes use Bootstrap 6 fluid
+font utilities: base titles use `fs-4xl` and the hero uses `fs-5xl`, with
+`fs-lg` and `fs-2xl` subtitles. Chulapa's 3.5rem and 4.5rem titles become
+3rem and 4rem at desktop widths, keeping their hierarchy. On a 390px screen,
+the hero title is about 51px instead of Chulapa's 40px and the subtitle 28px
+instead of 24px; base titles stay close at about 38px. A fixed
+`heading-line-height` in `vars` can make large titles overlap. Titles use the
 skin's heading weight instead of Chulapa's light weight, which came from
 Bootstrap 4 display headings. Subtitles use the body weight for the same
 reason. Focal keeps its Fira Sans title at 600, the treatment it applies to

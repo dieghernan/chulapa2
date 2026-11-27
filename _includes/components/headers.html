@@ -18,7 +18,7 @@
          alt="{{ page.header_img_alt | escape }}">
     {% endif %}
     {% endunless %}
-    <div class="container {% if header_type == 'hero' %}py-7{% else %}pt-3{% endif %}">
+    <div class="container {% if header_type == 'hero' %}py-7{% else %}pt-7{% endif %}">
       <div class="row justify-content-center">
         <div class="col-12{% unless header_type == 'hero' %} lg:col-8{% endunless %}">
           <h1 class="{% if header_type == 'hero' %}fs-5xl{% else %}fs-4xl{% endif %}">{{ page.title | markdownify | strip | remove_first: '<p>' | remove: '</p>' }}</h1>
@@ -26,13 +26,23 @@
           {% if header_type == 'hero' %}<hr class="mx-auto my-5">{% endif %}
           <p class="chulapa-subtitle {% if header_type == 'hero' %}fs-2xl{% else %}fs-lg{% endif %}">{{ page.subtitle | markdownify | strip | remove_first: '<p>' | remove: '</p>' }}</p>
           {% endif %}
-          {% if header_projects.size > 0 %}
-          <ul class="list-unstyled d-flex {% if header_type == 'hero' %}flex-column align-items-center{% else %}flex-wrap{% unless header_type == 'post' %} justify-content-center{% endunless %}{% endif %} gap-3 my-3">
+          {% if header_projects.size > 0 and header_type == 'hero' %}
+          <div class="btn-group-vertical mt-3" role="group">
+            {% for project in header_projects %}
+            {% if project.url and project.label %}
+            <a class="btn btn-outline btn-lg chulapa-btn-project" href="{{ project.url | absolute_url | escape_once }}">
+              {% if project.icon %}<i class="{{ project.icon | escape }} me-1" aria-hidden="true"></i>{% endif %}
+              {{ project.label | escape }}
+            </a>
+            {% endif %}
+            {% endfor %}
+          </div>
+          {% elsif header_projects.size > 0 %}
+          <ul class="list-unstyled d-flex flex-wrap{% unless header_type == 'post' %} justify-content-center{% endunless %} gap-3 my-3">
             {% for project in header_projects %}
             {% if project.url and project.label %}
             <li>
-              <a class="btn {% if header_type == 'hero' %}btn-outline btn-lg chulapa-btn-project{% else %}btn-solid theme-primary btn-sm{% endif %}"
-                 href="{{ project.url | absolute_url | escape_once }}">
+              <a class="btn btn-solid theme-primary btn-sm" href="{{ project.url | absolute_url | escape_once }}">
                 {% if project.icon %}<i class="{{ project.icon | escape }} me-1" aria-hidden="true"></i>{% endif %}
                 {{ project.label | escape }}
               </a>

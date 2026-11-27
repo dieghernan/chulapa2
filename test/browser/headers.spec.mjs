@@ -44,6 +44,9 @@ for (const width of [390, 1280]) {
     await expectEditorialColumn(page, width === 390 ? 1 : 8 / 12);
     expect((await readContrast(heading)).text).toBeGreaterThanOrEqual(4.5);
     await expect(heading).toHaveCSS("font-size", width === 390 ? "37.75px" : "48px");
+    // Chulapa leaves 1.5rem between the banner and the title.
+    const gap = (await heading.boundingBox()).y - ((await banner.boundingBox()).y + (await banner.boundingBox()).height);
+    expect(gap).toBeCloseTo(24, 0);
     const project = header.getByRole("link", { name: "View the text-only header" });
     await expect(project).not.toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
     expect((await readContrast(project)).text).toBeGreaterThanOrEqual(4.5);
@@ -142,7 +145,10 @@ for (const width of [390, 1280]) {
     expect(await hero.evaluate((node) => getComputedStyle(node, "::after").backgroundColor))
       .toBe("rgba(0, 0, 0, 0.6)");
     await expect(projects.first()).toHaveCSS("border-top-color", "rgb(255, 255, 255)");
-    await expect(hero.getByRole("list")).toHaveCSS("flex-direction", "column");
+    // Chulapa's project links form one vertical group of equal-width buttons.
+    await expect(hero.getByRole("group")).toHaveClass(/\bbtn-group-vertical\b/);
+    const widths = await projects.evaluateAll((links) => links.map((link) => link.getBoundingClientRect().width));
+    expect(new Set(widths).size).toBe(1);
     await expect(projects.first()).toHaveClass(/\bbtn-lg\b/);
     await expect(heading).toHaveCSS("font-weight", "800");
     await expect(heading).toHaveCSS("font-size", width === 390 ? "51.5px" : "64px");
