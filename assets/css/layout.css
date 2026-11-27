@@ -1,0 +1,70 @@
+:root {
+  scroll-padding-block-start: var(--chulapa-navbar-height, 4rem);
+}
+
+:where(.chulapa-navbar .menu) {
+  --bs-menu-bg: var(--bs-bg-1);
+  --bs-menu-color: var(--bs-navbar-color);
+  --bs-menu-item-hover-color: var(--bs-navbar-hover-color);
+  --bs-menu-item-hover-bg: var(--chulapa-skin-nav-hover-bg, var(--bs-menu-bg));
+  --bs-menu-item-focus-color: var(--bs-menu-item-hover-color);
+  --bs-menu-item-focus-bg: var(--bs-menu-item-hover-bg);
+  --bs-menu-item-active-color: var(--bs-navbar-active-color);
+  --bs-menu-item-active-bg: var(--bs-menu-bg);
+  --bs-menu-item-disabled-color: var(--bs-navbar-disabled-color);
+}
+
+:where(.chulapa-navbar .menu-item.active) {
+  --bs-menu-item-font-weight: var(--bs-font-weight-semibold);
+}
+
+:where(.chulapa-navbar .menu-item:hover:not(.disabled, :disabled)) {
+  text-decoration: underline;
+}
+
+:where(.chulapa-navbar .menu-item:focus-visible:not(.disabled, :disabled)) {
+  outline: var(--bs-focus-ring-width) solid currentColor;
+  outline-offset: calc(-1 * var(--bs-focus-ring-width));
+}
+
+@supports (color: contrast-color(white)) {
+  @media (forced-colors: none) {
+    :where(.chulapa-navbar .menu-item:focus-visible:not(.disabled, :disabled)) {
+      outline-color: contrast-color(var(--bs-menu-item-focus-bg));
+    }
+  }
+}
+
+.chulapa-footer {
+  --_footer-bg: var(--chulapa-footer-bg, var(--chulapa-skin-nav-bg, var(--bs-bg-1)));
+  --_footer-contrast: var(--chulapa-skin-nav-fg, var(--bs-fg-body));
+  --_footer-blend: var(--chulapa-footer-blend, 1);
+  --_footer-link: var(--chulapa-footer-link-color, color-mix(in srgb, var(--_footer-bg) calc(10% * var(--_footer-blend)), var(--_footer-contrast)));
+  background-color: var(--_footer-bg);
+  color: var(--chulapa-footer-color, color-mix(in srgb, var(--_footer-bg) calc(25% * var(--_footer-blend)), var(--_footer-contrast)));
+}
+
+@supports (color: contrast-color(white)) {
+  .chulapa-footer {
+    --_footer-contrast: contrast-color(var(--_footer-bg));
+  }
+}
+
+.chulapa-footer a {
+  color: var(--_footer-link);
+  font-weight: var(--bs-font-weight-bold);
+}
+
+.chulapa-footer a:hover,
+.chulapa-footer a:focus-visible {
+  color: var(--chulapa-footer-link-hover-color, color-mix(in srgb, var(--_footer-bg) calc(20% * var(--_footer-blend)), var(--_footer-link)));
+}
+
+.chulapa-footer a:focus-visible {
+  outline: var(--bs-focus-ring-width) solid var(--_footer-contrast);
+  outline-offset: 0.15em;
+}
+
+.chulapa-footer-brand {
+  font-size: calc(var(--bs-body-font-size) * 0.8);
+}
