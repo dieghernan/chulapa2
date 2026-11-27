@@ -20,6 +20,11 @@ The browser loads the pinned Bootstrap 6 CSS and JavaScript from jsDelivr.
 Viewing the Bootstrap styles and interactive components requires access to
 the CDN.
 
+## Migrate from chulapa
+
+See the [migration draft](development/migrating-from-chulapa.md) for the
+settings that keep working and the HTML and CSS changes a chulapa site needs.
+
 ## Run the browser tests
 
 See the [test guide](test/README.md) for the test suite, drafts, and themed

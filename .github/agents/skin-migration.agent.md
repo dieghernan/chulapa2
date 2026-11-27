@@ -14,8 +14,12 @@ configuration. Update it with a fast-forward pull before reading it.
    and any upstream wrapper. Include fonts, spacing, borders, and states.
 3. Inspect the pinned Bootstrap 6 CSS for each component. Keep existing
    Chulapa layout, include, and snippet names where their contracts match.
-4. Apply verified values through project-owned CSS and existing theme tokens.
+4. Prefer Bootstrap 6 classes, utilities and tokens. Add a project class only
+   when Bootstrap cannot meet the requirement, and name it `.chulapa-<name>`.
+   Keep the `.chulapa` brand class and Chulapa's documented Markdown callout
+   classes. Follow [Project CSS classes](../../development/skin-migration.md#project-css-classes).
+5. Apply verified values through project-owned CSS and existing theme tokens.
    Check user overrides, named and generated modes, and mobile and desktop
    renderings using the [test guide](../../test/README.md).
-5. Record measured contrast exceptions, intentional differences, and open
+6. Record measured contrast exceptions, intentional differences, and open
    work in the migration guide. Keep the skin migration issue current.

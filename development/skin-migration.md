@@ -26,8 +26,8 @@ The original HTML compression layout remains a separate migration decision.
 The `base` page header keeps Chulapa's centered title and optional banner
 cropped to 20% of the viewport height. The banner is an image element with
 `object-fit: cover`. Set `header_img_alt` for a meaningful image and leave
-it empty for decoration. The large title scales between the original mobile
-and desktop sizes. Project buttons wrap when space is limited.
+it empty for decoration. The title uses Bootstrap's fluid `fs-4xl` size.
+Project buttons wrap when space is limited.
 
 The `post` page header shares the banner and title styles with `base`.
 It aligns titles, subtitles and project buttons to the start of the reading
@@ -40,6 +40,59 @@ intrinsic aspect ratio. Bootstrap 6's `lg` breakpoint switches the maximum
 image height from 30% to 25% of the viewport. Chulapa interpolated the
 height across the medium-to-large range. With no photo, the centered title
 and divider remain aligned with the editorial column.
+
+The `hero` header has a 40vh minimum height, centered text, a short divider
+and large, vertically arranged project links. Header sizes use Bootstrap 6
+fluid font utilities: base titles use `fs-4xl` and the hero uses `fs-5xl`,
+with `fs-lg` and `fs-2xl` subtitles. Chulapa's 3.5rem and 4.5rem titles
+become 3rem and 4rem at desktop widths, keeping their hierarchy. Titles use the
+skin's heading weight instead of Chulapa's light weight, which came from
+Bootstrap 4 display headings. Subtitles use the body weight for the same
+reason. Focal keeps its Fira Sans title at 600, the treatment it applies to
+display text. Base and post project links use `btn-solid theme-primary`.
+See [Project CSS classes](#project-css-classes) for the renamed header
+classes.
+
+The photo keeps the cover crop and Chulapa's subtle shadow behind the text
+and divider. The shadow is black in every skin; Chulapa tinted it with each
+skin's `$black`, which is visually equivalent. The stronger overlay keeps
+white text readable over bright images. Hovering a project button over a
+photo inverts white and the overlay color, matching the hero without a
+photo, instead of using each skin's dark and light grays. The image element
+exposes `header_img_alt` when set.
+
+Without a photo, the hero defaults to the navbar surface and computes its
+own contrasting foreground. Academia derives its original darker blue from
+the primary color and Twitter uses its primary blue. Chulapa, Listen,
+Media and Twitter Lights Out keep their original foregrounds. Twitter,
+Hootstrap, Mickie and Wandoo pin black text on their original surfaces.
+Chulapa used white, which measured about 3.0:1 to 4.4:1 on those colors.
+Skeeblu retains its explicit TopHat foreground at 2.38:1 against the
+original blue, a known exception for its text and control boundaries.
+Generated alternate skins derive their hero from their own navbar surface.
+
+In `chulapa-skin.vars`, `hero-chulapa-bg-color` and `hero-chulapa-text-color`
+map to `--chulapa-hero-bg` and `--chulapa-hero-color`. An explicit custom
+property takes precedence over its alias. The same foreground styles the
+title, subtitle, divider, and outline buttons. Hovering a project button
+inverts the two colors.
+
+## Project CSS classes
+
+Style components with Bootstrap 6 classes, utilities and tokens first. Add a
+project class only for a requirement Bootstrap cannot meet, such as a skin
+color or a viewport-relative height, or as a public hook. Name it
+`.chulapa-<name>`. The `.chulapa` brand class is the exception.
+
+Chulapa's Kramdown callout classes, such as `.callout-note`, keep their
+names. The public Chulapa documentation told authors to write them in
+Markdown, so renaming them would break existing content. Classes generated
+by third-party tools, such as Rouge's `.highlight`, also keep their names.
+
+Chulapa classes that placed the prefix last are renamed. Record each rename
+in the [site migration guide](migrating-from-chulapa.md#update-custom-css).
+YAML options such as `hero-chulapa-bg-color` and `navbar-chulapa-bg-color`
+are configuration, not classes, and keep their names.
 
 ## Contrast rules for maintainer-authored skins
 
