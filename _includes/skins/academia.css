@@ -1,0 +1,31 @@
+color-scheme: light;
+--bs-bg-body: #ffffff;
+--bs-body-font-family: "Roboto", sans-serif;
+--bs-heading-font-family: "Montserrat", sans-serif;
+--bs-font-mono: "Roboto Mono", monospace;
+--bs-primary-base: #1565c0;
+--bs-secondary-base: #2962ff;
+--bs-success-base: #28a745;
+--bs-warning-base: #ffc107;
+--bs-info-base: #20a6bb;
+--bs-link-color: var(--bs-primary-fg);
+--bs-link-hover-color: color-mix(in srgb, var(--bs-link-color) 85%, var(--bs-fg-body));
+
+{% include skins/roles.css names='primary,secondary,success,warning,info' labels='white,white,black,black,black' %}
+--bs-success-bg: #208738;
+--bs-info-bg: #198192;
+--bs-danger-contrast: black;
+
+--chulapa-skin-nav-bg: #ffffff;
+--chulapa-skin-nav-fg: #757575;
+--chulapa-skin-nav-hover: #404040;
+--chulapa-skin-nav-active: #2962ff;
+--chulapa-skin-nav-brand: #000000;
+--chulapa-skin-nav-brand-hover: #2962ff;
+--chulapa-skin-nav-disabled: #cccccc;
+{% include skins/navbar.css %}
+
+& h1 { font-size: 2.25rem; }
+& h2 { font-size: 1.5rem; }
+& h3 { font-size: 1.25rem; }
+& :where(h4, h5, h6) { font-size: 1rem; }

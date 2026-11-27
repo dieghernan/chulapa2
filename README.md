@@ -118,8 +118,8 @@ to see both modes with configured fonts, colors and component tokens.
 
 ## Choose a bundled skin
 
-The initial collection includes GitDev and GitDev Dark. Use the same
-skin names as in chulapa.
+Use the original Chulapa names for the 16 maintainer-authored and 12 TopHat
+skins. See the [skin catalog and contrast checks](docs/theming.md#bundled-skins).
 
 ```yaml
 chulapa-skin:
@@ -131,9 +131,14 @@ chulapa-skin-dark:
 An explicit `chulapa-skin-dark` takes priority over the dark variant. Use
 `chulapa-skin.use-dual-mode: true` and `color-mode-selector: true` to offer
 GitDev Dark as the dark variant of GitDev without a separate dark block.
-GitDev and GitDev Dark use their original palette, Inter for text,
-Inter Tight for headings and navigation, and Roboto Mono for code.
+For light skins without a bundled dark variant, such as Focal and Media,
+`use-dual-mode: true` generates dark surfaces and keeps the skin's palette
+and typography. Dark skins use their bundled light counterpart. Listen
+gets a generated light variant.
 Explicit primary and link colors in `vars` take precedence over skin defaults.
+Run `npm run preview:test` and open the
+[skin gallery](http://127.0.0.1:4173/chulapa2/test/skins/focal/) to switch
+skins and color modes on the shared kitchen sink.
 
 ## Choose code highlighting
 

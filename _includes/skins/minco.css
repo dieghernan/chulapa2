@@ -1,0 +1,25 @@
+color-scheme: light;
+--bs-body-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+--bs-heading-font-family: 'Crete Round';
+--tophat-light: #F2F2F0;
+--tophat-dark: #072247;
+--bs-primary-base: #083358;
+--bs-secondary-base: #F67280;
+--bs-success-base: #0074E4;
+--bs-danger-base: #ff475d;
+--bs-info-base: #74DBEF;
+--bs-warning-base: #fc4c4c;
+
+{% include skins/tophat.css labels='white,black,black,black,black,black,white' navbar_hover=true %}
+
+{% unless include.variant_scheme %}
+{% include skins/tophat-buttons.css labels='warning:#ffffff,danger:#ffffff' outlines='secondary:#b85660,info:#407883,warning:#ca3d3d,danger:#cc394a' vars=include.vars %}
+{% endunless %}
+
+& :where(.card.bg-primary) {
+  --bs-card-color: #ffffff;
+}
+
+& :where(a:not([class])) {
+  text-decoration-thickness: 2px;
+}

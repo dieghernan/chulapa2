@@ -9,5 +9,6 @@ export default defineConfig({
   webServer: {
     command: "npm run preview:test",
     url: baseURL,
+    timeout: 180_000,
   },
 });

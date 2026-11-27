@@ -67,12 +67,27 @@ Custom CSS, Sass and JavaScript must address a concrete requirement that cannot 
   approval for the skin in scope. Preserve the original palette and carry
   over authored typography, margins, spacing, and component styling. Use
   Bootstrap defaults for properties the original skin leaves unspecified.
-- Defer third-party skins to a later phase. Incorporate them as supplied by
-  their authors, including their Bootstrap customizations. Leave their source
-  and appearance intact when changing shared styles or tokens.
+- Migrate third-party skins only with maintainer approval. The TopHat
+  migration may translate reliably mapped Bootstrap 4 variable names and
+  component hooks to Bootstrap 6 while retaining their original values.
+  Leave complex or uncertain skins pending and keep vendor sources read-only.
 - Changes scoped to chulapa2's own components require no skin approval. Keep
   those styles within the component so they leave skins and Bootstrap 6's global
   defaults intact.
+
+### Skin accessibility regressions
+
+- Verify ownership against `skin_author` in Chulapa's
+  `docs/collections/_skins/` catalog. Keep the original primary colors pinned
+  in `test/browser/skin-identity.json`.
+- Run the browser skin tests at mobile and desktop widths. Check rendered
+  text contrast at 4.5:1 and meaningful control boundaries and focus rings at
+  3:1. Include normal, hover, keyboard focus and active states.
+- Improve contrast through semantic foregrounds or component states while
+  retaining the original palette. Document any remaining exceptions with the
+  component, state and measured ratio. An exception is a known limitation.
+- Check named and generated light and dark variants against their own
+  computed surfaces. Custom configuration still needs review in both modes.
 
 ### Clean-slate implementation
 

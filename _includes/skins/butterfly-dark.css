@@ -1,0 +1,43 @@
+color-scheme: dark;
+--bs-bg-body: #000000;
+--bs-fg-body: #ffffff;
+--bs-body-font-family: "Inter", "Roboto";
+--bs-heading-font-family: "Inter", "Roboto";
+--bs-link-hover-color: rgb(66.7875, 157.35, 254.2125);
+--bs-primary-base: #1083fe;
+--bs-secondary-base: #c5cfd9;
+--bs-success-base: #008900;
+--bs-warning-base: #ffba00;
+--bs-danger-base: #fa4c51;
+--bs-info-base: #54c7ec;
+--bs-link-color: var(--bs-primary-fg);
+
+{% include skins/roles.css names='primary,secondary,success,warning,danger,info' labels='black,black,white,black,black,black' %}
+--bs-primary-bg: #0e74e2;
+--bs-danger-bg: #d34044;
+
+--chulapa-skin-nav-bg: #000000;
+--chulapa-skin-nav-fg: #ffffff;
+--chulapa-skin-nav-hover: #1083fe;
+--chulapa-skin-nav-active: #1083fe;
+--chulapa-skin-nav-disabled: #333333;
+{% include skins/navbar.css %}
+
+& :where(blockquote) {
+  background-color: rgb(3.2, 26.2, 50.8);
+  color: rgb(243.05, 248.8, 254.95);
+}
+
+& :where(.table thead) {
+  --bs-table-bg: #1083fe;
+  --bs-table-color: black;
+}
+
+& :where(.pagination) {
+  --bs-pagination-hover-bg: #1083fe;
+  --bs-pagination-hover-color: black;
+}
+
+& :where(:not(.chulapa-brand)) {
+  font-variant-ligatures: none;
+}

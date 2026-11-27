@@ -1,0 +1,19 @@
+color-scheme: light;
+--bs-body-font-family: Nunito;
+--bs-heading-font-family: Comfortaa;
+--tophat-light: #ececec;
+--tophat-dark: #222222;
+--bs-gray-300: #e0e0e0;
+--bs-primary-base: #FF304F;
+--bs-secondary-base: #CACACA;
+--bs-success-base: #015668;
+--bs-danger-base: #06648C;
+--bs-info-base: #0e7bbe;
+--bs-warning-base: #0DE2EA;
+
+{% include skins/tophat.css labels='black,black,white,white,black,black,white' %}
+--bs-link-color: #cc2640;
+
+{% unless include.variant_scheme %}
+{% include skins/tophat-buttons.css labels='primary:#ffffff' outlines='primary:#d92943,secondary:#6f6f6f,warning:#077c81' vars=include.vars %}
+{% endunless %}

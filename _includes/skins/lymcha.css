@@ -1,0 +1,20 @@
+color-scheme: light;
+--bs-heading-font-family: Muli;
+--tophat-light: #FAFAFA;
+--tophat-dark: #4e4e4e;
+--bs-primary-base: #07689F;
+--bs-secondary-base: #C9D6DF;
+--bs-success-base: #11D3BC;
+--bs-danger-base: #F67280;
+--bs-info-base: #A2D5F2;
+--bs-warning-base: #FF7E67;
+
+{% include skins/tophat.css labels='white,black,black,black,black,black,white' %}
+
+{% unless include.variant_scheme %}
+{% include skins/tophat-buttons.css labels='' outlines='secondary:#6f767b,success:#0a7f71,info:#597585,warning:#b25848,danger:#b85660' vars=include.vars %}
+{% endunless %}
+
+& :where(.card.bg-primary) {
+  --bs-card-color: #fff;
+}

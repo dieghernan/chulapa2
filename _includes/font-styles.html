@@ -4,10 +4,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     {% endif %}
     {% if main_skin_fonts %}
-      {% include {{ main_skin_fonts }} %}
+    <link rel="stylesheet" href="{{ main_skin_fonts | escape }}">
     {% endif %}
     {% if dark_skin_fonts and dark_skin_fonts != main_skin_fonts %}
-      {% include {{ dark_skin_fonts }} %}
+    <link rel="stylesheet" href="{{ dark_skin_fonts | escape }}">
     {% endif %}
     {% for font in site.googlefonts %}
       {% assign font_url = font.url | strip %}

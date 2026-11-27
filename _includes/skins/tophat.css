@@ -1,0 +1,17 @@
+/*!
+{% include skins/tophat-license.txt %}
+*/
+--bs-inverse-base: light-dark(var(--tophat-dark), var(--tophat-light));
+--bs-link-color: var(--bs-primary-fg);
+--bs-link-hover-color: var(--bs-primary-fg-emphasis);
+--chulapa-skin-nav-bg: var(--bs-primary-base);
+--chulapa-skin-nav-fg: var(--bs-primary-contrast);
+--chulapa-skin-nav-brand: var(--bs-primary-contrast);
+--chulapa-skin-nav-active: var(--bs-primary-contrast);
+--chulapa-skin-nav-disabled: color-mix(in srgb, var(--chulapa-skin-nav-active) 20%, var(--chulapa-skin-nav-bg));
+{% if include.navbar_hover %}
+--chulapa-skin-nav-hover: color-mix(in srgb, var(--bs-primary-contrast) 75%, var(--chulapa-skin-nav-bg));
+{% endif %}
+
+{% include skins/roles.css names='primary,secondary,success,danger,info,warning,inverse' labels=include.labels %}
+{% include skins/navbar.css %}

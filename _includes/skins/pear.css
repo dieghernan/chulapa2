@@ -1,0 +1,36 @@
+color-scheme: light;
+font-variant-ligatures: none;
+--bs-bg-body: rgb(243.55, 251.65, 250.05);
+--bs-fg-body: #444;
+--bs-body-font-family: "Source Sans Pro", "Source Sans 3", sans-serif;
+--bs-heading-font-family: "Raleway", sans-serif;
+--bs-body-font-size: 1.125rem;
+--bs-border-width: 3px;
+--bs-link-color: #117a65;
+--bs-primary-base: #1abc9c;
+--bs-secondary-base: #656e75;
+--bs-success-base: #28a745;
+--bs-warning-base: #ffc107;
+--bs-danger-base: #dc3545;
+--bs-info-base: #20a6bb;
+--bs-link-hover-color: color-mix(in srgb, var(--bs-link-color) 85%, var(--bs-fg-body));
+
+{% include skins/roles.css names='primary,secondary,success,warning,danger,info' labels='black,white,black,black,black,black' %}
+--bs-primary-bg: #12856f;
+--bs-success-bg: #208738;
+--bs-info-bg: #198192;
+
+--chulapa-skin-nav-bg: var(--bs-primary-base);
+--chulapa-skin-nav-fg: #094337;
+--chulapa-skin-nav-hover: #062f27;
+--chulapa-skin-nav-active: #000000;
+--chulapa-skin-nav-brand: #000000;
+--chulapa-skin-nav-disabled: #15967d;
+{% include skins/navbar.css %}
+
+& :where(.btn, .btn-solid, .btn-outline, .btn-subtle, .btn-text) {
+  --bs-btn-border-radius: 1.35rem;
+}
+
+& :where(.btn-sm) { --bs-btn-border-radius: 1rem; }
+& :where(.btn-lg) { --bs-btn-border-radius: 10rem; }

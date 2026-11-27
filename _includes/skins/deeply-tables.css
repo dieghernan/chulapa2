@@ -1,0 +1,46 @@
+& :where(.table) {
+  --bs-table-color: #fff;
+  --bs-table-border-color: rgba(255, 255, 255, 0.3);
+}
+
+& :where(.table-striped > tbody > tr:nth-of-type(odd) > *) {
+  --bs-table-bg-type: var(--deeply-table-stripe, rgba(255, 255, 255, 0.05));
+}
+
+& :where(.table-hover > tbody > tr:hover > *) {
+  --bs-table-bg-state: var(--deeply-table-hover, rgba(255, 255, 255, 0.075));
+}
+
+{% assign table_roles = 'primary|rgb(240.5, 72.9385245902, 0);secondary|rgb(124.5, 124.5, 124.5);success|rgb(0.7571428571, 65.1142857143, 78.7428571429);info|rgb(12.25, 107.625, 166.25);danger|rgb(255, 44.5, 75.2216216216);warning|rgb(11.6578947368, 202.6680161943, 209.8421052632)' | split: ';' %}
+{% for entry in table_roles %}
+  {% assign pair = entry | split: '|' %}
+& :where(.table:is(.theme-{{ pair[0] }}, .table-{{ pair[0] }}), .table :is(.theme-{{ pair[0] }}, .table-{{ pair[0] }})) {
+  --bs-theme-bg-subtle: var(--bs-{{ pair[0] }}-base);
+  --bs-theme-fg: #fff;
+  --deeply-table-stripe: transparent;
+  --deeply-table-hover: {{ pair[1] }};
+}
+{% endfor %}
+
+& :where(.table.table-light, .table .table-light) {
+  --bs-theme-bg-subtle: var(--tophat-light);
+  --bs-theme-fg: var(--tophat-dark);
+  --deeply-table-stripe: transparent;
+  --deeply-table-hover: rgb(219.25, 219.25, 219.25);
+}
+
+& :where(.table.table-dark, .table .table-dark) {
+  --bs-theme-bg-subtle: var(--tophat-dark);
+  --bs-theme-fg: #fff;
+  --deeply-table-stripe: transparent;
+  --deeply-table-hover: black;
+}
+
+& :where(.table .table-active) {
+  --bs-table-bg-state: rgba(0, 0, 0, 0.075);
+  --deeply-table-hover: rgba(0, 0, 0, 0.075);
+}
+
+& :where(.table-hover .table-active:hover > *) {
+  --bs-table-color-state: rgb(70%, 70%, 70%);
+}

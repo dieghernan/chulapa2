@@ -1,0 +1,18 @@
+color-scheme: {{ include.scheme }};
+{% include auto-themer/surfaces.css %}
+--bs-fg-3: color-mix(in srgb, var(--bs-fg-body) 72%, var(--bs-bg-body));
+--bs-link-color: var(--bs-primary-fg);
+--bs-link-hover-color: var(--bs-primary-fg-emphasis);
+--chulapa-skin-nav-bg: var(--bs-bg-body);
+--chulapa-skin-nav-fg: var(--bs-fg-body);
+--chulapa-skin-nav-brand: initial;
+--chulapa-skin-nav-brand-hover: initial;
+--chulapa-skin-nav-disabled: initial;
+--chulapa-skin-nav-hover: var(--bs-link-hover-color);
+--chulapa-skin-nav-active: var(--bs-link-color);
+--chulapa-skin-nav-hover-bg: var(--bs-bg-2);
+
+& :where(.table thead) {
+  --bs-table-bg: var(--bs-bg-2);
+  --bs-table-color: var(--bs-fg-body);
+}

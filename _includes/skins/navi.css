@@ -1,0 +1,29 @@
+color-scheme: light;
+--bs-fg-body: #23263b;
+--bs-body-font-family: "Sora", "Roboto";
+--bs-heading-font-family: "Sora", "Roboto";
+--bs-link-color: #285bdb;
+--bs-primary-base: #457aff;
+--bs-secondary-base: #000033;
+--bs-success-base: #00a648;
+--bs-warning-base: #f7df1e;
+--bs-danger-base: #b52e31;
+--bs-info-base: #6d3fa1;
+--bs-link-hover-color: color-mix(in srgb, var(--bs-link-color) 85%, var(--bs-fg-body));
+
+{% include skins/roles.css names='primary,secondary,success,warning,danger,info' labels='black,white,black,black,white,white' %}
+--bs-primary-bg: #3e6ee7;
+--bs-success-bg: #00883b;
+
+--chulapa-skin-nav-bg: var(--bs-secondary-base);
+--chulapa-skin-nav-fg: #808099;
+--chulapa-skin-nav-hover: #bfbfcc;
+--chulapa-skin-nav-active: #ffffff;
+--chulapa-skin-nav-brand: #ffffff;
+--chulapa-skin-nav-disabled: #33335c;
+{% include skins/navbar.css %}
+
+& :where(.table thead) {
+  --bs-table-bg: #000033;
+  --bs-table-color: white;
+}

@@ -1,0 +1,29 @@
+{% assign labels = include.labels | split: ',' %}
+{% for entry in labels %}
+  {% assign pair = entry | split: ':' %}
+  {% assign role = pair[0] %}
+  {% assign native_base = role | append: '-base' %}
+  {% assign prefixed_base = native_base | prepend: '--bs-' %}
+  {% unless include.vars[role] or include.vars[native_base] or include.vars[prefixed_base] %}
+& :where(.theme-{{ role }} .btn-solid, .theme-{{ role }}.btn-solid) {
+  --bs-btn-color: {{ pair[1] }};
+  --bs-btn-hover-color: {{ pair[1] }};
+  --bs-btn-active-color: {{ pair[1] }};
+  --bs-btn-disabled-color: {{ pair[1] }};
+}
+  {% endunless %}
+{% endfor %}
+
+{% assign outlines = include.outlines | split: ',' %}
+{% for entry in outlines %}
+  {% assign pair = entry | split: ':' %}
+  {% assign role = pair[0] %}
+  {% assign native_base = role | append: '-base' %}
+  {% assign prefixed_base = native_base | prepend: '--bs-' %}
+  {% unless include.vars[role] or include.vars[native_base] or include.vars[prefixed_base] %}
+& :where(.theme-{{ role }} .btn-outline, .theme-{{ role }}.btn-outline) {
+  --bs-btn-color: {{ pair[1] }};
+  --bs-btn-border-color: {{ pair[1] }};
+}
+  {% endunless %}
+{% endfor %}

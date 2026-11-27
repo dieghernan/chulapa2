@@ -1,0 +1,28 @@
+--bs-control-checked-bg: var(--bs-primary-bg);
+--bs-control-active-bg: var(--bs-primary-bg);
+
+& :where(.switch) {
+  --bs-switch-checked-indicator-bg: var(--bs-primary-contrast);
+}
+
+& :where(.btn-outline) {
+  --bs-btn-border-color: var(--bs-theme-fg, var(--bs-fg-body));
+}
+
+& :where(:is(.btn-solid, .btn-outline):focus-visible) {
+  outline-color: var(--bs-theme-fg, var(--bs-fg-body));
+}
+
+& :where(.chulapa-navbar .nav-link:focus-visible) {
+  outline-color: currentColor;
+}
+
+@supports (color: contrast-color(white)) {
+  & :where(:is(.btn-solid, .btn-outline):hover) {
+    --bs-btn-hover-color: contrast-color(var(--bs-btn-hover-bg, var(--bs-bg-3)));
+  }
+
+  & :where(:is(.btn-solid, .btn-outline):is(:active, .active, .btn-check:has(input:checked))) {
+    --bs-btn-active-color: contrast-color(var(--bs-btn-active-bg, var(--bs-bg-3)));
+  }
+}

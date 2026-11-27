@@ -2,6 +2,14 @@
 --bs-heading-font-family: "Inter Tight", Roboto, sans-serif;
 --bs-heading-font-weight: 800;
 --bs-font-mono: "Roboto Mono", monospace;
+--bs-primary-bg: var(--bs-primary-base);
+--bs-primary-contrast: white;
+--bs-primary-fg-emphasis: var(--bs-fg-body);
+--bs-primary-focus-ring: var(--bs-link-color);
+
+@supports (color: contrast-color(white)) {
+  --bs-primary-contrast: contrast-color(var(--bs-primary-bg));
+}
 
 {% assign gitdev_roles = 'secondary,success,warning,danger,info' | split: ',' %}
 {% for role in gitdev_roles %}
@@ -37,9 +45,10 @@
   --bs-navbar-color: #ffffff;
   --bs-navbar-hover-color: var(--gitdev-navbar-hover);
   --bs-navbar-active-color: color-mix(in srgb, #ffffff 80%, var(--gitdev-navbar-bg));
+  --bs-navbar-disabled-color: color-mix(in srgb, #ffffff 20%, var(--gitdev-navbar-bg));
   --bs-navbar-brand-color: #ffffff;
   --bs-navbar-brand-hover-color: #ffffff;
-  font-family: "Inter Tight", "GitDev navigation fallback", Roboto, sans-serif;
+  font-family: "Inter Tight", Roboto, sans-serif;
   font-weight: var(--bs-heading-font-weight);
 }
 

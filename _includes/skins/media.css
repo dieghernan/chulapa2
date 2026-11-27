@@ -1,0 +1,46 @@
+color-scheme: light;
+--bs-fg-3: #757575;
+--bs-body-font-family: "Source Serif 4", Georgia, Cambria, "Times New Roman", Times, serif;
+--bs-heading-font-family: "Mona Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+--bs-heading-font-weight: 900;
+--bs-font-mono: Inconsolata, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+--bs-link-color: rgba(0, 0, 0, 0.5411764706);
+--bs-primary-base: #242424;
+--bs-secondary-base: #555555;
+--bs-success-base: #1a8917;
+--bs-warning-base: #ffc017;
+--bs-danger-base: #c35050;
+--bs-info-base: rgba(0, 0, 0, 0.54);
+--bs-link-hover-color: color-mix(in srgb, var(--bs-link-color) 85%, var(--bs-fg-body));
+
+{% include skins/roles.css names='primary,secondary,success,warning,danger,info' labels='white,white,black,black,black,white' %}
+
+--chulapa-skin-nav-bg: #ffffff;
+--chulapa-skin-nav-fg: #757575;
+--chulapa-skin-nav-hover: #656565;
+--chulapa-skin-nav-active: #000000;
+--chulapa-skin-nav-brand-hover: #000000;
+--chulapa-skin-nav-disabled: #d3d3d3;
+--chulapa-skin-nav-hover-bg: #f2f2f2;
+{% include skins/navbar.css hover_background=true %}
+
+& :where(.table thead) {
+  --bs-table-bg: #ffffff;
+  --bs-table-color: black;
+}
+
+& :where(.nav, .card-header, .badge, .pagination, .breadcrumb, .footnotes, label, .navbar-brand:not(.chulapa-brand)) {
+  font-family: var(--bs-heading-font-family);
+}
+
+& :where(label, .navbar-brand:not(.chulapa-brand)) {
+  font-weight: var(--bs-heading-font-weight);
+}
+
+& :where(a:not([class])) {
+  text-decoration-thickness: 2px;
+}
+
+& :where(:not(.chulapa-brand)) {
+  font-variant-ligatures: none;
+}

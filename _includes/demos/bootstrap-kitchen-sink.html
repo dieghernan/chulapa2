@@ -3,6 +3,7 @@
 <p>Compare Bootstrap surfaces, component states and typography in the current theme.</p>
 <p><a href="https://getbootstrap.com/docs/6.0/examples/cheatsheet/">Bootstrap 6 Cheatsheet</a></p>
 <ul class="list-inline">
+  <li class="list-inline-item"><a href="#sink-navbar">Navbar</a></li>
   <li class="list-inline-item"><a href="#surfaces">Surfaces</a></li>
   <li class="list-inline-item"><a href="#sink-images">Images</a></li>
   <li class="list-inline-item"><a href="#palette">Colors</a></li>
@@ -15,46 +16,201 @@
 </ul>
 
 <div id="bootstrap-kitchen-sink" class="not-prose d-grid gap-4">
+
+  <section id="sink-navbar" aria-labelledby="sink-navbar-title">
+    <h{{ kitchen_section_level }} id="sink-navbar-title">Navbar</h{{ kitchen_section_level }}>
+    <nav class="chulapa-navbar navbar md:navbar-expand bg-1 border rounded" aria-label="Example navbar">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#bootstrap-kitchen-sink">Kitchen Sink</a>
+        <button class="btn-icon navbar-toggler" type="button" data-bs-toggle="drawer"
+                data-bs-target="#sink-navbar-menu" aria-controls="sink-navbar-menu"
+                aria-label="Open example navigation">
+          <span class="navbar-toggler-icon" aria-hidden="true"></span>
+        </button>
+        <dialog class="drawer drawer-end" id="sink-navbar-menu" aria-labelledby="sink-navbar-menu-title">
+          <div class="drawer-header">
+            <h{{ kitchen_sample_level }} class="drawer-title" id="sink-navbar-menu-title">Kitchen Sink navigation</h{{ kitchen_sample_level }}>
+            <button type="button" class="btn-close" data-bs-dismiss="drawer" aria-label="Close example navigation"></button>
+          </div>
+          <div class="drawer-body">
+            <ul class="navbar-nav">
+              <li class="nav-item"><a class="nav-link" href="#surfaces">Surfaces</a></li>
+              <li class="nav-item"><a class="nav-link" href="#forms">Forms</a></li>
+              <li class="nav-item"><a class="nav-link" href="#components">Components</a></li>
+            </ul>
+          </div>
+        </dialog>
+      </div>
+    </nav>
+  </section>
+
   <section id="surfaces" aria-labelledby="surfaces-title">
     <h{{ kitchen_section_level }} id="surfaces-title">Surfaces and typography</h{{ kitchen_section_level }}>
     <div class="row g-2 mb-3">
       {% for level in (1..4) %}
       <div class="col-6 md:col-3">
-        <div class="bg-{{ level }} border rounded p-3">Surface {{ level }}</div>
+      <div class="bg-{{ level }} border rounded p-3">Surface {{ level }}</div>
       </div>
       {% endfor %}
     </div>
     <div class="mb-3">
-      {% assign font_sizes = 'xs,sm,md,lg,xl,2xl,3xl,4xl,5xl,6xl' | split: ',' %}
-      {% for size in font_sizes %}
+    {% assign font_sizes = 'xs,sm,md,lg,xl,2xl,3xl' | split: ',' %}
+    {% for size in font_sizes %}
       <div class="fs-{{ size }}">Type scale {{ size }}</div>
-      {% endfor %}
+    {% endfor %}
     </div>
-    <p>Body text with <strong>emphasis</strong>, <mark>highlighted text</mark> and <code>inline code</code>.</p>
-    <blockquote class="blockquote">A quote shows how text and borders sit on a neutral background.</blockquote>
-    {% capture code_sample %}
+
+    <div class="mb-3">
+      <div class="row g-2 mb-3">
+        <div class="lg:col-6">
+        {% for level in (1..6) %}
+          <p class="h{{ level }}">h{{ level }}. heading</p>
+        {% endfor %}
+          <p class="h4"> Heading <small class="fg-2">with .fg-2 muted text</small></p>
+        </div>
+        <div class="lg:col-6">
+          <p class="h3">Emphasis classes</p>
+        {% assign roles = 'primary,accent,secondary,success,warning,danger,info,inverse' | split: ',' %}
+        {% for role in roles %}
+          <p class="fg-{{ role }}">This is a text with fg-{{ role }} class</p>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+    <div class="mb-3">
+          <p class="h3">Example body text</p>
+          <p>Nullam quis risus eget <a href="#">urna mollis ornare</a> vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
+          <p>Body text with <strong>emphasis</strong>, <mark>highlighted text</mark> and <code>inline code</code>.</p>
+          <p><del>This line of text is meant to be treated as deleted text.</del></p>
+          <p><s>This line of text is meant to be treated as no longer accurate.</s></p>
+          <p><ins>This line of text is meant to be treated as an addition to the document.</ins></p>
+          <p><u>This line of text will render as underlined.</u></p>
+          <p><small>This line of text is meant to be treated as fine print.</small></p>
+          <p><strong>This line rendered as bold text.</strong></p>
+          <p><em>This line rendered as italicized text.</em></p>
+          <p>An abbreviation of the word attribute is <abbr title="attribute">attr</abbr>.</p>
+       </div>
+
+    <div class="row g-2 mb-3">
+      <div class="md:col-6">
+      <blockquote class="blockquote">A quote shows how text and borders sit on a neutral background.</blockquote>
+      </div>
+      <div class="md:col-6">
+        <figure class="blockquote">
+        <blockquote>
+        <p>A well-known quote, contained in a blockquote element.</p>
+        </blockquote>
+        <figcaption class="blockquote-footer">
+        Someone famous in <cite title="Source Title">Source Title</cite>
+        </figcaption>
+        </figure>
+      </div>
+    </div>
+
+{% capture code_sample %}
 ```ruby
 # Report the outcome of a build.
 def build_status(ready)
-  return "Complete" if ready
+return "Complete" if ready
 
-  "Waiting"
+"Waiting"
 # Ligatures <-
 end
 ```
-    {% endcapture %}
-    {{ code_sample | markdownify }}
+{% endcapture %}
+{{ code_sample | markdownify }}
+
     <div class="table-responsive">
-      <table class="table table-striped table-hover">
-        <caption>Build stages</caption>
-        <thead><tr><th scope="col">Stage</th><th scope="col">Result</th></tr></thead>
-        <tbody>
-          <tr><th scope="row">Compile</th><td>Complete</td></tr>
-          <tr><th scope="row">Validate</th><td>In progress</td></tr>
-          <tr><th scope="row">Publish</th><td>Waiting</td></tr>
-        </tbody>
-      </table>
+    <table class="table table-striped table-hover">
+    <caption>Build stages</caption>
+    <thead><tr><th scope="col">Stage</th><th scope="col">Result</th></tr></thead>
+    <tbody>
+    <tr><th scope="row">Compile</th><td>Complete</td></tr>
+    <tr><th scope="row">Validate</th><td>In progress</td></tr>
+    <tr><th scope="row">Publish</th><td>Waiting</td></tr>
+    </tbody>
+    </table>
     </div>
+    <div>
+      <p class="h4">Simple reponsive small table</p>
+      <div class="table-responsive">
+      <table class="table table-sm">
+        <thead>
+           <tr>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+           </tr>
+           <tr>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+           </tr>
+           <tr>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+           </tr>
+         </tbody>
+       </table>
+       </div>
+    </div>
+
   </section>
 
   <section id="sink-images" aria-labelledby="sink-images-title">
@@ -200,6 +356,40 @@ Removing a redirect can break incoming links.
           <li class="list-group-item">Running <span class="badge theme-info">1</span></li>
           <li class="list-group-item">Complete <span class="badge theme-success">3</span></li>
         </ul>
+      </div>
+    </div>
+    <div class="contains-inline my-3">
+      <div class="card-group">
+      <div class="card">
+        <img src="{{ '/assets/img/kitchen-sink/forest.webp' | absolute_url }}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h4 class="card-title">Card title</h4>
+          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+        </div>
+        <div class="card-footer">
+          <small class="fg-2">Last updated 3 mins ago</small>
+        </div>
+      </div>
+      <div class="card">
+        <img src="{{ '/assets/img/kitchen-sink/dunes.webp' | absolute_url }}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h4 class="card-title">Card title</h4>
+          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+        </div>
+        <div class="card-footer">
+          <small class="fg-2">Last updated 3 mins ago</small>
+        </div>
+      </div>
+      <div class="card">
+        <img src="{{ '/assets/img/kitchen-sink/harbor.webp' | absolute_url }}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h4 class="card-title">Card title</h4>
+          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+        </div>
+        <div class="card-footer">
+          <small class="fg-2">Last updated 3 mins ago</small>
+        </div>
+      </div>
       </div>
     </div>
     <details class="mt-3">

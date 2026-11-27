@@ -1,0 +1,7 @@
+& :where(.breadcrumb-divider:empty)::before {
+  content: ">";
+  width: auto;
+  height: auto;
+  background: none;
+  mask-image: none;
+}
