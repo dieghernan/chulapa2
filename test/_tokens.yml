@@ -11,11 +11,11 @@ navbar:
   nav:
     - title: Home
       url: /
-    - title: About
+    - title: '<span>About</span>'
       url: /#about
-    - title: Examples
+    - title: '<em>Examples</em>'
       child:
-        - title: Minimal example
+        - title: '<span>Minimal example</span>'
           url: /test/minimal
 
 footer:
@@ -32,6 +32,8 @@ chulapa-skin:
   vars:
     primary-base: "#285d70"
     primary-bg: "#18455b"
+    hero-chulapa-bg-color: "#164149"
+    hero-chulapa-text-color: "#fff0b5"
     success-base: "oklch(0.63 0.18 145)"
     danger-base: "#8b2535"
     link-color: "#154e85"
@@ -71,6 +73,11 @@ chulapa-skin-dark:
   autothemer: false
   vars:
     primary-base: "#809bb5"
+    # Precedence check, not a contrast bug: the explicit custom property must
+    # override the legacy alias. The test expects the #182637 surface.
+    hero-chulapa-bg-color: "#fff"
+    "--chulapa-hero-bg": "#182637"
+    hero-chulapa-text-color: "#f4e8d1"
     primary-bg: "#234063"
     body-font-family: '"IBM Plex Mono", monospace'
     font-mono: "Consolas, monospace"

@@ -29,6 +29,15 @@ changing sources or configuration.
 | [GitDev preview](http://127.0.0.1:4173/chulapa2/test/gitdev/) | Authored colors, fonts, and components. |
 | [Configured components](http://127.0.0.1:4173/chulapa2/test/tokens/test/auto-themer/components/) | Explicit fonts, CSS tokens, and light and dark overrides. |
 | [Skin gallery](http://127.0.0.1:4173/chulapa2/test/skins/focal/) | Every bundled skin and its named or generated alternate. |
+| [Base header with an image](http://127.0.0.1:4173/chulapa2/test/headers/base-image/) and [without an image](http://127.0.0.1:4173/chulapa2/test/headers/base/) | Legacy header front matter in the default and minimal layouts. |
+| [Post header with an image](http://127.0.0.1:4173/chulapa2/test/headers/post-image/) and [without an image](http://127.0.0.1:4173/chulapa2/test/headers/post/) | Start-aligned title and divider aligned with the editorial column. |
+| [Image header with a photo](http://127.0.0.1:4173/chulapa2/test/headers/image-photo/) and [without a photo](http://127.0.0.1:4173/chulapa2/test/headers/image/) | Centered photo at its original aspect ratio, with a viewport-relative height limit. |
+| [Hero with a photo](http://127.0.0.1:4173/chulapa2/test/gitdev/test/headers/hero-photo/) and [without a photo](http://127.0.0.1:4173/chulapa2/test/gitdev/test/headers/hero/) | Overlay contrast, project links, and the active skin's surface in GitDev and GitDev Dark. |
+| [Splash with a photo](http://127.0.0.1:4173/chulapa2/test/gitdev/test/headers/splash-photo/) and [without a photo](http://127.0.0.1:4173/chulapa2/test/gitdev/test/headers/splash/) | Full-screen hero with larger type and the same skin colors. |
+
+Use the [Unsplash Madrid collection](https://unsplash.com/es/colecciones/Cb6qszx7yKU/chulapa2)
+or the [Pexels Madrid collection](https://www.pexels.com/es-es/collections/chulapa2-56djped/)
+for new image fixtures when collection access is available.
 
 The prototype reads its palette configuration from
 [`test/_config.yml`](_config.yml). Use six-digit hex colors for

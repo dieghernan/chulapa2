@@ -262,7 +262,7 @@ test("applies GitDev typography, navigation and editorial styles", async ({ page
   await expect(heading).toHaveCSS("font-family", /^"Inter Tight"/);
   await expect(heading).toHaveCSS("font-weight", "800");
   await expect(nav).toHaveCSS("font-family", '"Inter Tight", Roboto, sans-serif');
-  await expect(brand).toHaveCSS("font-family", "Chulapa, sans-serif");
+  await expect(brand).toHaveCSS("font-family", '"Inter Tight", Roboto, sans-serif');
   await expect(nav).toHaveCSS("background-color", "rgb(34, 39, 46)");
   await expect(quote).toHaveCSS("border-inline-start-color", "rgb(9, 105, 218)");
   await expect(quote).toHaveCSS("border-top-left-radius", "0px");

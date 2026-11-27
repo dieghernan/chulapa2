@@ -14,6 +14,7 @@ font-variant-ligatures: none;
 --chulapa-skin-nav-fg: #fff;
 --chulapa-skin-nav-brand: #fff;
 --chulapa-skin-nav-active: #fff;
+--chulapa-hero-color: #000000;
 
 {% unless include.variant_scheme %}
 {% include skins/tophat-buttons.css labels='primary:#ffffff,danger:#ffffff' outlines='primary:#b84b69,secondary:#6f6f6f,warning:#077c81,danger:#cc3a42' vars=include.vars %}

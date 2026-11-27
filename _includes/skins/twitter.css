@@ -23,6 +23,8 @@ color-scheme: light;
 --bs-warning-bg: #bc5a00;
 
 --chulapa-skin-nav-bg: #fff;
+--chulapa-hero-bg: var(--bs-primary-base);
+--chulapa-hero-color: #000000;
 --chulapa-skin-nav-fg: #14171a;
 --chulapa-skin-nav-hover: #177bbe;
 --chulapa-skin-nav-active: #177bbe;

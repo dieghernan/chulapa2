@@ -6,8 +6,7 @@
   font-display: swap;
 }
 
-.chulapa,
-.chulapa-brand {
+.chulapa {
   font-family: Chulapa, sans-serif;
   font-weight: 700;
   font-variant-ligatures: common-ligatures discretionary-ligatures;

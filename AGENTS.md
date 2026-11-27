@@ -129,6 +129,13 @@ Preserve the recognizable visual identity of chulapa, including:
 
 Visual continuity is more important than pixel-perfect reproduction.
 
+Render the project name as `<span class="chulapa">chulapa2</span>` wherever
+the project's own visible site HTML mentions it, including branding in the
+navbar, drawer, and footer. Keep `.chulapa` in the distributed CSS and
+enable the Chulapa typeface's ligatures. Use plain text in site metadata,
+document titles, and attribute values. Keep `site.title` in plain text and
+put the navbar's display markup in `navbar.brand.title`.
+
 When migrating a layout or component, compare the rendered result with
 Chulapa at representative widths and in both color modes when applicable.
 Preserve the recognizable typography, proportions, spacing, placement, and
