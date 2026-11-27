@@ -1,4 +1,5 @@
 chulapa-skin:
+  highlight: "../unknown"
   autothemer: true
   vars:
     primary: "#285d70"

@@ -17,6 +17,8 @@
     {% if site['chulapa-skin'] or site['chulapa-skin-dark'] %}
     <link rel="stylesheet" href="{{ '/assets/css/auto-themer.css' | absolute_url }}">
     {% endif %}
+    <link rel="stylesheet" href="{{ '/assets/css/highlight.css' | absolute_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/callouts.css' | absolute_url }}">
   </head>
   <body>
     <a class="visually-hidden-focusable" href="#main-content">Skip to content</a>
@@ -29,7 +31,10 @@
         {{ content }}
       </article>
     </main>
-    <script type="module" src="{{ bootstrap_dist }}/js/bootstrap.bundle.min.js"
+    <script type="module" data-bootstrap-bundle src="{{ bootstrap_dist }}/js/bootstrap.bundle.min.js"
             integrity="sha384-+PW0IDVGGwmpaBQvcXY+W0BcpHpITFB3dSfSoGvDdHtLbrLpSbpGcvtQRM/BJpz+" crossorigin="anonymous"></script>
+    {% if content contains 'id="bootstrap-kitchen-sink"' %}
+    <script type="module" src="{{ '/assets/js/kitchen-sink.js' | absolute_url }}"></script>
+    {% endif %}
   </body>
 </html>

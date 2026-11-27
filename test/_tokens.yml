@@ -49,6 +49,7 @@ chulapa-skin-dark:
     primary-base: "#809bb5"
     primary-bg: "#234063"
     body-font-family: '"IBM Plex Mono", monospace'
+    font-mono: "Consolas, monospace"
     bg-body: "#202a36"
     fg-body: "#edf4fa"
     heading-font-family: "Raleway, sans-serif"

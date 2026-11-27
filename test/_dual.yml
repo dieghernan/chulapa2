@@ -2,3 +2,23 @@ chulapa-skin:
   skin: auto
   autothemer: false
   use-dual-mode: true
+  vars:
+    font-family-base: "Georgia, serif"
+    headings-font-family: "Verdana, sans-serif"
+    "--bs-font-mono": '"Fira Code", ui-monospace, monospace'
+    body-font-size: "18px"
+    body-font-weight: 500
+    body-line-height: 1.75
+    headings-font-weight: 650
+    heading-line-height: "34px"
+    spacer-2: "10px"
+    btn-input-padding-x: "calc(var(--bs-spacer-2) * 2)"
+    border-width: "2px"
+    radius-5: "11px"
+    body-bg: "#f7f3eb"
+    "--bs-fg-body": "#203047"
+    code-color: "#123456"
+    "--demo-border-color": "#352467"
+    ".btn-solid":
+      btn-border-radius: "13px"
+      btn-border-color: "var(--demo-border-color)"

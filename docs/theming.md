@@ -29,7 +29,7 @@ settings were explicit Sass overrides. [Chulapa build][legacy-build] · [Chulapa
 | Link color, hover, decoration and focus | Set `link-color`, `link-hover-color`, `link-decoration` and `focus-ring-width`. Use `primary-focus-ring` for primary-themed buttons, which read the semantic focus color. A configured link color also applies on hover unless a separate hover value is supplied. |
 | Forms, input sizes and interaction states | Use shared inputs such as `btn-input-padding-x` and `control-checked-bg`, or scope local tokens such as `control-border-color` to `.form-control`. Bootstrap owns keyboard behavior and interaction selectors. |
 | Navigation, footer, hero, quotes, pagination and TOC | Use native component tokens where they match. Existing authored skin rules cover the navigation and quotes. The footer, hero, pagination and TOC need the corresponding chulapa2 components before their legacy settings can be mapped. |
-| Code color, highlighted blocks and third-party integrations | Set `code-color` and `font-mono`. Rouge highlighter selection, plugin-specific styling and Sass expressions require separate work or downstream CSS. |
+| Code color, highlighted blocks and third-party integrations | Set `code-color` and `font-mono` for Bootstrap code styles. Choose `default`, `github` or `github.dark` using each mode's `highlight` field. Plugin-specific styling and Sass expressions require separate work or downstream CSS. |
 
 ## Token dependencies and scope
 
@@ -76,6 +76,20 @@ expressions. Changing that base on a descendant leaves the inherited derived
 values computed on `:root`. To change a single component, override its local
 token or redeclare the derived token on the same element as the local base.
 Use a component class under `vars` for that scope.
+
+## Skin settings
+
+| Setting | Effect |
+| --- | --- |
+| `skin` | Selects `auto` or a bundled skin, currently `gitdev` and `gitdev-dark`. An omitted or unknown name adds no skin declarations. |
+| `autothemer` | Generates a palette for the mode. `skin: auto` also enables generation. |
+| `vars` | Applies explicit Bootstrap or custom CSS tokens, with optional component classes. |
+| `highlight` | Selects `default`, `github` or `github.dark`. An omitted or unsupported dark value uses the main palette. |
+| `use-dual-mode` | Goes under `chulapa-skin` and enables the automatic dark variant. A separate dark configuration takes precedence. |
+
+The top-level `color-mode-selector` option shows the selector when set to
+`true`. An explicit dark configuration always shows it. The top-level
+`googlefonts` list loads fonts available to either mode.
 
 ## Configure tokens
 
@@ -127,6 +141,35 @@ mode's font tokens to select which loaded families appear on the page.
 The bundled skins load their own default families when selected.
 [Font configuration in chulapa](https://dieghernan.github.io/chulapa/docs/24-change-fonts)
 
+## Automatic dark variant
+
+With `use-dual-mode: true`, the automatic dark variant shares all
+configured `chulapa-skin.vars` except `bg-body` and `fg-body`. The same
+rule covers their legacy aliases, fully prefixed names and tokens scoped
+to a component class.
+
+```yaml
+chulapa-skin:
+  skin: auto
+  use-dual-mode: true
+  vars:
+    primary-base: "#285d70"
+    bg-body: "#f7f3eb"                 # Light only
+    body-font-size: "18px"
+    code-color: "light-dark(#123456, #c9e2ff)"
+    spacer-2: "10px"
+    btn-input-padding-x: "calc(var(--bs-spacer-2) * 2)"
+    ".btn-solid":
+      btn-border-radius: "13px"
+```
+
+Shared color overrides take precedence over generated colors in both modes.
+Check their contrast in each mode. Use `light-dark()` for a shared color
+token that needs a different value in each mode. Bootstrap, the dark skin
+or the Auto Themer supply the dark body foreground and background. An
+explicit `chulapa-skin-dark` defines an independent configuration and
+can set its own body colors.
+
 ## Generator and intentional overrides
 
 - Auto Themer derives the primary roles and tints the page and surface
@@ -147,8 +190,7 @@ The bundled skins load their own default families when selected.
   native base tokens with independent Bootstrap roles can be paired with
   explicit derived values or automatic generation.
 - GitDev retains authored styling. Explicit YAML and downstream CSS can
-  override it. A separate dark configuration stays independent. Existing
-  dual-mode handling shares the primary only when it generates a variant.
+  override it.
 - Legacy Sass variables could affect compile-time utilities, contrast
   algorithms, interpolation and plugin styles. The runtime mapping cannot
   evaluate Sass, generate new Bootstrap component classes, or restyle a

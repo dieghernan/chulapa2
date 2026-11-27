@@ -1,0 +1,86 @@
+<h{{ include.heading_level }} class="mt-4" id="sink-avatar-title">Avatar</h{{ include.heading_level }}>
+<div class="d-flex flex-wrap align-items-center gap-2">
+  <span class="avatar theme-primary" role="img" aria-label="Alicia Rivera">AR</span>
+  <span class="avatar theme-success" role="img" aria-label="Luis Vega">LV</span>
+  <span class="avatar theme-warning" role="img" aria-label="Marta Díaz">MD</span>
+</div>
+
+<h{{ include.heading_level }} class="mt-4">Chips</h{{ include.heading_level }}>
+<div class="d-flex flex-wrap gap-2">
+  <span class="chip">Draft</span>
+  <span class="chip theme-success active">Validated</span>
+  <span class="chip theme-warning">Needs review</span>
+  <a class="chip theme-info" href="#palette">View color palette</a>
+</div>
+
+<h{{ include.heading_level }} class="mt-4">Close button</h{{ include.heading_level }}>
+<div class="d-flex flex-wrap align-items-center gap-3">
+  <div id="sink-close-panel" class="alert theme-info">
+    Dismissible sample
+    <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#sink-close-panel"
+            aria-label="Close sample"></button>
+  </div>
+  <button type="button" class="btn-close" disabled aria-label="Disabled close button"></button>
+</div>
+
+<h{{ include.heading_level }} class="mt-4">Collapse</h{{ include.heading_level }}>
+<button type="button" class="btn-outline theme-primary" data-bs-toggle="collapse"
+        data-bs-target="#sink-collapse" aria-controls="sink-collapse" aria-expanded="false">Toggle build notes</button>
+<div class="collapse mt-2" id="sink-collapse">
+  <div class="card card-body">Review the generated files before publication.</div>
+</div>
+
+<h{{ include.heading_level }} class="mt-4">Drawer</h{{ include.heading_level }}>
+<button type="button" class="btn-outline theme-primary" data-bs-toggle="drawer"
+        data-bs-target="#sink-build-drawer" aria-controls="sink-build-drawer">Open build drawer</button>
+<dialog class="drawer drawer-end" id="sink-build-drawer" aria-labelledby="sink-build-drawer-title">
+  <div class="drawer-header">
+    <h{{ include.heading_level }} class="drawer-title" id="sink-build-drawer-title">Build summary</h{{ include.heading_level }}>
+    <button type="button" class="btn-close" data-bs-dismiss="drawer" aria-label="Close build drawer"></button>
+  </div>
+  <div class="drawer-body">
+    <p>The build produced an HTML preview, a stylesheet and an asset report.</p>
+  </div>
+</dialog>
+
+<h{{ include.heading_level }} class="mt-4">Nav overflow</h{{ include.heading_level }}>
+<nav aria-label="Overflow example" style="max-inline-size: 24rem">
+  <div class="nav-overflow" data-bs-toggle="nav-overflow">
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a class="nav-link" href="#surfaces">Surfaces</a></li>
+      <li class="nav-item"><a class="nav-link" href="#sink-images">Illustrations</a></li>
+      <li class="nav-item"><a class="nav-link" href="#palette">Color palette</a></li>
+      <li class="nav-item"><a class="nav-link" href="#sink-callouts">Editorial notes</a></li>
+      <li class="nav-item"><a class="nav-link" href="#forms">Form controls</a></li>
+      <li class="nav-item"><a class="nav-link" href="#components">Interactive components</a></li>
+    </ul>
+  </div>
+</nav>
+
+<h{{ include.heading_level }} class="mt-4">Placeholder</h{{ include.heading_level }}>
+<div class="card">
+  <div class="card-body">
+    <p>Loading preview</p>
+    <div class="placeholder-wave" aria-hidden="true">
+      <span class="placeholder col-7"></span>
+      <span class="placeholder col-4"></span>
+      <span class="placeholder col-5"></span>
+    </div>
+  </div>
+</div>
+
+<h{{ include.heading_level }} class="mt-4">Stepper</h{{ include.heading_level }}>
+<div class="contains-inline">
+  <ol class="stepper sm:stepper-horizontal" aria-label="Publication steps">
+    <li class="stepper-item active">Draft</li>
+    <li class="stepper-item active" aria-current="step">Review</li>
+    <li class="stepper-item">Publish</li>
+  </ol>
+</div>
+
+<h{{ include.heading_level }} class="mt-4">Toggler</h{{ include.heading_level }}>
+<button type="button" class="btn-outline theme-primary" data-bs-toggle="toggler"
+        data-bs-target="#sink-toggler-surface" aria-controls="sink-toggler-surface">Toggle surface tint</button>
+<div class="border rounded p-3 mt-2" id="sink-toggler-surface" data-bs-attribute="class" data-bs-value="bg-2">
+  This panel changes its background when the button is pressed.
+</div>

@@ -1,4 +1,5 @@
 color-mode-selector: true
 chulapa-skin:
   skin: gitdev
+  highlight: GiThUb
   use-dual-mode: true

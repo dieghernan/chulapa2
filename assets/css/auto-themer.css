@@ -6,14 +6,16 @@
   {%- assign light_generate = true -%}
 {%- endif -%}
 {%- assign dark_generate = false -%}
-{%- assign dual_base_vars = nil -%}
+{%- assign dark_vars = dark_theme_settings.vars -%}
+{%- assign automatic_dark = false -%}
 {%- if has_dark_theme -%}
   {%- assign dark_generate = dark_theme_settings.autothemer -%}
   {%- if dark_skin_name == 'auto' -%}
     {%- assign dark_generate = true -%}
   {%- endif -%}
 {%- elsif use_dual_mode == true -%}
-  {%- assign dual_base_vars = main_theme_settings.vars -%}
+  {%- assign dark_vars = main_theme_settings.vars -%}
+  {%- assign automatic_dark = true -%}
   {%- assign dark_generate = true -%}
   {%- if dark_skin -%}
     {%- assign dark_generate = main_theme_settings.autothemer -%}
@@ -27,9 +29,9 @@
   {%- for mode in modes -%}
     {%- capture declarations -%}
       {%- if mode == 'light' -%}
-        {%- include auto-themer/mode.css settings=main_theme_settings skin=main_skin generate=light_generate stage=stage -%}
+        {%- include auto-themer/mode.css vars=main_theme_settings.vars skin=main_skin generate=light_generate stage=stage -%}
       {%- else -%}
-        {%- include auto-themer/mode.css settings=dark_theme_settings skin=dark_skin generate=dark_generate shared_vars=dual_base_vars stage=stage -%}
+        {%- include auto-themer/mode.css vars=dark_vars skin=dark_skin generate=dark_generate stage=stage skip_body_colors=automatic_dark -%}
       {%- endif -%}
     {%- endcapture -%}
     {%- assign declarations = declarations | strip -%}
