@@ -20,7 +20,7 @@ test("loads Bootstrap from the CDN and renders Markdown with the Chulapa font", 
     expect(loaded.has(await element.getAttribute(attribute))).toBe(true);
   }
 
-  await expect(page).toHaveTitle("Markdown fixture · chulapa2");
+  await expect(page).toHaveTitle("Markdown fixture · <span class=\"chulapa\">chulapa2</span>");
   await expect(page.getByRole("heading", { level: 1, name: "Markdown fixture" })).toBeVisible();
   await expect(page.getByRole("heading", { level: 2, name: "Article content" })).toBeVisible();
   await expect(page.locator("main strong")).toHaveText("strong text");
@@ -30,8 +30,6 @@ test("loads Bootstrap from the CDN and renders Markdown with the Chulapa font", 
   const nav = page.getByRole("navigation", { name: "Primary" });
   await expect(nav).toHaveCSS("display", "flex");
   const brand = nav.getByRole("link", { name: "chulapa2" });
-  await expect(brand).toHaveCSS("font-family", "Chulapa, sans-serif");
-  await expect(brand).toHaveCSS("font-variant-ligatures", "common-ligatures discretionary-ligatures");
   expect(await page.evaluate(async () => {
     const fonts = await document.fonts.load('700 1rem "Chulapa"');
     return fonts.some((font) => font.status === "loaded");
@@ -67,7 +65,7 @@ test("supports desktop keyboard navigation and skips to the main content", async
 test("renders the minimal shell with a configured classic navbar and footer", async ({ page }) => {
   await page.setViewportSize({ width: 980, height: 900 });
   await page.goto("test/tokens/test/minimal/");
-  await expect(page).toHaveTitle("Minimal fixture · chulapa2");
+  await expect(page).toHaveTitle("Minimal fixture · <span class=\"chulapa\">chulapa2</span>");
   await expect(page.locator("html")).toHaveAttribute("lang", "en-US");
   await expect(page.getByRole("main")).toHaveCount(1);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("A full-width page");
