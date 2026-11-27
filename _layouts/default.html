@@ -2,14 +2,20 @@
 layout: minimal
 main_content: true
 ---
-<main id="main-content" tabindex="-1">
-  {% assign use_base_header = false %}
-  {% if page.header_type == 'base' and page.show_header != false %}
-    {% assign use_base_header = true %}
+{% capture page_header %}
+  {% unless page.show_header == false %}
     {% include components/headers.html %}
-  {% endif %}
-  <article class="container prose py-5">
-    {% unless use_base_header %}{% if page.title %}<h1>{{ page.title | escape }}</h1>{% endif %}{% endunless %}
-    {{ content }}
-  </article>
+  {% endunless %}
+{% endcapture %}
+{% assign page_header = page_header | strip %}
+<main id="main-content" tabindex="-1">
+  {{ page_header }}
+  <div class="container">
+    <div class="row justify-content-center">
+      <article class="col-12 lg:col-8 prose py-5">
+        {% if page_header == empty and page.title %}<h1>{{ page.title | escape }}</h1>{% endif %}
+        {{ content }}
+      </article>
+    </div>
+  </div>
 </main>

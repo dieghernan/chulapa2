@@ -9,7 +9,9 @@
       {% include navbar.html %}
     </header>
     {% unless layout.main_content %}
+    {% unless page.main_content %}
     <div id="main-content" tabindex="-1"></div>
+    {% endunless %}
     {% if page.show_header == true %}
       {% include components/headers.html %}
     {% endif %}

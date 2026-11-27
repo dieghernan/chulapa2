@@ -114,6 +114,7 @@ footer:
 `navbar.expand` accepts `sm`, `md`, `lg`, `xl`, `always` and `never`.
 At the selected breakpoint, Bootstrap 6 switches between the side drawer
 and inline navigation according to the navbar's width. The default is `md`.
+The mobile drawer uses the same title as the navbar brand.
 The brand uses the site title and home URL when its settings are omitted.
 
 ## Choose a bundled skin
@@ -191,3 +192,5 @@ Palomar. The project includes Chulapa Bold under
 ## Photo credits
 
 Plaza Mayor, Madrid. Photo by [Juan Gomez](https://unsplash.com/es/@nosoylasonia?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/es/fotos/edificio-de-hormigon-rojo-y-beige-XO3v5IAeAR4?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText).
+
+Mercado de San Miguel, Madrid. Photo by [Bas van der Linden](https://unsplash.com/es/@basvdlinden98?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/es/fotos/un-grupo-de-personas-sentadas-en-las-mesas-de-un-restaurante-m9GyQa8Ylmo?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText).

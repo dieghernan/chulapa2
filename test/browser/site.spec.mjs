@@ -85,7 +85,9 @@ test("renders the minimal shell with a configured classic navbar and footer", as
   await expect(brand.locator("img")).toHaveAttribute("src", /\/chulapa2\/test\/tokens\/assets\/img\/kitchen-sink\/harbor\.webp$/);
   await expect(toggle).toBeVisible();
   await toggle.press("Enter");
-  await expect(page.getByRole("dialog", { name: "Menu" })).toBeVisible();
+  const drawer = page.getByRole("dialog", { name: await brand.innerText(), exact: true });
+  await expect(drawer).toBeVisible();
+  await expect(drawer.getByRole("heading", { name: "Demo brand", exact: true })).toBeVisible();
   await submenu.press("Enter");
   const submenuItem = navbar.getByText("Minimal example");
   await expect(submenuItem).toHaveAttribute("aria-current", "page");
@@ -126,7 +128,7 @@ test("opens and dismisses the mobile drawer with the keyboard", async ({ page })
   await page.goto("test/themed/");
 
   const toggle = page.getByRole("button", { name: "Toggle navigation" });
-  const drawer = page.getByRole("dialog", { name: "Menu" });
+  const drawer = page.getByRole("dialog", { name: "chulapa2", exact: true });
   await expect(toggle).toBeVisible();
   await expect(drawer).toBeHidden();
 
@@ -166,7 +168,7 @@ test("closes the classic mobile drawer before following an in-page link", async 
   await page.goto("./");
   const nav = page.getByRole("navigation", { name: "Primary", exact: true });
   await nav.getByRole("button", { name: "Toggle navigation" }).click();
-  const drawer = page.getByRole("dialog", { name: "Menu" });
+  const drawer = page.getByRole("dialog", { name: "chulapa2", exact: true });
   await drawer.getByRole("link", { name: "About" }).click();
   await expect(drawer).toBeHidden();
   await expect(page).toHaveURL(/#about$/);

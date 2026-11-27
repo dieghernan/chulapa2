@@ -29,6 +29,12 @@ cropped to 20% of the viewport height. The banner is an image element with
 it empty for decoration. The large title scales between the original mobile
 and desktop sizes. Project buttons wrap when space is limited.
 
+The `post` page header shares the banner and title styles with `base`.
+It aligns titles, subtitles and project buttons to the start of the reading
+column. The `default` layout centers this column at eight Bootstrap grid
+columns from `lg` and uses the full container width below that breakpoint.
+The home page kitchen sink uses `minimal` and keeps the full container width.
+
 ## Contrast rules for maintainer-authored skins
 
 Look for an import of `chulapa/skins/authored-contrast` in the original skin.

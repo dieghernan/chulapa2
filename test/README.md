@@ -30,6 +30,7 @@ changing sources or configuration.
 | [Configured components](http://127.0.0.1:4173/chulapa2/test/tokens/test/auto-themer/components/) | Explicit fonts, CSS tokens, and light and dark overrides. |
 | [Skin gallery](http://127.0.0.1:4173/chulapa2/test/skins/focal/) | Every bundled skin and its named or generated alternate. |
 | [Base header with an image](http://127.0.0.1:4173/chulapa2/test/headers/base-image/) and [without an image](http://127.0.0.1:4173/chulapa2/test/headers/base/) | Legacy header front matter in the default and minimal layouts. |
+| [Post header with an image](http://127.0.0.1:4173/chulapa2/test/headers/post-image/) and [without an image](http://127.0.0.1:4173/chulapa2/test/headers/post/) | Start-aligned title and divider aligned with the editorial column. |
 
 Use the [Unsplash Madrid collection](https://unsplash.com/es/colecciones/Cb6qszx7yKU/chulapa2)
 or the [Pexels Madrid collection](https://www.pexels.com/es-es/collections/chulapa2-56djped/)
