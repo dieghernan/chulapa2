@@ -23,6 +23,12 @@ Bootstrap demo. The demo uses the current Bootstrap 6 component set.
 The stylesheet is published at Chulapa's `assets/css/highlighter.css` path.
 The original HTML compression layout remains a separate migration decision.
 
+The `base` page header keeps Chulapa's centered title and optional banner
+cropped to 20% of the viewport height. The banner is an image element with
+`object-fit: cover`. Set `header_img_alt` for a meaningful image and leave
+it empty for decoration. The large title scales between the original mobile
+and desktop sizes. Project buttons wrap when space is limited.
+
 ## Contrast rules for maintainer-authored skins
 
 Look for an import of `chulapa/skins/authored-contrast` in the original skin.

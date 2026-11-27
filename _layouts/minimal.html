@@ -10,6 +10,9 @@
     </header>
     {% unless layout.main_content %}
     <div id="main-content" tabindex="-1"></div>
+    {% if page.show_header == true %}
+      {% include components/headers.html %}
+    {% endif %}
     {% endunless %}
     {{ content }}
     {% include footer.html %}

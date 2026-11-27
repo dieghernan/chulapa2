@@ -1,4 +1,6 @@
 url: "http://127.0.0.1:4173"
+include:
+  - _fixtures
 
 # Start the browser fixtures from Bootstrap defaults.
 chulapa-skin: false

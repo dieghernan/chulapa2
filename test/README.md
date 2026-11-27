@@ -29,6 +29,13 @@ changing sources or configuration.
 | [GitDev preview](http://127.0.0.1:4173/chulapa2/test/gitdev/) | Authored colors, fonts, and components. |
 | [Configured components](http://127.0.0.1:4173/chulapa2/test/tokens/test/auto-themer/components/) | Explicit fonts, CSS tokens, and light and dark overrides. |
 | [Skin gallery](http://127.0.0.1:4173/chulapa2/test/skins/focal/) | Every bundled skin and its named or generated alternate. |
+| [Base header with an image](http://127.0.0.1:4173/chulapa2/test/headers/base-image/) and [without an image](http://127.0.0.1:4173/chulapa2/test/headers/base/) | Legacy header front matter in the default and minimal layouts. |
+
+Use the [Unsplash Madrid collection](https://unsplash.com/es/colecciones/Cb6qszx7yKU/chulapa2)
+or the [Pexels Madrid collection](https://www.pexels.com/es-es/collections/chulapa2-56djped/)
+for new image fixtures when collection access is available. The first base
+header fixture reuses [Chulapa's Madrid banner](https://github.com/dieghernan/chulapa/blob/main/docs/assets/img/site/chulapa-madrid-hd.webp)
+from [Unsplash](https://images.unsplash.com/photo-1545290614-5ceedf604139).
 
 The prototype reads its palette configuration from
 [`test/_config.yml`](_config.yml). Use six-digit hex colors for
