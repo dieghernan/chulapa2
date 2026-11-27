@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { colorMode } from "./color-mode-control.mjs";
 
 test("loads Bootstrap from the CDN and renders Markdown with the Chulapa font", async ({ page }) => {
   const errors = [];
@@ -36,6 +37,12 @@ test("loads Bootstrap from the CDN and renders Markdown with the Chulapa font", 
     return fonts.some((font) => font.status === "loaded");
   })).toBe(true);
 
+  const attribution = page.getByRole("contentinfo").getByRole("link", { name: "Chulapa2 Jekyll Theme" });
+  await expect(attribution).toHaveAttribute("href", "https://dieghernan.github.io/chulapa2/");
+  await expect(attribution.locator(".chulapa")).toHaveCSS("font-family", "Chulapa, sans-serif");
+  await expect(attribution.locator(".chulapa"))
+    .toHaveCSS("font-variant-ligatures", "common-ligatures discretionary-ligatures");
+
   await page.getByRole("link", { name: "link to the home page" }).click();
   await expect(page).toHaveURL(/\/chulapa2\/$/);
   await expect(nav.getByRole("link", { name: "Home" })).toHaveAttribute("aria-current", "page");
@@ -57,6 +64,63 @@ test("supports desktop keyboard navigation and skips to the main content", async
   await expect(page).toHaveURL(/#about$/);
 });
 
+test("renders the minimal shell with a configured classic navbar and footer", async ({ page }) => {
+  await page.setViewportSize({ width: 980, height: 900 });
+  await page.goto("test/tokens/test/minimal/");
+  await expect(page).toHaveTitle("Minimal fixture · chulapa2");
+  await expect(page.locator("html")).toHaveAttribute("lang", "en-US");
+  await expect(page.getByRole("main")).toHaveCount(1);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("A full-width page");
+  await expect(page.locator("main article")).toHaveCount(0);
+  await page.keyboard.press("Tab");
+  await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#main-content")).toBeFocused();
+
+  const navbar = page.getByRole("navigation", { name: "Primary", exact: true });
+  const brand = navbar.getByRole("link", { name: "Demo brand" });
+  const toggle = navbar.getByRole("button", { name: "Toggle navigation" });
+  const submenu = navbar.getByRole("button", { name: "Examples" });
+  await expect(brand).toHaveAttribute("href", /\/chulapa2\/test\/tokens\/test\/minimal\/$/);
+  await expect(brand.locator("img")).toHaveAttribute("src", /\/chulapa2\/test\/tokens\/assets\/img\/kitchen-sink\/harbor\.webp$/);
+  await expect(toggle).toBeVisible();
+  await toggle.press("Enter");
+  await expect(page.getByRole("dialog", { name: "Menu" })).toBeVisible();
+  await submenu.press("Enter");
+  const submenuItem = navbar.getByText("Minimal example");
+  await expect(submenuItem).toHaveAttribute("aria-current", "page");
+  const navBackground = await navbar.evaluate((nav) => getComputedStyle(nav).backgroundColor);
+  await expect(navbar.locator(".menu").filter({ has: page.getByText("Minimal example") }))
+    .toHaveCSS("background-color", navBackground);
+  await page.keyboard.press("ArrowDown");
+  await expect(submenuItem).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(submenu).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(toggle).toBeFocused();
+
+  await page.setViewportSize({ width: 1040, height: 900 });
+  await expect(toggle).toBeHidden();
+  await expect(submenu).toBeVisible();
+  await expect(submenu).toHaveClass(/\bactive\b/);
+  const alignment = await navbar.evaluate((nav) => {
+    const bounds = nav.getBoundingClientRect();
+    const links = nav.querySelector(".navbar-nav").getBoundingClientRect();
+    return links.x > bounds.x + bounds.width / 2;
+  });
+  expect(alignment).toBe(true);
+
+  const footer = page.getByRole("contentinfo");
+  await expect(footer.locator("strong")).toHaveText("Chulapa");
+  await expect(footer.getByRole("link", { name: "Fixture home" }))
+    .toHaveAttribute("href", /\/chulapa2\/test\/tokens\/$/);
+  await expect(footer.getByRole("link", { name: "Email" })).toHaveAttribute("href", "mailto:fixture@example.com");
+  const navbarBackground = () => navbar.evaluate((nav) => getComputedStyle(nav).backgroundColor);
+  await expect(footer).toHaveCSS("background-color", "rgb(13, 17, 23)");
+  await colorMode(page).choose("dark");
+  await expect(footer).toHaveCSS("background-color", await navbarBackground());
+});
+
 test("opens and dismisses the mobile drawer with the keyboard", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("test/themed/");
@@ -72,17 +136,42 @@ test("opens and dismisses the mobile drawer with the keyboard", async ({ page })
   await expect(toggle).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(drawer).toBeVisible();
+  await expect(drawer.locator(".navbar-nav")).toHaveCSS("text-align", "start");
   await expect(drawer.getByRole("button", { name: "Close menu" })).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(drawer.getByRole("link", { name: "Home" })).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(drawer.getByRole("link", { name: "About" })).toBeFocused();
   await page.keyboard.press("Tab");
-  const select = drawer.getByRole("combobox", { name: "Color mode" });
-  await expect(select).toBeFocused();
-  await select.press("End");
+  const themeToggle = colorMode(page).trigger;
+  await expect(themeToggle).toBeFocused();
+  await themeToggle.press("Enter");
+  await expect(themeToggle).toHaveAttribute("aria-expanded", "true");
+  await page.keyboard.press("ArrowDown");
+  await expect(drawer.getByRole("button", { name: "Light theme", exact: true })).toBeFocused();
+  await page.keyboard.press("ArrowDown");
+  await expect(drawer.getByRole("button", { name: "Dark theme", exact: true })).toBeFocused();
+  await page.keyboard.press("Enter");
   await expect(page.locator("html")).toHaveAttribute("data-bs-theme", "dark");
+  await expect(themeToggle).toBeFocused();
+  await expect(themeToggle).toHaveAttribute("aria-expanded", "false");
+  await expect(drawer.locator("#site-color-mode-icon")).toHaveClass("bi bi-moon-stars-fill");
   await page.keyboard.press("Escape");
   await expect(drawer).toBeHidden();
   await expect(toggle).toBeFocused();
+});
+
+test("closes the classic mobile drawer before following an in-page link", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("./");
+  const nav = page.getByRole("navigation", { name: "Primary", exact: true });
+  await nav.getByRole("button", { name: "Toggle navigation" }).click();
+  const drawer = page.getByRole("dialog", { name: "Menu" });
+  await drawer.getByRole("link", { name: "About" }).click();
+  await expect(drawer).toBeHidden();
+  await expect(page).toHaveURL(/#about$/);
+  await expect.poll(() => page.evaluate(() =>
+    document.getElementById("about").getBoundingClientRect().top >=
+    document.getElementById("site-header").getBoundingClientRect().bottom - 1,
+  )).toBe(true);
 });

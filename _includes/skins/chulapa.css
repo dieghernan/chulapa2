@@ -1,4 +1,5 @@
 color-scheme: light;
+--chulapa-footer-color: rgb(26.7205882353%, 22.4362745098%, 20.6323529412%);
 {% for step in (1..9) %}
 --bs-radius-{{ step }}: 0;
 {% endfor %}

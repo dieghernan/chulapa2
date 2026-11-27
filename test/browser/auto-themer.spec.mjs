@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { colorMode } from "./color-mode-control.mjs";
 import { readContrast } from "./contrast.mjs";
 
 test.use({ reducedMotion: "reduce" });
@@ -113,30 +114,30 @@ test("uses the configured site palettes with the native color-mode selector", as
   await page.goto("test/themed/");
   const root = page.locator("html");
   const link = page.getByRole("main").getByRole("link", { name: "chulapa", exact: true });
-  const mode = page.getByRole("combobox", { name: "Color mode" });
+  const themeMenu = colorMode(page);
   await expect(root).toHaveCSS("--bs-primary-base", "#285d70");
   await expect(link).toHaveCSS("color", "rgb(132, 32, 41)");
   expect((await readContrast(link)).text).toBeGreaterThanOrEqual(4.5);
   await link.hover();
   await expect(link).toHaveCSS("color", "rgb(100, 24, 33)");
-  await mode.hover();
+  await themeMenu.trigger.hover();
 
-  await mode.selectOption("");
+  await themeMenu.choose("system");
   await page.emulateMedia({ colorScheme: "dark" });
   await expect(root).toHaveCSS("--bs-primary-base", "#906");
   await expect(link).toHaveCSS("color", "rgb(255, 217, 168)");
   expect((await readContrast(link)).text).toBeGreaterThanOrEqual(4.5);
 
-  await mode.selectOption("light");
+  await themeMenu.choose("light");
   await expect(root).toHaveCSS("--bs-primary-base", "#285d70");
-  await mode.selectOption("dark");
+  await themeMenu.choose("dark");
   await page.emulateMedia({ colorScheme: "light" });
   await expect(root).toHaveCSS("--bs-primary-base", "#906");
   await page.reload();
-  await expect(mode).toHaveValue("dark");
+  await expect(themeMenu.selected).toHaveAttribute("data-color-mode", "dark");
   await expect(root).toHaveCSS("--bs-primary-base", "#906");
 
-  await mode.selectOption("");
+  await themeMenu.choose("system");
   await expect(root).toHaveCSS("--bs-primary-base", "#285d70");
 });
 
@@ -151,11 +152,11 @@ test("offers the configured palette selector at small, medium and large widths",
       await expect(menu).toBeHidden();
     }
 
-    const mode = page.getByRole("combobox", { name: "Color mode" });
-    await expect(mode).toBeVisible();
-    await mode.selectOption("dark");
+    const themeMenu = colorMode(page);
+    await expect(themeMenu.trigger).toBeVisible();
+    await themeMenu.choose("dark");
     await expect(page.locator("html")).toHaveCSS("--bs-primary-base", "#906");
-    await mode.selectOption("light");
+    await themeMenu.choose("light");
     await expect(page.locator("html")).toHaveCSS("--bs-primary-base", "#285d70");
   }
 });
@@ -163,7 +164,7 @@ test("offers the configured palette selector at small, medium and large widths",
 for (const mode of ["light", "dark"]) {
   test(`keeps site-wide ${mode} components readable and keyboard accessible`, async ({ page }) => {
     await page.goto("test/themed/test/auto-themer/components/");
-    await page.getByRole("combobox", { name: "Color mode" }).selectOption(mode);
+    await colorMode(page).choose(mode);
     await expect(page.locator("html")).toHaveAttribute("data-bs-theme", mode);
     const content = page.getByRole("main");
     const field = content.getByRole("textbox", { name: "Email address", exact: true });
@@ -226,13 +227,13 @@ test("applies the GitDev pair and keeps Bootstrap button geometry", async ({ pag
 
   await page.goto("test/gitdev/test/auto-themer/components/");
   await expect(page.locator('link[href^="https://fonts.googleapis.com/"]')).toHaveCount(1);
-  const selector = page.getByRole("combobox", { name: "Color mode" });
-  await expect(selector).toHaveValue("light");
+  const themeMenu = colorMode(page);
+  await expect(themeMenu.selected).toHaveAttribute("data-color-mode", "light");
   for (const [mode, primary, surface, link] of [
     ["light", "#22272e", "rgb(255, 255, 255)", "#0969da"],
     ["dark", "#373e47", "rgb(36, 41, 47)", "#79b8ff"],
   ]) {
-    await selector.selectOption(mode);
+    await themeMenu.choose(mode);
     await expect(page.locator("body")).toHaveCSS("background-color", surface);
     await expect(page.locator("body")).toHaveCSS("font-family", /^Inter,/);
     await expect(page.locator("html")).toHaveCSS("--bs-primary-base", primary);
@@ -269,7 +270,7 @@ test("applies GitDev typography, navigation and editorial styles", async ({ page
   await expect(code).toHaveCSS("font-family", /^"Roboto Mono"/);
   await expect(page.locator("html")).toHaveCSS("--bs-success-base", "#277f46");
 
-  await page.getByRole("combobox", { name: "Color mode" }).selectOption("dark");
+  await colorMode(page).choose("dark");
   await expect(nav).toHaveCSS("background-color", "rgb(36, 41, 47)");
   await expect(quote).toHaveCSS("border-inline-start-color", "rgb(121, 184, 255)");
   await expect(page.locator("html")).toHaveCSS("--bs-success-base", "#6fdd8c");
@@ -278,10 +279,10 @@ test("applies GitDev typography, navigation and editorial styles", async ({ page
 test("uses the authored GitDev Dark palette with dual mode", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "dark" });
   await page.goto("test/gitdev-dual/");
-  const selector = page.getByRole("combobox", { name: "Color mode" });
-  await expect(selector).toHaveValue("light");
+  const themeMenu = colorMode(page);
+  await expect(themeMenu.selected).toHaveAttribute("data-color-mode", "light");
   await expect(page.locator("html")).toHaveCSS("--bs-primary-base", "#22272e");
-  await selector.selectOption("");
+  await themeMenu.choose("system");
   const link = page.getByRole("main").getByRole("link", { name: "chulapa", exact: true });
   await expect(link).toHaveCSS("color", "rgb(121, 184, 255)");
   expect((await readContrast(link)).text).toBeGreaterThanOrEqual(4.5);
@@ -291,15 +292,15 @@ test("uses the authored GitDev Dark palette with dual mode", async ({ page }) =>
 
 test("keeps a dark primary skin and allows a separate light alternate", async ({ page }) => {
   await page.goto("test/gitdev-alternate/");
-  const selector = page.getByRole("combobox", { name: "Color mode" });
-  await expect(selector.getByRole("option", { name: "Primary theme" })).toHaveAttribute("value", "light");
-  await expect(selector).toHaveValue("light");
+  const themeMenu = colorMode(page);
+  await expect(themeMenu.selected).toHaveText("Primary theme");
+  await expect(themeMenu.selected).toHaveAttribute("data-color-mode", "light");
   const root = page.locator("html");
   await expect(root).toHaveCSS("color-scheme", "dark");
   await expect(root).toHaveCSS("--bs-primary-base", "#41516a");
   await expect(root).toHaveCSS("--bs-link-color", "#b1dcff");
 
-  await selector.selectOption({ label: "Alternate theme" });
+  await themeMenu.choose({ label: "Alternate theme" });
   await expect(root).toHaveCSS("color-scheme", "light");
   await expect(root).toHaveCSS("--bs-primary-base", "#22272e");
   await expect(root).toHaveCSS("--bs-link-color", "#0969da");
@@ -365,7 +366,7 @@ test("loads configured fonts, colors and component overrides across both modes",
   const stylesheet = await page.request.get("test/tokens/assets/css/auto-themer.css");
   expect(await stylesheet.text()).not.toMatch(/white; color: red|var\(--missing|\.invalid, body|1px2px/);
 
-  await page.getByRole("combobox", { name: "Color mode" }).selectOption("dark");
+  await colorMode(page).choose("dark");
   await expect(body).toHaveCSS("font-family", /^"IBM Plex Mono"/);
   await expect(code).toHaveCSS("font-family", "Consolas, monospace");
   await expect(body).toHaveCSS("background-color", "rgb(32, 42, 54)");
@@ -419,9 +420,9 @@ test("generates surfaces and status colors from one primary in the kitchen sink"
   await expect(page.getByRole("heading", { name: "Bootstrap 6 kitchen sink", level: 1 })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Semantic colors", level: 2 })).toBeVisible();
   expect(await Promise.all([body, sample, ...roles.map(buttonFor)].map(background))).toEqual(light);
-  const selector = page.getByRole("combobox", { name: "Color mode" });
+  const themeMenu = colorMode(page);
   for (const mode of ["light", "dark"]) {
-    await selector.selectOption(mode);
+    await themeMenu.choose(mode);
     expect((await readContrast(body)).text, mode).toBeGreaterThanOrEqual(4.5);
     for (const role of roles) {
       expect((await readContrast(buttonFor(role))).text, `${mode} ${role}`).toBeGreaterThanOrEqual(4.5);
@@ -473,13 +474,13 @@ test("styles the legacy Markdown callouts in both color modes", async ({ page })
   await page.goto("test/dual/");
   const section = page.getByRole("region", { name: "Callouts" });
   const labels = ["Note", "Tip", "Important", "Warning", "Caution"];
-  const selector = page.getByRole("combobox", { name: "Color mode" });
+  const themeMenu = colorMode(page);
   const background = (target) => target.evaluate((element) => getComputedStyle(element).backgroundColor);
   const note = section.getByRole("note", { name: "Note", exact: true });
   const light = await background(note);
 
   for (const mode of ["light", "dark"]) {
-    await selector.selectOption(mode);
+    await themeMenu.choose(mode);
     await expect(section.getByRole("note")).toHaveCount(labels.length);
     const backgrounds = [];
     for (const label of labels) {

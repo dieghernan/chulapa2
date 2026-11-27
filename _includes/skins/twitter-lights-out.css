@@ -1,4 +1,7 @@
 color-scheme: dark;
+--chulapa-footer-color: #c1c2c2;
+--chulapa-footer-link-color: #1d9bf0;
+--chulapa-footer-link-hover-color: rgb(9.0980392157%, 48.6274509804%, 75.2941176471%);
 --bs-bg-body: #000;
 --bs-fg-body: #c1c2c2;
 --bs-body-font-family: "Libre Franklin", Roboto, Helvetica, Arial, sans-serif;

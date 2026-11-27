@@ -1,4 +1,6 @@
 --bs-body-font-family: Inter, Roboto, sans-serif;
+--chulapa-footer-color: #8b949e;
+--chulapa-footer-link-color: #58a6ff;
 --bs-heading-font-family: "Inter Tight", Roboto, sans-serif;
 --bs-heading-font-weight: 800;
 --bs-font-mono: "Roboto Mono", monospace;
@@ -6,6 +8,8 @@
 --bs-primary-contrast: white;
 --bs-primary-fg-emphasis: var(--bs-fg-body);
 --bs-primary-focus-ring: var(--bs-link-color);
+--chulapa-skin-nav-bg: var(--gitdev-navbar-bg);
+--chulapa-skin-nav-fg: #ffffff;
 
 @supports (color: contrast-color(white)) {
   --bs-primary-contrast: contrast-color(var(--bs-primary-bg));

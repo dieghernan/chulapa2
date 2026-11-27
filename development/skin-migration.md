@@ -10,19 +10,18 @@ component differences and compatibility work still pending. Check the
 Follow the [skin migration issue](https://github.com/dieghernan/chulapa2/issues/10)
 for the checklist by skin family.
 
-## Start with the original skin
+Use the [migration agent](../.github/agents/skin-migration.agent.md) for the
+workflow and the [test guide](../test/README.md) for verification.
 
-1. Check the skin's author in Chulapa's skin catalog. For third-party skins,
-   keep vendored files read-only and preserve the original values when mapping
-   verified variables and component rules. Leave uncertain mappings pending.
-2. Record the effective palette, fonts, spacing, borders and component styles.
-   Check both the upstream skin and the Chulapa wrapper, since the wrapper can
-   override the upstream design.
-3. Find the consumer of each value in the pinned Bootstrap CSS. A theme class
-   can affect a different part of a component than its Bootstrap 4 counterpart.
-4. Use the skin selector in the Kitchen Sink to inspect both modes. Run
-   `npm test -- test/browser/skins.spec.mjs test/browser/kitchen-sink.spec.mjs`
-   to verify rendered colors, contrast and behavior.
+## Layouts, includes, and assets
+
+`default` inherits from `minimal`. The shared `head.html`, `navbar.html`,
+and `footer.html` includes use Chulapa's original entry-point names.
+`components/` holds the markup and script includes. `snippets/` keeps the
+original paths for page language, explicit dark-skin detection, and the
+Bootstrap demo. The demo uses the current Bootstrap 6 component set.
+The stylesheet is published at Chulapa's `assets/css/highlighter.css` path.
+The original HTML compression layout remains a separate migration decision.
 
 ## Contrast rules for maintainer-authored skins
 
@@ -60,6 +59,21 @@ The generated alternate uses its body surface and foreground for the navbar.
 The shared rules apply to `.chulapa-navbar`, which both the site header and the
 Kitchen Sink example use.
 
+Chulapa's classic dropdowns share the navbar's background and link colors.
+In chulapa2, map those values to `--bs-menu-bg` and `--bs-menu-color`
+on menus inside `.chulapa-navbar`. Map the hover, focus, active and disabled
+item tokens to the corresponding navbar states. Use the skin's hover
+background when provided and keep the navbar background otherwise. Active
+items use a heavier weight, hovered items are underlined, and keyboard focus
+has an outline. Check both link submenus and the theme selector on desktop
+and inside the mobile drawer. Verify normal-size text at 4.5:1 and visible
+keyboard focus at 3:1 against the menu surface.
+[Chulapa dropdown rules][legacy-navbar] · [Pinned Bootstrap CSS][bootstrap-dist]
+
+The menus inherit the existing TopHat text contrast exceptions from the
+navbar. Mickie's text measures 2.95:1 in normal, hover, focus and active
+states. Skeeblu's normal text measures 2.38:1.
+
 Compare the background, brand, link, hover, active and disabled colors in
 Chulapa's compiled CSS. Include the mobile drawer in the visual check.
 Chulapa and Pear derive their navbar from the primary base, Navi uses the
@@ -91,6 +105,36 @@ corresponding chulapa2 settings and verify that explicit values override the
 skin defaults. Check the original derived colors again when users customize
 the backgrounds of maintainer-authored skins.
 
+## Footer and attribution
+
+Chulapa's footer centers its links, copyright and theme attribution.
+Chulapa2 retains that order. The footer defaults to the navbar background
+and derives text, link and hover colors from its own surface. CSS
+`color-mix()` reproduces the original blend weights for most skins.
+Electro, Hootstrap, Lymcha, Preptor and Wandoo use stronger foreground
+blends to reach 4.5:1 on their original backgrounds.
+
+GitDev and Media keep their original footer surfaces. Butterfly Dark,
+Butterfly Dim, GitDev, Listen, Media and the Twitter variants retain their
+explicit text and link colors. Skeeblu also retains its original explicit
+colors, with measured exceptions of 2.38:1 for text, 1.30:1 for the link
+and 1.22:1 for its hover, focus and active text. The focus outline uses the
+surface contrast independently. Named variants use their own footer
+palette. Generated variants derive it from their generated body surface.
+
+Custom CSS can set `--chulapa-footer-bg`, `--chulapa-footer-color`,
+`--chulapa-footer-link-color` and `--chulapa-footer-link-hover-color`.
+Both layouts link to the Chulapa2 project in the attribution. The attribution
+uses 80% of the base text size, as in Chulapa. Use the public `.chulapa` class
+to apply the Chulapa typeface and its ligatures to selected text, including
+when the skin disables ligatures on body copy.
+
+Footer links use visible text in Chulapa2. Email links open a new message
+without a preset subject. The original Font Awesome icon stacks, comment
+providers and the automatic top border when the footer matches the body
+still need migration.
+[Original footer markup][legacy-footer]
+
 ## Cards and breadcrumbs
 
 - Bootstrap 4 uses `.card.bg-primary` for an explicitly filled card. In
@@ -110,6 +154,8 @@ the backgrounds of maintainer-authored skins.
 [legacy-authored-contrast]: https://github.com/dieghernan/chulapa/blob/main/_sass/chulapa/skins/_authored-contrast.scss
 [legacy-stylesheet]: https://github.com/dieghernan/chulapa/blob/main/_sass/chulapa-master.scss
 [legacy-towards]: https://dieghernan.github.io/chulapa/skins/towards
+[legacy-navbar]: https://github.com/dieghernan/chulapa/blob/main/_sass/chulapa/_classes.scss#L278-L301
+[legacy-footer]: https://github.com/dieghernan/chulapa/blob/main/_includes/components/footer-content.html
 [bs4-cards]: https://getbootstrap.com/docs/4.6/components/card/#background-and-color
 [bootstrap-dist]: https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.2/dist/css/bootstrap.css
 [bs6-breadcrumbs]: https://getbootstrap.com/docs/6.0/components/breadcrumb/#accessibility

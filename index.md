@@ -12,4 +12,4 @@ It keeps the Chulapa typeface and rebuilds the theme for Bootstrap 6.
 
 ## Bootstrap 6 kitchen sink
 
-{% include demos/bootstrap-kitchen-sink.html section_level=3 %}
+{% include snippets/bootstrapdemo.html section_level=3 %}

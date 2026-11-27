@@ -22,39 +22,8 @@ the CDN.
 
 ## Run the browser tests
 
-Install Node.js 24 for the Playwright tests.
-
-```sh
-npm ci
-npx playwright install chromium
-npm test
-```
-
-Run `npm run preview:test` to preview Jekyll drafts and unpublished fixtures.
-This build uses `_site_test/` and serves
-<http://127.0.0.1:4173/chulapa2/>. The Auto Themer prototype is under
-<http://127.0.0.1:4173/chulapa2/test/auto-themer/>.
-The prototype reads the primary color and link overrides from
-[`test/_config.yml`](test/_config.yml). Use a six-digit hex color for
-`vars.primary`. Dark mode shares the primary color unless
-`chulapa-skin-dark.vars.primary` supplies another one. Without a dark
-configuration, dark mode follows the light Auto Themer setting. When a dark
-configuration is present, set its `autothemer` flag to `true` to generate
-that palette. Link overrides belong to their own mode and also apply when
-palette generation is off. Restart the preview after editing the file.
-The GitHub Pages workflow publishes only `_site/` from the regular build.
-Keep drafts that need to stay private out of the public Git repository.
-
-The published home page uses the Auto Themer, the color mode selector and
-Fira Code. The test preview starts from Bootstrap defaults and builds
-separate themed fixtures. Compare the kitchen sink in the
-[default preview](http://127.0.0.1:4173/chulapa2/) with the
-[Auto Themer preview](http://127.0.0.1:4173/chulapa2/test/dual/) and the
-[GitDev preview](http://127.0.0.1:4173/chulapa2/test/gitdev/).
-The [standalone kitchen sink](http://127.0.0.1:4173/chulapa2/test/dual/test/auto-themer/kitchen-sink/)
-shows the same content, form and component families on their own page.
-The gallery covers the Bootstrap 6 component index and uses the chulapa2
-site header. Drawer, Nav overflow and Toggler have separate examples.
+See the [test guide](test/README.md) for the test suite, drafts, and themed
+previews. Keep private drafts out of the public Git repository.
 
 ## Generate a primary palette
 
@@ -83,7 +52,7 @@ To generate a palette from the separate configuration, set its
 `autothemer` flag to `true`. It uses its own `vars.primary` or the Bootstrap
 default. To share a custom primary between both configurations, set the
 same `vars.primary` in each. See the
-[supported skin settings](docs/theming.md#skin-settings).
+[supported skin settings](development/theming.md#skin-settings).
 
 Use native CSS values in `vars`, including quoted hex colors, font stacks,
 dimensions and CSS functions. A Bootstrap token such as `primary-base`
@@ -92,7 +61,7 @@ with or without generation. Auto Themer uses Bootstrap's primary when
 the configuration supplies no primary. It derives neutral surfaces and
 status colors from the primary, while named skins and explicit tokens
 take precedence. Existing `skin: auto` configurations also enable generation. See the
-[theming architecture](docs/theming.md) for precedence, inheritance,
+[theming architecture](development/theming.md) for precedence, inheritance,
 component-level overrides and migration aliases.
 
 ## Load fonts
@@ -112,14 +81,45 @@ chulapa-skin:
 
 The legacy `font-family-base` and `headings-font-family` names also work.
 Each mode can select its own font families from the loaded stylesheets.
-Run `npm run preview:test` and open
-<http://127.0.0.1:4173/chulapa2/test/tokens/test/auto-themer/components/>
-to see both modes with configured fonts, colors and component tokens.
+See the [configured components preview](test/README.md#preview-the-fixtures) for an example in both modes.
+
+## Page layouts and navigation
+
+Use `layout: default` for a page with a content container and title.
+Use `layout: minimal` when the page supplies its own content layout.
+Both layouts share the page head, site navigation and footer.
+
+```yaml
+navbar:
+  expand: md
+  brand:
+    title: My site
+    img: /assets/img/logo.png
+    url: /
+  nav:
+    - title: Home
+      url: /
+    - title: Resources
+      child:
+        - title: About
+          url: /about/
+
+footer:
+  links:
+    - label: Contact
+      url: hello@example.com
+  copyright: "&copy; My site"
+```
+
+`navbar.expand` accepts `sm`, `md`, `lg`, `xl`, `always` and `never`.
+At the selected breakpoint, Bootstrap 6 switches between the side drawer
+and inline navigation according to the navbar's width. The default is `md`.
+The brand uses the site title and home URL when its settings are omitted.
 
 ## Choose a bundled skin
 
 Use the original Chulapa names for the 16 maintainer-authored and 12 TopHat
-skins. See the [skin catalog and contrast checks](docs/theming.md#bundled-skins).
+skins. See the [skin catalog and contrast checks](development/theming.md#bundled-skins).
 
 ```yaml
 chulapa-skin:
@@ -136,9 +136,7 @@ For light skins without a bundled dark variant, such as Focal and Media,
 and typography. Dark skins use their bundled light counterpart. Listen
 gets a generated light variant.
 Explicit primary and link colors in `vars` take precedence over skin defaults.
-Run `npm run preview:test` and open the
-[skin gallery](http://127.0.0.1:4173/chulapa2/test/skins/focal/) to switch
-skins and color modes on the shared kitchen sink.
+See the [skin gallery](test/README.md#preview-the-fixtures) to compare skins and color modes.
 
 ## Choose code highlighting
 

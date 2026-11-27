@@ -1,27 +1,14 @@
 {%- assign main_theme_settings = site['chulapa-skin'] -%}
 {%- assign dark_theme_settings = site['chulapa-skin-dark'] -%}
-{%- assign has_dark_theme = false -%}
 {%- assign main_skin_name = main_theme_settings.skin | strip -%}
-{%- assign dark_skin_name = dark_theme_settings.skin | strip -%}
-{%- assign dark_highlight = dark_theme_settings.highlight | strip -%}
-{%- if dark_skin_name != empty or dark_highlight != empty or dark_theme_settings.autothemer == true -%}
-  {%- assign has_dark_theme = true -%}
-{%- else -%}
-  {%- for variable in dark_theme_settings.vars -%}
-    {%- assign value = variable[1] | strip -%}
-    {%- unless value == empty -%}
-      {%- assign has_dark_theme = true -%}
-      {%- break -%}
-    {%- endunless -%}
-  {%- endfor -%}
-{%- endif -%}
+{%- include snippets/dark-skin-enabled.html -%}
 {%- include skins/resolve.html name=main_skin_name -%}
 {%- assign main_skin = resolved_skin -%}
 {%- assign main_skin_scheme = resolved_scheme -%}
 {%- assign main_skin_fonts = resolved_skin_fonts -%}
 {%- assign use_dual_mode = main_theme_settings['use-dual-mode'] -%}
 {%- assign automatic_variant = false -%}
-{%- if has_dark_theme == false and use_dual_mode == true -%}
+{%- if dark_skin_enabled == false and use_dual_mode == true -%}
   {%- assign automatic_variant = true -%}
   {%- assign dark_skin_name = resolved_skin_variant -%}
 {%- endif -%}
@@ -40,6 +27,6 @@
   {%- assign dark_skin_scheme = generated_variant_scheme -%}
 {%- endif -%}
 {%- assign show_color_mode_selector = false -%}
-{%- if has_dark_theme or site['color-mode-selector'] == true -%}
+{%- if dark_skin_enabled or site['color-mode-selector'] == true -%}
   {%- assign show_color_mode_selector = true -%}
 {%- endif -%}

@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { colorMode } from "./color-mode-control.mjs";
 
 test("follows the system and remembers explicit modes across pages", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "light" });
@@ -6,35 +7,46 @@ test("follows the system and remembers explicit modes across pages", async ({ pa
 
   const root = page.locator("html");
   const body = page.locator("body");
-  const select = page.getByRole("combobox", { name: "Color mode" });
-  await expect(select).toHaveValue("light");
+  const themeMenu = colorMode(page);
+  const icon = page.locator("#site-color-mode-icon");
+  await expect(themeMenu.selected).toHaveAttribute("data-color-mode", "light");
+  await expect(icon).toHaveClass("bi bi-sun-fill");
+  await expect(icon).toHaveAttribute("aria-hidden", "true");
+  expect(await icon.evaluate(async (element) => {
+    const style = getComputedStyle(element, "::before");
+    const glyph = style.content.slice(1, -1);
+    const fonts = await document.fonts.load("1rem bootstrap-icons", glyph);
+    return glyph.length > 0 && fonts.some((font) => font.status === "loaded");
+  })).toBe(true);
   const lightBackground = await body.evaluate((element) => getComputedStyle(element).backgroundColor);
 
   await page.emulateMedia({ colorScheme: "dark" });
   await expect(body).toHaveCSS("background-color", lightBackground);
-  await select.selectOption("");
+  await themeMenu.choose("system");
   await expect(body).not.toHaveCSS("background-color", lightBackground);
   const darkBackground = await body.evaluate((element) => getComputedStyle(element).backgroundColor);
-  await expect(select).toHaveValue("");
+  await expect(themeMenu.selected).toHaveAttribute("data-color-mode", "system");
+  await expect(icon).toHaveClass("bi bi-circle-half");
 
-  await select.selectOption("light");
+  await themeMenu.choose("light");
   await expect(root).toHaveAttribute("data-bs-theme", "light");
   await expect(body).toHaveCSS("background-color", lightBackground);
   await page.goto("test/themed/test/auto-themer/components/");
-  await expect(select).toHaveValue("light");
+  await expect(themeMenu.selected).toHaveAttribute("data-color-mode", "light");
   await expect(body).toHaveCSS("background-color", lightBackground);
 
-  await select.selectOption("dark");
+  await themeMenu.choose("dark");
   await page.emulateMedia({ colorScheme: "light" });
   await expect(body).toHaveCSS("background-color", darkBackground);
   await page.reload();
-  await expect(select).toHaveValue("dark");
+  await expect(themeMenu.selected).toHaveAttribute("data-color-mode", "dark");
+  await expect(icon).toHaveClass("bi bi-moon-stars-fill");
   await expect(root).toHaveAttribute("data-bs-theme", "dark");
 
-  await select.selectOption("");
+  await themeMenu.choose("system");
   await expect(body).toHaveCSS("background-color", lightBackground);
   await page.reload();
-  await expect(select).toHaveValue("");
+  await expect(themeMenu.selected).toHaveAttribute("data-color-mode", "system");
   await expect(root).not.toHaveAttribute("data-bs-theme", /.+/);
 });
 
@@ -47,9 +59,9 @@ test("lets visitors change the mode when browser storage is blocked", async ({ p
     });
   });
   await page.goto("test/themed/");
-  const select = page.getByRole("combobox", { name: "Color mode" });
-  await expect(select).toHaveValue("light");
-  await select.selectOption("dark");
+  const themeMenu = colorMode(page);
+  await expect(themeMenu.selected).toHaveAttribute("data-color-mode", "light");
+  await themeMenu.choose("dark");
   await expect(page.locator("html")).toHaveAttribute("data-bs-theme", "dark");
 });
 
@@ -58,6 +70,7 @@ test("keeps a single primary configuration fixed even with a stored dark prefere
   await page.emulateMedia({ colorScheme: "dark" });
   await page.goto("test/primary/");
   await expect(page.locator("#site-color-mode")).toHaveCount(0);
+  await expect(page.locator('link[href*="/bootstrap-icons@"]')).toHaveCount(0);
   await expect(page.locator("html")).toHaveAttribute("data-bs-theme", "light");
   await expect(page.locator("html")).toHaveCSS("--auto-themer-primary", "#285d70");
   const stylesheet = await page.request.get("test/primary/assets/css/auto-themer.css");
@@ -74,7 +87,7 @@ test("applies an explicit primary without generating a palette", async ({ page }
   await expect(root).toHaveCSS("--bs-primary-bg", "#285d70");
   await expect(root).toHaveCSS("--auto-themer-primary", "");
   await expect(link).toHaveCSS("color", "rgb(40, 93, 112)");
-  await page.getByRole("combobox", { name: "Color mode" }).selectOption("dark");
+  await colorMode(page).choose("dark");
   await expect(root).toHaveCSS("color-scheme", "dark");
   await expect(root).not.toHaveCSS("--bs-primary-base", "#285d70");
   await expect(root).toHaveCSS("--auto-themer-primary", "");
@@ -85,11 +98,11 @@ test("uses the primary color for an explicitly requested dark variant", async ({
   await page.goto("test/dual/");
   const root = page.locator("html");
   const link = page.getByRole("main").getByRole("link", { name: "chulapa", exact: true });
-  await page.getByRole("combobox", { name: "Color mode" }).selectOption("");
+  await colorMode(page).choose("system");
   await expect(root).toHaveCSS("color-scheme", "light dark");
   await expect(root).toHaveCSS("--auto-themer-primary", "#285d70");
   const darkColor = await link.evaluate((element) => getComputedStyle(element).color);
-  await page.getByRole("combobox", { name: "Color mode" }).selectOption("light");
+  await colorMode(page).choose("light");
   await expect(root).toHaveCSS("--auto-themer-primary", "#285d70");
   await expect(link).not.toHaveCSS("color", darkColor);
 });
@@ -97,7 +110,7 @@ test("uses the primary color for an explicitly requested dark variant", async ({
 test("shares configured tokens except body colors with the automatic dark variant", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "dark" });
   await page.goto("test/dual/");
-  const selector = page.getByRole("combobox", { name: "Color mode" });
+  const themeMenu = colorMode(page);
   const body = page.locator("body");
   const heading = page.locator("#surfaces-title");
   const inlineCode = page.locator("#surfaces p code").first();
@@ -105,8 +118,8 @@ test("shares configured tokens except body colors with the automatic dark varian
   const field = page.locator("#sink-email");
   const button = page.getByRole("button", { name: "Primary button", exact: true });
 
-  for (const mode of ["light", "dark", ""]) {
-    await selector.selectOption(mode);
+  for (const mode of ["light", "dark", "system"]) {
+    await themeMenu.choose(mode);
     await expect(body).toHaveCSS("font-family", "Georgia, serif");
     await expect(body).toHaveCSS("font-size", "18px");
     await expect(body).toHaveCSS("font-weight", "500");
@@ -135,12 +148,12 @@ test("shares configured tokens except body colors with the automatic dark varian
 test("shows the selector with two configurations even when explicitly disabled", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "dark" });
   await page.goto("test/hide-selector/");
-  const selector = page.getByRole("combobox", { name: "Color mode" });
+  const themeMenu = colorMode(page);
   const root = page.locator("html");
-  await expect(selector).toBeVisible();
-  await expect(selector).toHaveValue("light");
+  await expect(themeMenu.trigger).toBeVisible();
+  await expect(themeMenu.selected).toHaveAttribute("data-color-mode", "light");
   await expect(root).toHaveCSS("--auto-themer-primary", "#285d70");
-  await selector.selectOption("dark");
+  await themeMenu.choose("dark");
   await expect(root).toHaveAttribute("data-bs-theme", "dark");
 });
 
@@ -154,7 +167,7 @@ test("uses Bootstrap's primary when the explicit dark configuration has no prima
 
   await page.goto("test/hide-selector/");
   await expect(root).toHaveCSS("--auto-themer-primary", "#285d70");
-  await page.getByRole("combobox", { name: "Color mode" }).selectOption("dark");
+  await colorMode(page).choose("dark");
   await expect(root).toHaveCSS("--auto-themer-primary", bootstrapPrimary);
 });
 
@@ -163,7 +176,7 @@ test.describe("without JavaScript", () => {
 
   test("keeps the primary appearance across system preferences", async ({ page }) => {
     await page.goto("test/themed/");
-    await expect(page.getByRole("combobox", { name: "Color mode" })).toBeHidden();
+    await expect(colorMode(page).trigger).toBeHidden();
     const body = page.locator("body");
     await expect(page.locator("html")).toHaveAttribute("data-bs-theme", "light");
     const primaryBackground = await body.evaluate((element) => getComputedStyle(element).backgroundColor);

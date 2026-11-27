@@ -28,7 +28,7 @@ settings were explicit Sass overrides. [Chulapa build][legacy-build] · [Chulapa
 | Shadows, spacing and sizing | Set `shadow-strength`, `box-shadow-inset`, `spacer`, size tokens or local component values. Some Bootstrap utilities have values compiled into the distribution. Changing a token updates its consumers only. |
 | Link color, hover, decoration and focus | Set `link-color`, `link-hover-color`, `link-decoration` and `focus-ring-width`. Use `primary-focus-ring` for primary-themed buttons, which read the semantic focus color. A configured link color also applies on hover unless a separate hover value is supplied. |
 | Forms, input sizes and interaction states | Use shared inputs such as `btn-input-padding-x` and `control-checked-bg`, or scope local tokens such as `control-border-color` to `.form-control`. Bootstrap owns keyboard behavior and interaction selectors. |
-| Navigation, footer, hero, quotes, pagination and TOC | Use native component tokens where they match. Existing authored skin rules cover the navigation and quotes. The footer, hero, pagination and TOC need the corresponding chulapa2 components before their legacy settings can be mapped. |
+| Navigation, footer, hero, quotes, pagination and TOC | Use native component tokens where they match. Existing skin rules cover navigation, footer and quotes. The footer defaults to the navbar background and derives foregrounds from its own surface. Legacy hero, pagination and TOC styles need their own migration. |
 | Code color, highlighted blocks and third-party integrations | Set `code-color` and `font-mono` for Bootstrap code styles. Choose `default`, `github` or `github.dark` using each mode's `highlight` field. Plugin-specific styling and Sass expressions require separate work or downstream CSS. |
 
 ## Token dependencies and scope
@@ -237,18 +237,8 @@ Deeply retains its original white primary and danger button labels in dark
 mode and white text on themed table rows. Some of those pairs are below
 4.5:1.
 
-Run `npm test -- test/browser/skins.spec.mjs` to build skin fixtures and
-test computed colors in Chromium. The checks pin the original primary
-colors and exercise text contrast, button and badge states and focus at
-mobile and desktop widths. Skins without a named alternate also run with
-their generated variant in manual and system modes.
-Custom tokens and user content require their own contrast review.
-
-Run `npm run preview:test` to open the
-[skin gallery](http://127.0.0.1:4173/chulapa2/test/skins/focal/). The skin
-selector loads another skin on the same kitchen sink and keeps the color
-mode selection. The primary appearance of an originally dark skin
-remains dark.
+See the [test guide](../test/README.md#skin-checks) for the contrast suite
+and the skin gallery.
 
 ## Generator and intentional overrides
 

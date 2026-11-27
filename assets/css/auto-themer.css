@@ -1,13 +1,13 @@
 ---
 ---
-{%- include theme-options.html -%}
+{%- include snippets/theme-options.html -%}
 {%- assign light_generate = main_theme_settings.autothemer -%}
 {%- if main_skin_name == 'auto' -%}
   {%- assign light_generate = true -%}
 {%- endif -%}
 {%- assign dark_generate = false -%}
 {%- assign dark_vars = dark_theme_settings.vars -%}
-{%- if has_dark_theme -%}
+{%- if dark_skin_enabled -%}
   {%- assign dark_generate = dark_theme_settings.autothemer -%}
   {%- if dark_skin_name == 'auto' -%}
     {%- assign dark_generate = true -%}

@@ -1,0 +1,40 @@
+{%- if show_color_mode_selector == nil -%}
+  {%- include snippets/theme-options.html -%}
+{%- endif -%}
+{% if show_color_mode_selector %}
+{% assign main_mode_icon = 'bi-sun-fill' %}
+{% assign main_mode_label = 'Light theme' %}
+{% if main_skin_scheme == 'dark' %}
+  {% assign main_mode_icon = 'bi-moon-stars-fill' %}
+  {% assign main_mode_label = 'Primary theme' %}
+{% endif %}
+{% assign alternate_mode_icon = 'bi-moon-stars-fill' %}
+{% assign alternate_mode_label = 'Dark theme' %}
+{% if dark_skin_scheme == 'light' %}
+  {% assign alternate_mode_icon = 'bi-sun-fill' %}
+  {% if automatic_variant %}
+    {% assign alternate_mode_label = 'Light theme' %}
+  {% else %}
+    {% assign alternate_mode_label = 'Alternate theme' %}
+  {% endif %}
+{% endif %}
+<li class="nav-item position-relative" id="site-color-mode-control" hidden>
+  <button class="nav-link" type="button" id="site-color-mode" data-bs-toggle="menu"
+          data-bs-placement="bottom-end" aria-expanded="false" aria-controls="site-color-mode-options"
+          aria-label="Color mode">
+    <span class="bi {{ main_mode_icon }}" id="site-color-mode-icon" aria-hidden="true"></span>
+    <span class="bi bi-chevron-expand" aria-hidden="true"></span>
+  </button>
+  <div class="menu" id="site-color-mode-options" aria-labelledby="site-color-mode">
+    <button type="button" class="menu-item" data-color-mode="light" aria-pressed="false">
+      <span class="bi {{ main_mode_icon }}" aria-hidden="true"></span> {{ main_mode_label }}
+    </button>
+    <button type="button" class="menu-item" data-color-mode="dark" aria-pressed="false">
+      <span class="bi {{ alternate_mode_icon }}" aria-hidden="true"></span> {{ alternate_mode_label }}
+    </button>
+    <button type="button" class="menu-item" data-color-mode="system" aria-pressed="false">
+      <span class="bi bi-circle-half" aria-hidden="true"></span> System theme
+    </button>
+  </div>
+</li>
+{% endif %}

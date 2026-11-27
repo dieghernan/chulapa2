@@ -1,4 +1,7 @@
 color-scheme: dark;
+--chulapa-footer-color: #fff;
+--chulapa-footer-link-color: #208bfe;
+--chulapa-footer-link-hover-color: rgb(32.4597338936%, 64.8669467787%, 99.6971288515%);
 --bs-bg-body: #161e27;
 --bs-fg-body: #ffffff;
 --bs-body-font-family: "Inter", "Roboto";
@@ -39,6 +42,6 @@ color-scheme: dark;
   --bs-pagination-hover-color: black;
 }
 
-& :where(:not(.chulapa-brand)) {
+& :where(:not(.chulapa-brand, .chulapa)) {
   font-variant-ligatures: none;
 }

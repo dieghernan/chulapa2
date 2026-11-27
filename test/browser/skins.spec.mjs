@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { expect, test } from "@playwright/test";
+import { colorMode } from "./color-mode-control.mjs";
 import { readContrasts } from "./contrast.mjs";
 
 const authored = JSON.parse(readFileSync(new URL("./skin-identity.json", import.meta.url)));
@@ -12,6 +13,17 @@ const identity = {
 };
 const catalog = readFileSync(new URL("../../_includes/skins/catalog.html", import.meta.url), "utf8")
   .trim().split(/\r?\n/).map((row) => row.split("|"));
+const footerBackgrounds = {
+  gitdev: "rgb(13, 17, 23)",
+  media: "rgb(36, 36, 36)",
+};
+const skeebluFooterContrast = {
+  "normal/footer-copy/text": 2.38,
+  "normal/footer-attribution/text": 1.30,
+  "hover/footer-attribution/text": 1.22,
+  "focus/footer-attribution/text": 1.22,
+  "active/footer-attribution/text": 1.22,
+};
 
 test.use({ reducedMotion: "reduce" });
 test.describe.configure({ mode: "parallel" });
@@ -28,6 +40,9 @@ async function audit(page, context, exceptions = {}) {
   const navLink = navigation.getByRole("link", { name: "About" });
   await expect(navLink).toBeVisible();
   await navLink.evaluate((link) => { link.dataset.contrast = "navigation-link"; });
+  const footer = page.getByRole("contentinfo");
+  await footer.locator(".chulapa-footer-brand").evaluate((copy) => { copy.dataset.contrast = "footer-copy"; });
+  await footer.locator(".chulapa-footer-brand a").evaluate((link) => { link.dataset.contrast = "footer-attribution"; });
   const fixture = page.locator("[data-contrast]");
   const interactive = "[data-contrast]:is(button, a, input)";
   const session = await page.context().newCDPSession(page);
@@ -86,6 +101,9 @@ for (const [skin, scheme] of catalog) {
       const navigation = page.getByRole("navigation", { name: "Primary", exact: true });
       await expect(navigation).toHaveCSS("background-color", navbarBackground);
       await expect(navigation.locator(".navbar-brand")).toHaveCSS("color", brandColor);
+      await expect(page.getByRole("contentinfo")).toHaveCSS(
+        "background-color", footerBackgrounds[skin] ?? navbarBackground,
+      );
       if (topHat[skin]) {
         const actual = await html.evaluate((element, names) => {
           const style = getComputedStyle(element);
@@ -94,7 +112,8 @@ for (const [skin, scheme] of catalog) {
         expect(actual).toEqual(topHat[skin]);
       }
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-      await audit(page, `${skin} at ${width}px`, topHatContrast[skin]);
+      const footerContrast = skin === "skeeblu" ? skeebluFooterContrast : {};
+      await audit(page, `${skin} at ${width}px`, { ...topHatContrast[skin], ...footerContrast });
     }
   });
 }
@@ -144,7 +163,7 @@ test("maps Deeply's dark component values and uses native surfaces in the genera
   await expect(input).toHaveCSS("background-color", "rgb(204, 204, 204)");
   await expect(input).toHaveCSS("color", "rgb(73, 80, 87)");
 
-  await page.getByRole("combobox", { name: "Color mode" }).selectOption({ label: "Light theme" });
+  await colorMode(page).choose({ label: "Light theme" });
   await expect(page.locator("html")).toHaveCSS("color-scheme", "light");
   await expect(cell).not.toHaveCSS("background-color", "rgb(255, 85, 11)");
   await expect(alert).not.toHaveCSS("background-color", "rgb(13, 226, 234)");
@@ -156,7 +175,7 @@ for (const [skin, primaryScheme] of catalog.filter(([, , alternate]) => !alterna
   test(`${skin} generates a ${alternateScheme} variant with the original typography`, async ({ page }) => {
     await page.emulateMedia({ colorScheme: alternateScheme });
     await page.goto(`test/skins/${skin}/`);
-    const selector = page.getByRole("combobox", { name: "Color mode" });
+    const themeMenu = colorMode(page);
     const body = page.locator("body");
     const heading = page.getByRole("heading", { name: "Skin contrast fixture" });
     const font = (element) => element.evaluate((node) => getComputedStyle(node).fontFamily);
@@ -164,14 +183,16 @@ for (const [skin, primaryScheme] of catalog.filter(([, , alternate]) => !alterna
     const titleFont = await font(heading);
     const primaryBackground = await body.evaluate((node) => getComputedStyle(node).backgroundColor);
 
-    for (const mode of ["dark", ""]) {
-      await selector.selectOption(mode);
+    for (const mode of ["dark", "system"]) {
+      await themeMenu.choose(mode);
       await expect(page.locator("html")).toHaveCSS("color-scheme", alternateScheme);
       await expect(page.locator("html")).toHaveCSS("--bs-primary-base", identity[skin]);
       await expect(body).toHaveCSS("font-family", bodyFont);
       await expect(heading).toHaveCSS("font-family", titleFont);
       await expect(body).not.toHaveCSS("background-color", primaryBackground);
-      await audit(page, `${skin} automatic ${alternateScheme} (${mode || "system"})`);
+      const bodyBackground = await body.evaluate((node) => getComputedStyle(node).backgroundColor);
+      await expect(page.getByRole("contentinfo")).toHaveCSS("background-color", bodyBackground);
+      await audit(page, `${skin} automatic ${alternateScheme} (${mode})`);
     }
     await page.emulateMedia({ colorScheme: primaryScheme });
     await expect(body).toHaveCSS("background-color", primaryBackground);
@@ -181,34 +202,40 @@ for (const [skin, primaryScheme] of catalog.filter(([, , alternate]) => !alterna
 test("switches between skins in the shared kitchen sink and keeps the color preference", async ({ page }) => {
   await page.goto("test/skins/focal/");
   const skin = page.getByRole("combobox", { name: "Skin", exact: true });
-  const mode = page.getByRole("combobox", { name: "Color mode" });
+  const themeMenu = colorMode(page);
   await expect(skin.locator("option")).toHaveCount(catalog.length);
   await expect(page.locator("#bootstrap-kitchen-sink")).toBeVisible();
-  await mode.selectOption("dark");
+  await themeMenu.choose("dark");
   await skin.selectOption({ label: "media" });
   await expect(page).toHaveURL(/\/test\/skins\/media\/$/);
-  await expect(mode).toHaveValue("dark");
+  await expect(themeMenu.selected).toHaveAttribute("data-color-mode", "dark");
   await expect(page.locator("#bootstrap-kitchen-sink")).toBeVisible();
   await expect(page.locator("html")).toHaveCSS("--bs-primary-base", identity.media);
+  const wordmark = page.getByRole("contentinfo").locator(".chulapa");
+  await expect(wordmark).toHaveCSS("font-variant-ligatures", "common-ligatures discretionary-ligatures");
   await skin.selectOption({ label: "listen" });
   await expect(page).toHaveURL(/\/test\/skins\/listen\/$/);
   await expect(page.locator("html")).toHaveCSS("color-scheme", "dark");
-  await mode.selectOption({ label: "Light theme" });
+  await themeMenu.choose({ label: "Light theme" });
   await skin.selectOption({ label: "focal" });
   await expect(page).toHaveURL(/\/test\/skins\/focal\/$/);
   await expect(page.locator("html")).toHaveCSS("color-scheme", "light");
-  await expect(mode).toHaveValue("light");
+  await expect(themeMenu.selected).toHaveAttribute("data-color-mode", "light");
 });
 
 test("uses the named dark skin when a family provides one", async ({ page }) => {
-  for (const [light, dark, background] of [
-    ["butterfly", "butterfly-dark", "rgb(0, 0, 0)"],
-    ["twitter", "twitter-lights-out", "rgb(0, 0, 0)"],
+  for (const [light, dark, background, linkColor] of [
+    ["butterfly", "butterfly-dark", "rgb(0, 0, 0)", "rgb(16, 131, 254)"],
+    ["gitdev", "gitdev-dark", "rgb(36, 41, 47)", "rgb(88, 166, 255)"],
+    ["twitter", "twitter-lights-out", "rgb(0, 0, 0)", "rgb(29, 155, 240)"],
   ]) {
     await page.goto(`test/skins/${light}/`);
-    await page.getByRole("combobox", { name: "Color mode" }).selectOption("dark");
+    await colorMode(page).choose("dark");
     await expect(page.locator("html")).toHaveCSS("--bs-primary-base", identity[dark]);
     await expect(page.locator("body")).toHaveCSS("background-color", background);
+    const footer = page.getByRole("contentinfo");
+    await expect(footer).toHaveCSS("background-color", background);
+    await expect(footer.locator(".chulapa-footer-brand a")).toHaveCSS("color", linkColor);
   }
 });
 
@@ -217,16 +244,19 @@ test("uses the named light skin when starting from its dark counterpart", async 
     await page.emulateMedia({ colorScheme: "light" });
     await page.goto(`test/skins/${skin}/`);
     const root = page.locator("html");
-    const selector = page.getByRole("combobox", { name: "Color mode" });
+    const themeMenu = colorMode(page);
+    const icon = page.locator("#site-color-mode-icon");
     await expect(root).toHaveCSS("color-scheme", "dark");
-    await selector.selectOption({ label: "Light theme" });
+    await expect(icon).toHaveClass("bi bi-moon-stars-fill");
+    await themeMenu.choose({ label: "Light theme" });
     await expect(root).toHaveCSS("--bs-primary-base", identity[alternate]);
     await expect(root).toHaveCSS("color-scheme", "light");
-    await selector.selectOption("");
+    await expect(icon).toHaveClass("bi bi-sun-fill");
+    await themeMenu.choose("system");
     await expect(root).toHaveCSS("color-scheme", "light");
     await page.emulateMedia({ colorScheme: "dark" });
     await expect(root).toHaveCSS("--bs-primary-base", identity[skin]);
     await expect(root).toHaveCSS("color-scheme", "dark");
-    await selector.selectOption("light");
+    await themeMenu.choose("light");
   }
 });

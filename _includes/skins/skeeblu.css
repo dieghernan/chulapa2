@@ -1,4 +1,7 @@
 color-scheme: light;
+--chulapa-footer-color: var(--bs-bg-body);
+--chulapa-footer-link-color: var(--bs-secondary-base);
+--chulapa-footer-link-hover-color: hsl(200.3076923077 37.4855824683% 66%);
 --bs-heading-font-family: Yantramanav;
 --tophat-light: #eef0f2;
 --tophat-dark: #3c4055;

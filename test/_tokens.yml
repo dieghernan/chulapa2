@@ -2,6 +2,30 @@ googlefonts:
   - url: "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Raleway:wght@400..800&family=Rubik:wght@400..700&display=swap"
   - url: "javascript:invalid"
 
+navbar:
+  expand: lg
+  brand:
+    title: Demo brand
+    img: /assets/img/kitchen-sink/harbor.webp
+    url: /test/minimal/
+  nav:
+    - title: Home
+      url: /
+    - title: About
+      url: /#about
+    - title: Examples
+      child:
+        - title: Minimal example
+          url: /test/minimal
+
+footer:
+  links:
+    - label: Fixture home
+      url: /
+    - label: Email
+      url: fixture@example.com
+  copyright: "Fixture &copy; <strong>Chulapa</strong>"
+
 chulapa-skin:
   skin: gitdev
   autothemer: true
