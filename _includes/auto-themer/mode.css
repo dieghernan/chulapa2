@@ -11,13 +11,10 @@
       }
     {% endif -%}
   {%- when 'base' -%}
-    {%- if include.shared_vars -%}
-      {%- include auto-themer/tokens.css vars=include.shared_vars stage='base' primary_only=true -%}
-    {%- endif -%}
-    {%- include auto-themer/tokens.css vars=include.settings.vars stage='base' -%}
-    {%- assign prefixed_primary = include.settings.vars['--bs-primary-base'] -%}
-    {%- assign native_primary = include.settings.vars['primary-base'] -%}
-    {%- assign legacy_primary = include.settings.vars.primary -%}
+    {%- include auto-themer/tokens.css vars=include.vars stage='base' -%}
+    {%- assign prefixed_primary = include.vars['--bs-primary-base'] -%}
+    {%- assign native_primary = include.vars['primary-base'] -%}
+    {%- assign legacy_primary = include.vars.primary -%}
     {%- capture primary -%}
       {%- include auto-themer/token-value.html value=prefixed_primary -%}
       {%- include auto-themer/token-value.html value=native_primary -%}
@@ -47,20 +44,20 @@
         {%- if reference %}
           {{ css_token }}: color-mix(in oklab, var(--bs-{{ reference }}) 86%, var(--bs-primary-base));
         {% endif -%}
-        {%- if role == 'primary' or reference or include.settings.vars[base_token] or include.settings.vars[css_token] %}
+        {%- if role == 'primary' or reference or include.vars[base_token] or include.vars[css_token] %}
           --auto-themer-{{ role }}: var({{ css_token }});
           {% include auto-themer/palette.css role=role %}
         {% endif -%}
       {%- endfor -%}
     {%- endif -%}
   {%- when 'explicit' -%}
-    {%- assign configured_link = include.settings.vars['--bs-link-color'] | default: include.settings.vars['link-color'] -%}
-    {%- assign configured_hover = include.settings.vars['--bs-link-hover-color'] | default: include.settings.vars['link-hover-color'] -%}
+    {%- assign configured_link = include.vars['--bs-link-color'] | default: include.vars['link-color'] -%}
+    {%- assign configured_hover = include.vars['--bs-link-hover-color'] | default: include.vars['link-hover-color'] -%}
     {%- capture link_value -%}
       {%- include auto-themer/token-value.html value=configured_link -%}
     {%- endcapture -%}
     {%- if link_value != empty and configured_hover == nil %}
       --bs-link-hover-color: var(--bs-link-color);
     {% endif -%}
-    {%- include auto-themer/tokens.css vars=include.settings.vars stage='explicit' -%}
+    {%- include auto-themer/tokens.css vars=include.vars stage='explicit' skip_body_colors=include.skip_body_colors -%}
 {%- endcase -%}

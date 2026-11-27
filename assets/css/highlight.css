@@ -1,0 +1,41 @@
+---
+---
+/*
+Rouge palettes from chulapa's _sass/highlight directory.
+{% include highlight/license.txt %}
+*/
+{%- assign supported_highlights = 'default,github,github.dark' | split: ',' -%}
+{%- assign primary_highlight = site.chulapa-skin.highlight | strip | downcase -%}
+{%- unless supported_highlights contains primary_highlight -%}
+  {%- assign primary_highlight = 'default' -%}
+{%- endunless -%}
+{%- assign alternate_highlight = site.chulapa-skin-dark.highlight | strip | downcase -%}
+{%- unless supported_highlights contains alternate_highlight -%}
+  {%- assign alternate_highlight = primary_highlight -%}
+{%- endunless -%}
+
+:root .highlight pre {
+  color: #24292f;
+}
+
+{% if primary_highlight == alternate_highlight %}
+:root {
+  {% include highlight/palette.css name=primary_highlight %}
+}
+{% else %}
+  {% assign modes = 'light,dark' | split: ',' %}
+  {% for mode in modes %}
+    {% assign name = primary_highlight %}
+    {% if mode == 'dark' %}{% assign name = alternate_highlight %}{% endif %}
+    {% capture rules %}{% include highlight/palette.css name=name %}{% endcapture %}
+:root:where([data-bs-theme="{{ mode }}"]) {
+  {{ rules }}
+}
+
+@media (prefers-color-scheme: {{ mode }}) {
+  :root:where(:not([data-bs-theme])) {
+    {{ rules }}
+  }
+}
+  {% endfor %}
+{% endif %}

@@ -1,0 +1,82 @@
+<div class="row g-3 mt-2">
+  <div class="col-12 md:col-6 form-field">
+    <label for="sink-password">Password</label>
+    <input class="form-control" id="sink-password" type="password" autocomplete="off">
+  </div>
+  <div class="col-12 md:col-6 form-field">
+    <label for="sink-file">Attach a sample file</label>
+    <input class="form-control" id="sink-file" type="file">
+  </div>
+</div>
+
+<h{{ include.heading_level }} class="mt-4">Disabled forms</h{{ include.heading_level }}>
+<fieldset class="row g-3" disabled>
+  <legend class="fs-md">Account options</legend>
+  <div class="col-12 md:col-6 form-field">
+    <label for="sink-disabled-select">Region</label>
+    <select class="form-control" id="sink-disabled-select"><option>Europe</option></select>
+  </div>
+  <div class="col-12 md:col-6 form-field">
+    <input class="check" id="sink-disabled-check" type="checkbox" checked>
+    <label for="sink-disabled-check">Remember preferences</label>
+  </div>
+</fieldset>
+
+<h{{ include.heading_level }} class="mt-4">Form sizing</h{{ include.heading_level }}>
+<div class="row g-3">
+  {% assign sizes = 'sm,default,lg' | split: ',' %}
+  {% for size in sizes %}
+  <div class="col-12 md:col-4 form-field">
+    <label for="sink-size-{{ size }}">{{ size | capitalize }} input</label>
+    <input class="form-control{% unless size == 'default' %} form-control-{{ size }}{% endunless %}" id="sink-size-{{ size }}" type="text">
+  </div>
+  {% endfor %}
+</div>
+
+<h{{ include.heading_level }} class="mt-4">Input groups</h{{ include.heading_level }}>
+<div class="row g-3">
+  <div class="col-12 md:col-6 form-field">
+    <label for="sink-handle">Account handle</label>
+    <div class="input-group">
+      <span id="sink-at" class="input-group-text">@</span>
+      <input type="text" class="form-control" id="sink-handle" aria-describedby="sink-at">
+    </div>
+  </div>
+  <div class="col-12 md:col-6 form-field">
+    <label for="sink-amount">Budget</label>
+    <div class="input-group">
+      <span id="sink-euros" class="input-group-text">EUR</span>
+      <input type="text" class="form-control" id="sink-amount" inputmode="decimal" aria-describedby="sink-euros">
+    </div>
+  </div>
+</div>
+
+<h{{ include.heading_level }} class="mt-4">Floating labels</h{{ include.heading_level }}>
+<div class="row g-3">
+  <div class="col-12 md:col-6">
+    <div class="form-floating">
+      <label for="sink-floating-email">Contact email</label>
+      <input type="email" class="form-control" id="sink-floating-email" placeholder="reader@example.com">
+    </div>
+  </div>
+  <div class="col-12 md:col-6">
+    <div class="form-floating">
+      <label for="sink-floating-password">Access code</label>
+      <input type="password" class="form-control" id="sink-floating-password" placeholder="Access code" autocomplete="off">
+    </div>
+  </div>
+</div>
+
+<h{{ include.heading_level }} class="mt-4">Validation</h{{ include.heading_level }}>
+<div class="row g-3">
+  <div class="col-12 md:col-6 form-field">
+    <label for="sink-valid">Project name</label>
+    <input class="form-control is-valid" id="sink-valid" value="Chulapa" aria-describedby="sink-valid-feedback">
+    <div class="valid-feedback" id="sink-valid-feedback">Project name is available.</div>
+  </div>
+  <div class="col-12 md:col-6 form-field">
+    <label for="sink-invalid">Contact address</label>
+    <input type="email" class="form-control is-invalid" id="sink-invalid" value="reader" aria-invalid="true" aria-describedby="sink-invalid-feedback">
+    <div class="invalid-feedback" id="sink-invalid-feedback">Enter a full email address.</div>
+  </div>
+</div>

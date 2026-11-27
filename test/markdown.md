@@ -16,6 +16,13 @@ This paragraph contains **strong text**, *emphasis*, and a [link to the home pag
 
 > Block quotes keep their meaning in the generated HTML.
 
+<div class="callout-note" role="note" aria-label="Note" markdown="1">
+This callout contains more than one block.
+
+- First item
+- Second item
+</div>
+
 | Format | Output |
 | --- | --- |
 | Markdown | HTML |

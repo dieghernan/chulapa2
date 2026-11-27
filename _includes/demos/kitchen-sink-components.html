@@ -1,0 +1,200 @@
+<h{{ include.heading_level }} class="mt-4" id="sink-accordion-title">Accordion</h{{ include.heading_level }}>
+<div class="accordion">
+  {% assign steps = 'Source,Build,Publish' | split: ',' %}
+  {% for step in steps %}
+  <details class="accordion-item" name="sink-accordion"{% if forloop.first %} open{% endif %}>
+    <summary class="accordion-header">
+      {{ step }} details
+      <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+           fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+           aria-hidden="true" focusable="false">
+        <path d="m2 5 6 6 6-6" />
+      </svg>
+    </summary>
+    <div class="accordion-body">Review the {{ step | downcase }} settings for this example.</div>
+  </details>
+  {% endfor %}
+</div>
+
+<h{{ include.heading_level }} class="mt-4">Alerts</h{{ include.heading_level }}>
+<div class="alert theme-warning mt-3">
+  This sample alert can be dismissed.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Dismiss sample alert"></button>
+</div>
+
+<h{{ include.heading_level }} class="mt-4">Badge</h{{ include.heading_level }}>
+<p>Build status <span class="badge theme-success">Ready</span> <span class="badge theme-info">Preview</span></p>
+
+<h{{ include.heading_level }} class="mt-4" id="sink-breadcrumbs-title">Breadcrumbs</h{{ include.heading_level }}>
+<nav aria-label="Example breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a class="breadcrumb-link" href="#bootstrap-kitchen-sink">Kitchen sink</a></li>
+    <li class="breadcrumb-divider" aria-hidden="true"></li>
+    <li class="breadcrumb-item"><a class="breadcrumb-link" href="#components">Components</a></li>
+    <li class="breadcrumb-divider" aria-hidden="true"></li>
+    <li class="breadcrumb-item"><span class="breadcrumb-link active" aria-current="page">Breadcrumbs</span></li>
+  </ol>
+</nav>
+
+<h{{ include.heading_level }} class="mt-4">Buttons and button groups</h{{ include.heading_level }}>
+<div class="d-flex flex-wrap gap-2 mb-3">
+  <button type="button" class="btn-subtle theme-primary btn-sm">Small subtle</button>
+  <button type="button" class="btn-text theme-primary">Text action</button>
+  <button type="button" class="btn-link">Link style</button>
+  <button type="button" class="btn-solid theme-primary btn-lg" disabled>Disabled large action</button>
+</div>
+<div class="d-flex flex-wrap gap-3 align-items-start">
+  <div class="btn-group" role="group" aria-label="Horizontal actions">
+    <button type="button" class="btn-outline theme-primary">Back</button>
+    <button type="button" class="btn-outline theme-primary">Preview</button>
+    <button type="button" class="btn-outline theme-primary">Next</button>
+  </div>
+  <div class="btn-group-vertical" role="group" aria-label="Vertical actions">
+    <button type="button" class="btn-solid theme-secondary">Draft</button>
+    <button type="button" class="btn-solid theme-secondary">Published</button>
+  </div>
+</div>
+
+<h{{ include.heading_level }} class="mt-4">Carousel</h{{ include.heading_level }}>
+<div class="carousel slide" id="sink-carousel" aria-label="Illustrated landscapes">
+  <div class="carousel-inner">
+    {% assign landscapes = 'harbor,dunes,forest' | split: ',' %}
+    {% for landscape in landscapes %}
+    <div class="carousel-item{% if forloop.first %} active{% endif %}">
+      {% assign image = landscape | prepend: '/assets/img/kitchen-sink/' | append: '.webp' %}
+      <img class="d-block w-100 rounded" src="{{ image | absolute_url }}" width="800" height="400"
+           loading="lazy" alt="Illustrated {{ landscape }}">
+    </div>
+    {% endfor %}
+  </div>
+  <div class="d-flex flex-wrap gap-2 align-items-center mt-3">
+    <div class="carousel-indicators">
+      {% for landscape in landscapes %}
+      <button type="button" data-bs-target="#sink-carousel" data-bs-slide-to="{{ forloop.index0 }}"
+              {% if forloop.first %}class="active" aria-current="true"{% endif %} aria-label="Slide {{ forloop.index }}"></button>
+      {% endfor %}
+    </div>
+    <button type="button" class="btn-outline theme-primary btn-sm" data-bs-target="#sink-carousel" data-bs-slide="prev">Previous slide</button>
+    <button type="button" class="btn-outline theme-primary btn-sm" data-bs-target="#sink-carousel" data-bs-slide="next">Next slide</button>
+  </div>
+</div>
+
+<h{{ include.heading_level }} class="mt-4">Menus</h{{ include.heading_level }}>
+<div class="d-flex flex-wrap gap-2">
+  {% assign placements = 'bottom-start,top-start,left-start,right-start' | split: ',' %}
+  {% assign directions = 'Below,Above,Start,End' | split: ',' %}
+  {% for placement in placements %}
+  <div class="position-relative">
+    <button type="button" class="btn-solid theme-secondary" data-bs-toggle="menu"
+            data-bs-placement="{{ placement }}" aria-expanded="false">Menu {{ directions[forloop.index0] }}</button>
+    <div class="menu">
+      <span class="menu-header">Go to an example</span>
+      <a class="menu-item" href="#surfaces">Surfaces</a>
+      <a class="menu-item" href="#forms">Form controls</a>
+      <hr class="menu-divider">
+      <a class="menu-item" href="#palette">Palette</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<h{{ include.heading_level }} class="mt-4">Navigation and tabs</h{{ include.heading_level }}>
+<nav class="nav nav-pills mb-3" aria-label="Example section links">
+  <a class="nav-link active" href="#palette">Palette</a>
+  <a class="nav-link" href="#forms">Forms</a>
+  <span class="nav-link disabled" aria-disabled="true">Unavailable</span>
+</nav>
+<div class="nav nav-tabs" role="tablist" aria-label="Example views">
+  <button type="button" id="sink-overview-tab" class="nav-link active" data-bs-toggle="tab"
+          data-bs-target="#sink-overview-panel" role="tab" aria-controls="sink-overview-panel" aria-selected="true">Overview</button>
+  <button type="button" id="sink-details-tab" class="nav-link" data-bs-toggle="tab"
+          data-bs-target="#sink-details-panel" role="tab" aria-controls="sink-details-panel" aria-selected="false">Details</button>
+</div>
+<div class="tab-content border border-top-0 p-3">
+  <div id="sink-overview-panel" class="tab-pane show active" role="tabpanel" aria-labelledby="sink-overview-tab" tabindex="0">Build overview.</div>
+  <div id="sink-details-panel" class="tab-pane" role="tabpanel" aria-labelledby="sink-details-tab" tabindex="0">Build details.</div>
+</div>
+
+<h{{ include.heading_level }} class="mt-4" id="sink-pagination">Pagination</h{{ include.heading_level }}>
+{% assign pager_sizes = 'sm,default,lg' | split: ',' %}
+{% for size in pager_sizes %}
+<nav aria-label="{{ size | capitalize }} example pagination">
+  <ul class="pagination{% unless size == 'default' %} pagination-{{ size }}{% endunless %} flex-wrap">
+    <li class="page-item disabled"><span class="page-link">Previous</span></li>
+    <li class="page-item active"><a class="page-link" href="#sink-pagination" aria-current="page">1</a></li>
+    <li class="page-item"><a class="page-link" href="#surfaces">2</a></li>
+    <li class="page-item"><a class="page-link" href="#forms">3</a></li>
+  </ul>
+</nav>
+{% endfor %}
+
+<h{{ include.heading_level }} class="mt-4">Popovers and tooltips</h{{ include.heading_level }}>
+{% assign positions = 'top,right,bottom,left' | split: ',' %}
+<div class="d-flex flex-wrap gap-2 mb-3">
+  {% for position in positions %}
+  <button type="button" class="btn-solid theme-secondary" data-bs-toggle="popover" data-bs-placement="{{ position }}"
+          data-bs-title="Build detail" data-bs-content="This panel is positioned beside its trigger.">Popover {{ position }}</button>
+  {% endfor %}
+</div>
+<div class="d-flex flex-wrap gap-2">
+  {% for position in positions %}
+  <button type="button" class="btn-outline theme-secondary" data-bs-toggle="tooltip" data-bs-placement="{{ position }}"
+          data-bs-title="Shows the current build state.">Tooltip {{ position }}</button>
+  {% endfor %}
+</div>
+
+<h{{ include.heading_level }} class="mt-4">Progress bars</h{{ include.heading_level }}>
+{% assign percentages = '25,50,75,100' | split: ',' %}
+{% assign colors = 'success,info,warning,danger' | split: ',' %}
+{% for value in percentages %}
+<div class="progress mb-2" role="progressbar" aria-label="{{ colors[forloop.index0] | capitalize }} progress"
+     aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="100">
+  <div class="progress-bar theme-{{ colors[forloop.index0] }} w-{{ value }}">{{ value }}%</div>
+</div>
+{% endfor %}
+<div class="progress-stacked">
+  <div class="progress w-25" role="progressbar" aria-label="Queued" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar"></div>
+  </div>
+  <div class="progress w-50" role="progressbar" aria-label="Completed" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar progress-bar-striped theme-success"></div>
+  </div>
+</div>
+
+<h{{ include.heading_level }} class="mt-4">Scrollspy</h{{ include.heading_level }}>
+<nav id="sink-scrollspy-nav" class="nav nav-pills flex-wrap" aria-label="Scrollspy sections">
+  {% for step in steps %}
+  <a class="nav-link{% if forloop.first %} active{% endif %}" href="#sink-scroll-{{ forloop.index }}">{{ step }}</a>
+  {% endfor %}
+</nav>
+<div class="position-relative overflow-auto border rounded p-3 mt-2" style="height: 12rem"
+     data-bs-spy="scroll" data-bs-target="#sink-scrollspy-nav" role="region" aria-label="Scrollable build stages" tabindex="0">
+  {% for step in steps %}
+  <div style="min-height: 10rem">
+    <h{{ include.heading_level }} id="sink-scroll-{{ forloop.index }}" class="fs-md">{{ step }} stage</h{{ include.heading_level }}>
+    <p>Scroll this panel to see the active section change in the links above.</p>
+  </div>
+  {% endfor %}
+</div>
+
+<h{{ include.heading_level }} class="mt-4">Spinners</h{{ include.heading_level }}>
+<div class="d-flex flex-wrap gap-3" role="status">
+  {% assign spinner_colors = 'primary,secondary,success,warning,danger,info' | split: ',' %}
+  {% for color in spinner_colors %}
+  <span class="spinner-border fg-{{ color }}" aria-hidden="true"></span>
+  <span class="spinner-grow fg-{{ color }}" aria-hidden="true"></span>
+  {% endfor %}
+  <span class="visually-hidden">Loading indicators</span>
+</div>
+
+<h{{ include.heading_level }} class="mt-4">Toast</h{{ include.heading_level }}>
+<button type="button" class="btn-outline theme-primary" data-kitchen-toast>Show toast</button>
+<div id="sink-toast" class="toast mt-3" role="status" aria-live="polite" aria-atomic="true">
+  <div class="toast-header">
+    <strong class="me-auto">Build complete</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close toast"></button>
+  </div>
+  <div class="toast-body">The example is ready to publish.</div>
+</div>
+
+{% include demos/kitchen-sink-extra-components.html heading_level=include.heading_level %}

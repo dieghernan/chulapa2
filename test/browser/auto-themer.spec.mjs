@@ -411,6 +411,7 @@ test("loads configured fonts, colors and component overrides across both modes",
 
   await page.getByRole("combobox", { name: "Color mode" }).selectOption("dark");
   await expect(body).toHaveCSS("font-family", /^"IBM Plex Mono"/);
+  await expect(code).toHaveCSS("font-family", "Consolas, monospace");
   await expect(body).toHaveCSS("background-color", "rgb(32, 42, 54)");
   await expect(body).toHaveCSS("color", "rgb(237, 244, 250)");
   await expect(button).toHaveCSS("background-color", "rgb(35, 64, 99)");
@@ -510,6 +511,42 @@ test("keeps authored and explicit colors above generated defaults", async ({ pag
     .toHaveCSS("background-color", "rgb(139, 37, 53)");
   await expect(page.getByRole("navigation", { name: "Primary" }))
     .toHaveCSS("background-color", "rgb(40, 93, 112)");
+});
+
+test("styles the legacy Markdown callouts in both color modes", async ({ page }) => {
+  await page.goto("test/dual/");
+  const section = page.getByRole("region", { name: "Callouts" });
+  const labels = ["Note", "Tip", "Important", "Warning", "Caution"];
+  const selector = page.getByRole("combobox", { name: "Color mode" });
+  const background = (target) => target.evaluate((element) => getComputedStyle(element).backgroundColor);
+  const note = section.getByRole("note", { name: "Note", exact: true });
+  const light = await background(note);
+
+  for (const mode of ["light", "dark"]) {
+    await selector.selectOption(mode);
+    await expect(section.getByRole("note")).toHaveCount(labels.length);
+    const backgrounds = [];
+    for (const label of labels) {
+      const callout = section.getByRole("note", { name: label, exact: true });
+      await expect(callout).toHaveCSS("border-inline-start-width", "4px");
+      expect((await readContrast(callout)).text, `${mode} ${label}`).toBeGreaterThanOrEqual(4.5);
+      backgrounds.push(await background(callout));
+    }
+    expect(new Set(backgrounds).size).toBe(labels.length);
+  }
+  await expect(note).not.toHaveCSS("background-color", light);
+
+  await note.evaluate((element) => { element.lang = "es"; });
+  const title = await note.evaluate((element) => getComputedStyle(element, "::before").content);
+  expect(title).toContain("Nota");
+});
+
+test("renders multiple Markdown blocks inside a legacy callout", async ({ page }) => {
+  await page.goto("test/markdown/");
+  const note = page.getByRole("note", { name: "Note" });
+  await expect(note).toContainText("This callout contains more than one block.");
+  await expect(note.getByRole("listitem")).toHaveCount(2);
+  await expect(note).toHaveCSS("border-inline-start-width", "4px");
 });
 
 test.describe("without JavaScript", () => {

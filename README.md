@@ -50,7 +50,9 @@ The home page includes a Bootstrap 6 kitchen sink. Compare the
 [Auto Themer preview](http://127.0.0.1:4173/chulapa2/test/dual/) and the
 [GitDev preview](http://127.0.0.1:4173/chulapa2/test/gitdev/).
 The [standalone kitchen sink](http://127.0.0.1:4173/chulapa2/test/dual/test/auto-themer/kitchen-sink/)
-shows the same components on their own page.
+shows the same content, form and component families on their own page.
+The gallery covers the Bootstrap 6 component index and uses the chulapa2
+site header. Drawer, Nav overflow and Toggler have separate examples.
 
 ## Generate a primary palette
 
@@ -68,6 +70,7 @@ selector. Set the top-level `color-mode-selector: true` to offer the
 Bootstrap color modes. Set `use-dual-mode: true` within `chulapa-skin` to
 use its bundled dark variant when available. The Auto Themer generates a
 dark palette from the same primary color when the skin has no dark variant.
+The automatic variant shares `vars` except the body foreground and background.
 
 To configure dark mode separately, add `chulapa-skin-dark`. That
 configuration takes precedence over the matching dark palette and shows
@@ -77,7 +80,8 @@ Visitors can choose System to follow their device preference.
 To generate a palette from the separate configuration, set its
 `autothemer` flag to `true`. It uses its own `vars.primary` or the Bootstrap
 default. To share a custom primary between both configurations, set the
-same `vars.primary` in each.
+same `vars.primary` in each. See the
+[supported skin settings](docs/theming.md#skin-settings).
 
 Use native CSS values in `vars`, including quoted hex colors, font stacks,
 dimensions and CSS functions. A Bootstrap token such as `primary-base`
@@ -128,7 +132,39 @@ GitDev Dark as the dark variant of GitDev without a separate dark block.
 GitDev and GitDev Dark use their original palette, Inter for text,
 Inter Tight for headings and navigation, and Roboto Mono for code.
 Explicit primary and link colors in `vars` take precedence over skin defaults.
-The separate syntax-highlighting setting from chulapa is still pending.
+
+## Choose code highlighting
+
+Jekyll uses Kramdown and Rouge to highlight fenced Markdown code blocks.
+Choose the stylesheet with the same `highlight` key as in chulapa.
+
+```yaml
+chulapa-skin:
+  skin: gitdev
+  highlight: github
+chulapa-skin-dark:
+  skin: gitdev-dark
+  highlight: github.dark
+```
+
+The supported values are `default`, `github` and `github.dark`. The main
+mode uses `default` for omitted or unsupported values. The dark mode
+inherits the main highlighter when its value is omitted or unsupported.
+The kitchen sink includes a fenced Ruby example to compare the palettes.
+
+## Add a callout
+
+Use `callout-note`, `callout-tip`, `callout-important`, `callout-warning`
+or `callout-caution` with a Kramdown attribute list, as in chulapa.
+
+```markdown
+Review the preview before publishing.
+{: .callout-tip role="note" aria-label="Tip"}
+```
+
+For multiple blocks, use a `div` with the callout class and
+`markdown="1"`. The visible title follows the page language for English
+and Spanish. Set the accessible label in the language of your content.
 
 ## Deploy to GitHub Pages
 

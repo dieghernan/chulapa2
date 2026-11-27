@@ -13,7 +13,7 @@
         {%- assign scoped_vars = option[1] -%}
         {%- capture scoped_tokens -%}
           {%- include auto-themer/tokens.css vars=scoped_vars stage='base' root=false -%}
-          {%- include auto-themer/tokens.css vars=scoped_vars stage='explicit' root=false -%}
+          {%- include auto-themer/tokens.css vars=scoped_vars stage='explicit' root=false skip_body_colors=include.skip_body_colors -%}
         {%- endcapture -%}
         {%- unless scoped_tokens == empty %}
   & :where(.{{ scoped_class }}) {
@@ -51,7 +51,9 @@
   {%- if option_suffix == '-base' -%}{%- assign is_base = true -%}{%- endif -%}
   {%- if is_base and include.stage != 'base' -%}{%- continue -%}{%- endif -%}
   {%- if is_base == false and include.stage == 'base' -%}{%- continue -%}{%- endif -%}
-  {%- if include.primary_only and option_name != 'bs-primary-base' -%}{%- continue -%}{%- endif -%}
+  {%- if include.skip_body_colors -%}
+    {%- if option_name == 'bs-bg-body' or option_name == 'bs-fg-body' -%}{%- continue -%}{%- endif -%}
+  {%- endif -%}
   {%- capture resolved_name -%}
     {%- include auto-themer/token-name.html value=option_name -%}
   {%- endcapture -%}

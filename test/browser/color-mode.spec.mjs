@@ -94,6 +94,44 @@ test("uses the primary color for an explicitly requested dark variant", async ({
   await expect(link).not.toHaveCSS("color", darkColor);
 });
 
+test("shares configured tokens except body colors with the automatic dark variant", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.goto("test/dual/");
+  const selector = page.getByRole("combobox", { name: "Color mode" });
+  const body = page.locator("body");
+  const heading = page.locator("#surfaces-title");
+  const inlineCode = page.locator("#surfaces p code").first();
+  const blockCode = page.locator("#surfaces .highlight pre code").first();
+  const field = page.locator("#sink-email");
+  const button = page.getByRole("button", { name: "Primary button", exact: true });
+
+  for (const mode of ["light", "dark", ""]) {
+    await selector.selectOption(mode);
+    await expect(body).toHaveCSS("font-family", "Georgia, serif");
+    await expect(body).toHaveCSS("font-size", "18px");
+    await expect(body).toHaveCSS("font-weight", "500");
+    await expect(body).toHaveCSS("line-height", "31.5px");
+    await expect(heading).toHaveCSS("font-family", "Verdana, sans-serif");
+    await expect(heading).toHaveCSS("font-weight", "650");
+    await expect(heading).toHaveCSS("line-height", "34px");
+    await expect(inlineCode).toHaveCSS("font-family", /^"Fira Code"/);
+    await expect(blockCode).toHaveCSS("font-family", /^"Fira Code"/);
+    await expect(field).toHaveCSS("padding-inline-start", "20px");
+    await expect(field).toHaveCSS("border-top-width", "2px");
+    await expect(field).toHaveCSS("border-top-left-radius", "11px");
+    await expect(button).toHaveCSS("border-top-left-radius", "13px");
+    await expect(inlineCode).toHaveCSS("color", "rgb(18, 52, 86)");
+    await expect(button).toHaveCSS("border-top-color", "rgb(53, 36, 103)");
+    if (mode === "light") {
+      await expect(body).toHaveCSS("background-color", "rgb(247, 243, 235)");
+      await expect(body).toHaveCSS("color", "rgb(32, 48, 71)");
+    } else {
+      await expect(body).not.toHaveCSS("background-color", "rgb(247, 243, 235)");
+      await expect(body).not.toHaveCSS("color", "rgb(32, 48, 71)");
+    }
+  }
+});
+
 test("shows the selector with two configurations even when explicitly disabled", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "dark" });
   await page.goto("test/hide-selector/");

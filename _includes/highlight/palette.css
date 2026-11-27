@@ -1,0 +1,11 @@
+{% assign palette_path = include.name | prepend: 'highlight/' | append: '.css' %}
+{% include {{ palette_path }} %}
+{% if include.name == 'github' %}
+/* Keep comments and diagnostic text readable on the GitHub light background. */
+.highlight :is(.c, .ch, .cd, .cm, .cp, .cpf, .c1, .cs, .gl, .gt) {
+  color: #656d76;
+}
+.highlight .gr {
+  color: #82071e;
+}
+{% endif %}

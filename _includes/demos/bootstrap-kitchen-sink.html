@@ -2,8 +2,19 @@
 {% assign kitchen_sample_level = kitchen_section_level | plus: 1 %}
 <p>Compare Bootstrap surfaces, component states and typography in the current theme.</p>
 <p><a href="https://getbootstrap.com/docs/6.0/examples/cheatsheet/">Bootstrap 6 Cheatsheet</a></p>
+<ul class="list-inline">
+  <li class="list-inline-item"><a href="#surfaces">Surfaces</a></li>
+  <li class="list-inline-item"><a href="#sink-images">Images</a></li>
+  <li class="list-inline-item"><a href="#palette">Colors</a></li>
+  <li class="list-inline-item"><a href="#forms">Forms</a></li>
+  <li class="list-inline-item"><a href="#components">Components</a></li>
+  <li class="list-inline-item"><a href="#sink-accordion-title">Accordion</a></li>
+  <li class="list-inline-item"><a href="#sink-breadcrumbs-title">Breadcrumbs</a></li>
+  <li class="list-inline-item"><a href="#sink-callouts-title">Callouts</a></li>
+  <li class="list-inline-item"><a href="#sink-avatar-title">More components</a></li>
+</ul>
 
-<div class="not-prose d-grid gap-4">
+<div id="bootstrap-kitchen-sink" class="not-prose d-grid gap-4">
   <section id="surfaces" aria-labelledby="surfaces-title">
     <h{{ kitchen_section_level }} id="surfaces-title">Surfaces and typography</h{{ kitchen_section_level }}>
     <div class="row g-2 mb-3">
@@ -13,8 +24,26 @@
       </div>
       {% endfor %}
     </div>
+    <div class="mb-3">
+      {% assign font_sizes = 'xs,sm,md,lg,xl,2xl,3xl,4xl,5xl,6xl' | split: ',' %}
+      {% for size in font_sizes %}
+      <div class="fs-{{ size }}">Type scale {{ size }}</div>
+      {% endfor %}
+    </div>
     <p>Body text with <strong>emphasis</strong>, <mark>highlighted text</mark> and <code>inline code</code>.</p>
     <blockquote class="blockquote">A quote shows how text and borders sit on a neutral background.</blockquote>
+    {% capture code_sample %}
+```ruby
+# Report the outcome of a build.
+def build_status(ready)
+  return "Complete" if ready
+
+  "Waiting"
+# Ligatures <-
+end
+```
+    {% endcapture %}
+    {{ code_sample | markdownify }}
     <div class="table-responsive">
       <table class="table table-striped table-hover">
         <caption>Build stages</caption>
@@ -25,6 +54,24 @@
           <tr><th scope="row">Publish</th><td>Waiting</td></tr>
         </tbody>
       </table>
+    </div>
+  </section>
+
+  <section id="sink-images" aria-labelledby="sink-images-title">
+    <h{{ kitchen_section_level }} id="sink-images-title">Images and figures</h{{ kitchen_section_level }}>
+    <div class="row g-3">
+      <div class="col-12 md:col-8">
+        <img class="img-fluid rounded" src="{{ '/assets/img/kitchen-sink/harbor.webp' | absolute_url }}"
+             width="800" height="400" loading="lazy" alt="Illustrated blue harbor with the sun rising over hills">
+      </div>
+      <div class="col-12 md:col-4">
+        <figure class="figure">
+          <img class="figure-img img-fluid img-thumbnail rounded"
+               src="{{ '/assets/img/kitchen-sink/dunes.webp' | absolute_url }}"
+               width="800" height="400" loading="lazy" alt="Illustrated ochre dunes">
+          <figcaption class="figure-caption">A framed image and its caption.</figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
@@ -44,6 +91,38 @@
       </section>
       {% endfor %}
     </div>
+  </section>
+
+  <section id="sink-callouts" aria-labelledby="sink-callouts-title">
+    <h{{ kitchen_section_level }} id="sink-callouts-title">Callouts</h{{ kitchen_section_level }}>
+    {% capture callout_samples %}
+The preview uses your current configuration.
+{: .callout-note role="note" aria-label="Note"}
+
+Review the page locally before publishing.
+{: .callout-tip role="note" aria-label="Tip"}
+
+Update links when you change a permalink.
+{: .callout-important role="note" aria-label="Important"}
+
+Check redirects before sharing a new URL. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+{: .callout-warning role="note" aria-label="Warning"}
+
+Removing a redirect can break incoming links.
+{: .callout-caution role="note" aria-label="Caution"}
+    {% endcapture %}
+    {{ callout_samples | markdownify }}
+    <h{{ kitchen_sample_level }}>Alternative callouts</h{{ kitchen_sample_level }}>
+    <p>Compare the alternative style based on the
+      <a href="https://getbootstrap.com/docs/6.0/customize/components/#creating-your-own">Bootstrap documentation callouts</a>.</p>
+
+    <div class="bd-callout-note"><p>Note callout</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></div>
+    <div class="bd-callout-tip"><p>Tip callout</p></div>
+    <div class="bd-callout-important"><p>Important callout</p></div>
+    <div class="bd-callout-warning"><p>Warning callout</p></div>
+    <div class="bd-callout-caution"><p>Caution callout</p></div>
+
   </section>
 
   <section id="forms" aria-labelledby="forms-title">
@@ -96,21 +175,26 @@
         <input class="form-range-input" type="range" id="sink-range" min="5" max="30" value="15">
       </div>
     </div>
+    {% include demos/kitchen-sink-forms.html heading_level=kitchen_sample_level %}
   </section>
 
   <section id="components" aria-labelledby="components-title">
     <h{{ kitchen_section_level }} id="components-title">Cards, feedback and interaction</h{{ kitchen_section_level }}>
     <div class="row g-3">
       <div class="col-12 md:col-6">
+        <h{{ kitchen_sample_level }}>Card</h{{ kitchen_sample_level }}>
         <div class="card">
+          <img class="card-img-top" src="{{ '/assets/img/kitchen-sink/forest.webp' | absolute_url }}"
+               width="800" height="400" loading="lazy" alt="Illustrated green woodland">
           <div class="card-body">
-            <h{{ kitchen_sample_level }} class="card-title fs-lg">Build report</h{{ kitchen_sample_level }}>
+            <p class="card-title fs-lg">Build report</p>
             <p class="card-text">Three of four checks are complete.</p>
             <progress class="progress theme-success" value="75" max="100" aria-label="Checks complete"></progress>
           </div>
         </div>
       </div>
       <div class="col-12 md:col-6">
+        <h{{ kitchen_sample_level }}>List group</h{{ kitchen_sample_level }}>
         <ul class="list-group">
           <li class="list-group-item">Queued <span class="badge theme-secondary">2</span></li>
           <li class="list-group-item">Running <span class="badge theme-info">1</span></li>
@@ -122,6 +206,7 @@
       <summary>Show validation details</summary>
       <p>The keyboard can open this disclosure and reach the confirmation dialog.</p>
     </details>
+    <h{{ kitchen_sample_level }} class="mt-3">Dialog</h{{ kitchen_sample_level }}>
     <button type="button" class="btn-solid theme-primary mt-3" data-bs-toggle="dialog" data-bs-target="#sink-dialog" aria-controls="sink-dialog">
       Open dialog
     </button>
@@ -134,5 +219,20 @@
         <p>Review the publication settings before continuing.</p>
       </div>
     </dialog>
+    <button type="button" class="btn-outline theme-primary mt-3" data-bs-toggle="dialog"
+            data-bs-target="#sink-static-dialog" aria-controls="sink-static-dialog">Open static dialog</button>
+    <dialog class="dialog" id="sink-static-dialog" data-bs-backdrop="static" data-bs-keyboard="false"
+            aria-labelledby="sink-static-title">
+      <div class="dialog-header">
+        <h{{ kitchen_sample_level }} class="dialog-title" id="sink-static-title">Confirm the sample</h{{ kitchen_sample_level }}>
+      </div>
+      <div class="dialog-body">
+        <p>Use the confirmation button to close this dialog.</p>
+      </div>
+      <div class="dialog-footer">
+        <button type="button" class="btn-solid theme-primary" data-bs-dismiss="dialog">Confirm sample</button>
+      </div>
+    </dialog>
+    {% include demos/kitchen-sink-components.html heading_level=kitchen_sample_level %}
   </section>
 </div>
