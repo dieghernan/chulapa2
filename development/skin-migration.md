@@ -105,6 +105,14 @@ corresponding chulapa2 settings and verify that explicit values override the
 skin defaults. Check the original derived colors again when users customize
 the backgrounds of maintainer-authored skins.
 
+## Body links
+
+Bootstrap 4 sets `$link-color` to the primary. Academia, Butterfly Dark,
+Listen, Towards and Twitter Lights Out leave it unset, so their links use
+the original primary color in chulapa2 as well. Each pair already
+measures at least 5.7:1 on its page background. Generated variants still
+derive their link colors from the generated surface.
+
 ## Footer and attribution
 
 Chulapa's footer centers its links, copyright and theme attribution.

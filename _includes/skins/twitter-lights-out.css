@@ -14,7 +14,7 @@ color-scheme: dark;
 --bs-warning-base: #ff7a00;
 --bs-danger-base: #e21674;
 --bs-info-base: #7856ff;
---bs-link-color: var(--bs-primary-fg);
+--bs-link-color: var(--bs-primary-base);
 
 {% include skins/roles.css names='primary,secondary,success,warning,danger,info' labels='black,black,black,black,black,white' %}
 --bs-primary-bg: #177bbe;
