@@ -15,6 +15,7 @@ color-scheme: light;
 
 {% include skins/tophat.css labels='black,black,black,black,black,black,white' %}
 --chulapa-skin-nav-fg: var(--bs-bg-body);
+--chulapa-hero-color: var(--bs-bg-body);
 --chulapa-skin-nav-brand: var(--bs-bg-body);
 --chulapa-skin-nav-brand-hover: #000000;
 --chulapa-skin-nav-hover: #0a283f;

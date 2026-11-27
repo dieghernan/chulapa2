@@ -32,6 +32,8 @@ chulapa-skin:
   vars:
     primary-base: "#285d70"
     primary-bg: "#18455b"
+    hero-chulapa-bg-color: "#164149"
+    hero-chulapa-text-color: "#fff0b5"
     success-base: "oklch(0.63 0.18 145)"
     danger-base: "#8b2535"
     link-color: "#154e85"
@@ -71,6 +73,9 @@ chulapa-skin-dark:
   autothemer: false
   vars:
     primary-base: "#809bb5"
+    hero-chulapa-bg-color: "#fff"
+    "--chulapa-hero-bg": "#182637"
+    hero-chulapa-text-color: "#f4e8d1"
     primary-bg: "#234063"
     body-font-family: '"IBM Plex Mono", monospace'
     font-mono: "Consolas, monospace"

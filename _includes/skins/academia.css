@@ -17,6 +17,7 @@ color-scheme: light;
 --bs-danger-contrast: black;
 
 --chulapa-skin-nav-bg: #ffffff;
+--chulapa-hero-bg: hsl(from var(--bs-primary-base) h s calc(l - 20));
 --chulapa-skin-nav-fg: #757575;
 --chulapa-skin-nav-hover: #404040;
 --chulapa-skin-nav-active: #2962ff;

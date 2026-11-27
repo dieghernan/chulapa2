@@ -19,6 +19,7 @@ color-scheme: dark;
 {% include skins/roles.css names='primary,secondary,success,warning,danger,info' labels='black,white,black,black,black,black' %}
 
 --chulapa-skin-nav-bg: #121212;
+--chulapa-hero-color: #c1c2c2;
 --chulapa-skin-nav-fg: #c1c2c2;
 --chulapa-skin-nav-hover: #1ed760;
 --chulapa-skin-nav-active: #1ed760;
