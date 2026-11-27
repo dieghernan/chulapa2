@@ -1,0 +1,32 @@
+color-scheme: light;
+--bs-heading-font-family: Nunito;
+--tophat-light: #eef0f2;
+--tophat-dark: #000633;
+--bs-bg-body: #ffffff;
+--bs-primary-base: #1633ff;
+--bs-secondary-base: #a0b7bc;
+--bs-success-base: #1633ff;
+--bs-danger-base: #00f900;
+--bs-info-base: #7ebcfa;
+--bs-warning-base: #00f900;
+
+{% include skins/tophat.css labels='white,black,white,black,black,black,white' navbar_hover=true %}
+
+{% unless include.variant_scheme %}
+{% include skins/tophat-buttons.css labels='warning:#ffffff,danger:#ffffff' outlines='secondary:#68777a,info:#4c7196,warning:#008900,danger:#008900' vars=include.vars %}
+{% endunless %}
+
+& :where(.card.bg-primary) {
+  --bs-card-color: #fff;
+}
+
+& :where(.display-1, .display-2, .display-3) {
+  font-weight: 600;
+}
+
+& :where(.btn, .btn-solid, .btn-outline, .btn-subtle, .btn-text, .btn-link, .btn-icon) {
+  --bs-btn-border-radius: 1.3rem;
+}
+
+& :where(.btn-sm) { --bs-btn-border-radius: .8rem; }
+& :where(.btn-lg) { --bs-btn-border-radius: 1.6rem; }

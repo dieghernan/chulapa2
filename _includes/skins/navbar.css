@@ -1,0 +1,27 @@
+& :where(.chulapa-navbar) {
+  --bs-bg-1: var(--chulapa-skin-nav-bg);
+  --bs-navbar-color: var(--chulapa-skin-nav-fg);
+  --bs-navbar-brand-color: var(--chulapa-skin-nav-brand, var(--chulapa-skin-nav-fg));
+  --bs-navbar-hover-color: var(--chulapa-skin-nav-hover, var(--chulapa-skin-nav-fg));
+  --bs-navbar-brand-hover-color: var(--chulapa-skin-nav-brand-hover, var(--chulapa-skin-nav-brand, var(--bs-navbar-hover-color)));
+  --bs-navbar-active-color: var(--chulapa-skin-nav-active, var(--bs-navbar-hover-color));
+  --bs-navbar-disabled-color: var(--chulapa-skin-nav-disabled, var(--bs-fg-3));
+  font-family: var(--bs-body-font-family);
+}
+
+& :where(.chulapa-navbar .drawer) {
+  --bs-drawer-bg: var(--chulapa-skin-nav-bg);
+  --bs-drawer-color: var(--chulapa-skin-nav-fg);
+}
+
+& :where(.chulapa-navbar :is(.navbar-toggler, .btn-close)) {
+  --bs-btn-color: var(--chulapa-skin-nav-fg);
+  --bs-btn-hover-color: var(--chulapa-skin-nav-hover, var(--chulapa-skin-nav-fg));
+  --bs-btn-close-color: var(--chulapa-skin-nav-fg);
+}
+
+{% if include.hover_background %}
+& :where(.chulapa-navbar .nav-link:is(:hover, :focus-visible)) {
+  background-color: var(--chulapa-skin-nav-hover-bg);
+}
+{% endif %}

@@ -23,7 +23,7 @@
           <select class="form-control form-control-sm" id="site-color-mode">
             <option value="">System theme</option>
             <option value="light">{% if main_skin_scheme == 'dark' %}Primary theme{% else %}Light theme{% endif %}</option>
-            <option value="dark">{% if dark_skin_scheme == 'light' %}Alternate theme{% else %}Dark theme{% endif %}</option>
+            <option value="dark">{% if dark_skin_scheme == 'light' and automatic_variant %}Light theme{% elsif dark_skin_scheme == 'light' %}Alternate theme{% else %}Dark theme{% endif %}</option>
           </select>
         </div>
         {% endif %}

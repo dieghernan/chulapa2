@@ -1,0 +1,81 @@
+---
+layout: default
+title: Skin contrast fixture
+permalink: /test/skin-contrast/
+published: false
+---
+{% if site.skin_preview_path %}
+{% capture skins %}{% include skins/catalog.html %}{% endcapture %}
+{% assign skin_rows = skins | newline_to_br | split: '<br />' %}
+<label for="skin-preview">Skin</label>
+<select class="form-control" id="skin-preview" aria-describedby="skin-preview-help">
+  {% for row in skin_rows %}
+    {% assign fields = row | strip | split: '|' %}
+    {% assign name = fields[0] %}
+    {% if name %}
+  <option value="{{ name | escape }}"{% if name == site.chulapa-skin.skin %} selected{% endif %}>{{ name | escape }}</option>
+    {% endif %}
+  {% endfor %}
+</select>
+<p class="form-text mb-3" id="skin-preview-help">Changing the skin reloads this preview and keeps the selected color mode.</p>
+<script type="module">
+  document.getElementById("skin-preview").addEventListener("change", (event) => {
+    const skin = event.currentTarget.value;
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(skin)) return;
+
+    const destination = new URL(window.location.href);
+    destination.pathname = destination.pathname.replace(/[^/]+\/?$/, `${encodeURIComponent(skin)}/`);
+    destination.search = "";
+    destination.hash = "";
+    window.location.assign(destination.href);
+  });
+</script>
+{% include demos/bootstrap-kitchen-sink.html %}
+{% endif %}
+<p data-contrast="body-text">Read the <a href="#states" data-contrast="article-link">skin examples</a>.</p>
+<blockquote class="blockquote" data-contrast="blockquote">Use this sample to compare editorial styles.</blockquote>
+<h2 id="states">Semantic colors and controls</h2>
+{% assign roles = 'primary,secondary,success,warning,danger,info,accent,inverse' | split: ',' %}
+{% for role in roles %}
+<div class="theme-{{ role }} mb-3">
+  <p class="fg-{{ role }}" data-contrast="text-{{ role }}">{{ role | capitalize }} text</p>
+  <div class="d-flex flex-wrap gap-2 mb-2">
+    <button class="btn-solid" type="button" data-contrast="solid-{{ role }}">{{ role | capitalize }} solid</button>
+    <button class="btn-outline" type="button" data-contrast="outline-{{ role }}">{{ role | capitalize }} outline</button>
+    <a class="badge" href="#states" data-contrast="badge-{{ role }}">{{ role | capitalize }} badge</a>
+  </div>
+  <p class="alert my-2" data-contrast="alert-{{ role }}">{{ role | capitalize }} alert</p>
+  <div class="card my-2 md:offset-3 md:col-6 theme-{{ role }}">
+    <img src="https://picsum.photos/id/43/1500/200" class="card-img-top" alt="The Brooklyn Bridge">
+    <div class="card-body" data-contrast="card-{{ role }}">
+      <h4 class="card-title">{{ role | capitalize }} card</h4>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">An item</li>
+      <li class="list-group-item">A second item</li>
+      <li class="list-group-item">A third item</li>
+    </ul>
+    <div class="card-body flex-row gap-4">
+      <a href="#">Card link</a>
+      <a href="#">Another link</a>
+    </div>
+  </div>
+</div>
+{% endfor %}
+<label for="skin-field">Sample field</label>
+<input id="skin-field" class="form-control" value="Sample text" data-contrast="field">
+  <div class="form-field">
+  <input id="skin-checkbox" type="checkbox" class="check" checked data-contrast="check-indicator">
+  <label for="skin-checkbox">Checked checkbox</label>
+  </div>
+  <div class="form-field">
+  <input id="skin-radio" type="radio" class="radio" checked data-contrast="radio-indicator">
+  <label for="skin-radio">Checked radio</label>
+  </div>
+  <div class="form-field">
+    <div class="switch">
+      <input type="checkbox" value="" id="switchMdLabel" role="switch" switch checked>
+    </div>
+    <label for="switchMdLabel">Default switch</label>
+  </div>

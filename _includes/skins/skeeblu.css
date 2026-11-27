@@ -1,0 +1,22 @@
+color-scheme: light;
+--bs-heading-font-family: Yantramanav;
+--tophat-light: #eef0f2;
+--tophat-dark: #3c4055;
+--bs-bg-body: #efefef;
+--bs-primary-base: #27a2fc;
+--bs-secondary-base: #a0b7bc;
+--bs-success-base: #37bd74;
+--bs-danger-base: #df2667;
+--bs-info-base: #7ebcfa;
+--bs-warning-base: #ff9b37;
+
+{% include skins/tophat.css labels='black,black,black,black,black,black,white' %}
+--chulapa-skin-nav-fg: var(--bs-bg-body);
+--chulapa-skin-nav-brand: var(--bs-bg-body);
+--chulapa-skin-nav-brand-hover: #000000;
+--chulapa-skin-nav-hover: #0a283f;
+--chulapa-skin-nav-active: #000000;
+
+{% unless include.variant_scheme %}
+{% include skins/tophat-buttons.css labels='primary:#ffffff,success:#ffffff' outlines='primary:#1969a4,secondary:#606e71,success:#247b4b,info:#45678a,warning:#995d21,danger:#c9225d' vars=include.vars %}
+{% endunless %}

@@ -7,15 +7,13 @@
 {%- endif -%}
 {%- assign dark_generate = false -%}
 {%- assign dark_vars = dark_theme_settings.vars -%}
-{%- assign automatic_dark = false -%}
 {%- if has_dark_theme -%}
   {%- assign dark_generate = dark_theme_settings.autothemer -%}
   {%- if dark_skin_name == 'auto' -%}
     {%- assign dark_generate = true -%}
   {%- endif -%}
-{%- elsif use_dual_mode == true -%}
+{%- elsif automatic_variant -%}
   {%- assign dark_vars = main_theme_settings.vars -%}
-  {%- assign automatic_dark = true -%}
   {%- assign dark_generate = true -%}
   {%- if dark_skin -%}
     {%- assign dark_generate = main_theme_settings.autothemer -%}
@@ -27,11 +25,19 @@
 {%- assign modes = 'light,dark' | split: ',' -%}
 {%- for stage in stages -%}
   {%- for mode in modes -%}
+    {%- assign system_scheme = mode -%}
+    {%- if automatic_variant and main_skin_scheme == 'dark' -%}
+      {%- if mode == 'light' -%}
+        {%- assign system_scheme = 'dark' -%}
+      {%- else -%}
+        {%- assign system_scheme = 'light' -%}
+      {%- endif -%}
+    {%- endif -%}
     {%- capture declarations -%}
       {%- if mode == 'light' -%}
         {%- include auto-themer/mode.css vars=main_theme_settings.vars skin=main_skin generate=light_generate stage=stage -%}
       {%- else -%}
-        {%- include auto-themer/mode.css vars=dark_vars skin=dark_skin generate=dark_generate stage=stage skip_body_colors=automatic_dark -%}
+        {%- include auto-themer/mode.css vars=dark_vars skin=dark_skin variant_scheme=generated_variant_scheme generate=dark_generate stage=stage skip_body_colors=automatic_variant -%}
       {%- endif -%}
     {%- endcapture -%}
     {%- assign declarations = declarations | strip -%}
@@ -40,7 +46,7 @@
   {{ declarations }}
 }
 
-@media (prefers-color-scheme: {{ mode }}) {
+@media (prefers-color-scheme: {{ system_scheme }}) {
   :root:where(:not([data-bs-theme])) {
     {{ declarations }}
   }

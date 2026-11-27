@@ -1,51 +1,7 @@
 import { expect, test } from "@playwright/test";
+import { readContrast } from "./contrast.mjs";
 
 test.use({ reducedMotion: "reduce" });
-
-function readContrast(target) {
-  return target.evaluate((element) => {
-    // Convert browser-resolved colors to sRGB, including colors from OKLCH.
-    const canvas = Object.assign(document.createElement("canvas"), { width: 1, height: 1 });
-    const context = canvas.getContext("2d");
-    const styles = getComputedStyle(element);
-    const panel = getComputedStyle(element.closest(".auto-themer-preview") ?? document.body);
-    const mark = getComputedStyle(element, "::before");
-
-    function pixel(...layers) {
-      context.clearRect(0, 0, 1, 1);
-      for (const layer of layers) {
-        context.fillStyle = layer;
-        context.fillRect(0, 0, 1, 1);
-      }
-      return context.getImageData(0, 0, 1, 1).data;
-    }
-
-    function luminance(pixel) {
-      const [r, g, b] = Array.from(pixel).slice(0, 3).map((channel) => {
-        const value = channel / 255;
-        return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
-      });
-      return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-    }
-
-    function ratio(first, second) {
-      const a = luminance(first);
-      const b = luminance(second);
-      return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
-    }
-
-    const surface = panel.backgroundColor;
-    const background = [surface, styles.backgroundColor];
-    return {
-      text: ratio(pixel(...background, styles.color), pixel(...background)),
-      border: ratio(pixel(...background, styles.borderTopColor), pixel(surface)),
-      focus: ratio(pixel(surface, styles.outlineColor), pixel(surface)),
-      fill: ratio(pixel(...background), pixel(surface)),
-      mark: ratio(pixel(...background, mark.backgroundColor), pixel(...background)),
-      showsMark: mark.opacity === "1" && mark.maskImage !== "none",
-    };
-  });
-}
 
 for (const color of ["#285d70", "#000000", "#ffffff", "#ff0000", "#00ff00", "#0000ff", "#ffff00"]) {
   test(`renders ${color} with readable component states in both modes`, async ({ page }) => {
@@ -304,7 +260,7 @@ test("applies GitDev typography, navigation and editorial styles", async ({ page
   const code = page.locator("main pre code");
   await expect(heading).toHaveCSS("font-family", /^"Inter Tight"/);
   await expect(heading).toHaveCSS("font-weight", "800");
-  await expect(nav).toHaveCSS("font-family", /^"Inter Tight", "GitDev navigation fallback"/);
+  await expect(nav).toHaveCSS("font-family", '"Inter Tight", Roboto, sans-serif');
   await expect(brand).toHaveCSS("font-family", "Chulapa, sans-serif");
   await expect(nav).toHaveCSS("background-color", "rgb(34, 39, 46)");
   await expect(quote).toHaveCSS("border-inline-start-color", "rgb(9, 105, 218)");

@@ -1,0 +1,34 @@
+color-scheme: light;
+--bs-fg-body: #0b0f14;
+--bs-body-font-family: "Inter", "Roboto";
+--bs-heading-font-family: "Inter", "Roboto";
+--bs-link-color: #0e6fcf;
+--bs-primary-base: #1083f3;
+--bs-secondary-base: #8d8e96;
+--bs-success-base: #008900;
+--bs-warning-base: #ffba00;
+--bs-danger-base: #fa4c51;
+--bs-info-base: #54c7ec;
+--bs-link-hover-color: color-mix(in srgb, var(--bs-link-color) 85%, var(--bs-fg-body));
+
+{% include skins/roles.css names='primary,secondary,success,warning,danger,info' labels='white,black,white,black,black,black' %}
+--bs-primary-bg: #0e75da;
+--bs-secondary-bg: #75757c;
+--bs-danger-bg: #d34044;
+
+--chulapa-skin-nav-bg: #ffffff;
+--chulapa-skin-nav-fg: #757575;
+--chulapa-skin-nav-hover: #404040;
+--chulapa-skin-nav-active: #000000;
+--chulapa-skin-nav-brand: #000000;
+--chulapa-skin-nav-disabled: #cccccc;
+{% include skins/navbar.css %}
+
+& :where(.table thead) {
+  --bs-table-bg: #ffffff;
+  --bs-table-color: black;
+}
+
+& :where(:not(.chulapa-brand)) {
+  font-variant-ligatures: none;
+}

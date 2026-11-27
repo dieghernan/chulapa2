@@ -1,0 +1,45 @@
+color-scheme: light;
+--bs-fg-body: #262626;
+--bs-body-font-family: "Fira Sans", sans-serif;
+--bs-heading-font-family: "Playfair Display", serif;
+--bs-link-color: #a65f56;
+--bs-primary-base: #ff9285;
+--bs-secondary-base: #6e6e6e;
+--bs-success-base: #26a65b;
+--bs-warning-base: #f9690e;
+--bs-danger-base: #ed0000;
+--bs-info-base: #00acc1;
+--bs-link-hover-color: color-mix(in srgb, var(--bs-link-color) 85%, var(--bs-fg-body));
+
+{% include skins/roles.css names='primary,secondary,success,warning,danger,info' labels='black,white,white,black,black,black' %}
+--bs-success-bg: #1f864a;
+--bs-info-bg: #008292;
+--bs-warning-bg: #c4530b;
+
+--chulapa-skin-nav-bg: #262626;
+--chulapa-skin-nav-fg: #939393;
+--chulapa-skin-nav-hover: #c9c9c9;
+--chulapa-skin-nav-active: #ffffff;
+--chulapa-skin-nav-brand: #ffffff;
+--chulapa-skin-nav-disabled: #515151;
+{% include skins/navbar.css %}
+
+& :where(.table thead) {
+  --bs-table-bg: #262626;
+  --bs-table-color: white;
+}
+
+& :where(.display-1, .display-2, .display-3, .display-4, .display-5, .display-6) {
+  font-family: var(--bs-body-font-family);
+  font-weight: 600;
+}
+
+& :where(a:not([class])) {
+  color: var(--bs-fg-body);
+  text-decoration-thickness: 2px;
+}
+
+& :where(.chulapa-navbar, footer) {
+  font-family: var(--bs-body-font-family);
+  font-weight: 600;
+}

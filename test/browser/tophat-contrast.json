@@ -1,0 +1,84 @@
+{
+  "deeply": {
+    "normal/solid-primary/text": 3.2,
+    "normal/solid-danger/text": 3.33,
+    "hover/solid-primary/text": 3.68,
+    "hover/solid-danger/text": 3.86,
+    "focus/solid-primary/text": 3.2,
+    "focus/solid-danger/text": 3.33,
+    "active/solid-primary/text": 3.68,
+    "active/solid-danger/text": 3.86
+  },
+  "electro": {
+    "normal/solid-warning/text": 1.44,
+    "normal/solid-danger/text": 1.44,
+    "hover/solid-warning/text": 1.59,
+    "hover/solid-danger/text": 1.59,
+    "focus/solid-warning/text": 1.44,
+    "focus/solid-danger/text": 1.44,
+    "active/solid-warning/text": 1.59,
+    "active/solid-danger/text": 1.59
+  },
+  "graymor": {
+    "normal/solid-warning/text": 2.93,
+    "normal/solid-info/text": 3.38,
+    "hover/solid-warning/text": 3.32,
+    "hover/solid-info/text": 3.83,
+    "focus/solid-warning/text": 2.93,
+    "focus/solid-info/text": 3.38,
+    "active/solid-warning/text": 3.32,
+    "active/solid-info/text": 3.83
+  },
+  "mickie": {
+    "normal/navigation-link/text": 2.95,
+    "normal/solid-primary/text": 2.95,
+    "normal/solid-danger/text": 3.32,
+    "hover/navigation-link/text": 2.95,
+    "hover/solid-primary/text": 3.4,
+    "hover/solid-danger/text": 3.84,
+    "focus/navigation-link/text": 2.95,
+    "focus/navigation-link/outline": 2.95,
+    "focus/solid-primary/text": 2.95,
+    "focus/solid-danger/text": 3.32,
+    "active/navigation-link/text": 2.95,
+    "active/solid-primary/text": 3.4,
+    "active/solid-danger/text": 3.84
+  },
+  "minco": {
+    "normal/solid-warning/text": 3.35,
+    "normal/solid-danger/text": 3.33,
+    "hover/solid-warning/text": 3.87,
+    "hover/solid-danger/text": 3.85,
+    "focus/solid-warning/text": 3.35,
+    "focus/solid-danger/text": 3.33,
+    "active/solid-warning/text": 3.87,
+    "active/solid-danger/text": 3.85
+  },
+  "preptor": {
+    "normal/solid-danger/text": 3.39,
+    "normal/solid-info/text": 2.24,
+    "hover/solid-danger/text": 3.91,
+    "hover/solid-info/text": 2.5,
+    "focus/solid-danger/text": 3.39,
+    "focus/solid-info/text": 2.24,
+    "active/solid-danger/text": 3.91,
+    "active/solid-info/text": 2.5
+  },
+  "skeeblu": {
+    "normal/navigation-link/text": 2.38,
+    "normal/solid-primary/text": 2.74,
+    "normal/solid-success/text": 2.42,
+    "hover/solid-primary/text": 3.09,
+    "hover/solid-success/text": 2.72,
+    "focus/solid-primary/text": 2.74,
+    "focus/solid-success/text": 2.42,
+    "active/solid-primary/text": 3.09,
+    "active/solid-success/text": 2.72
+  },
+  "wandoo": {
+    "normal/solid-primary/text": 3.63,
+    "hover/solid-primary/text": 4.03,
+    "focus/solid-primary/text": 3.63,
+    "active/solid-primary/text": 4.03
+  }
+}

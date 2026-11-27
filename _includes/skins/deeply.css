@@ -1,0 +1,26 @@
+color-scheme: dark;
+--bs-heading-font-family: Comfortaa;
+--bs-body-font-size: 1.1rem;
+--tophat-light: #e8e8e8;
+--tophat-dark: #000000;
+--bs-primary-base: #FF550B;
+--bs-secondary-base: #303030;
+--bs-success-base: #015668;
+--bs-danger-base: #ff4661;
+--bs-info-base: #0e7bbe;
+--bs-warning-base: #0DE2EA;
+
+{% include skins/tophat.css labels='black,white,white,black,white,black,white' %}
+
+& :where(a:not([class])) {
+  text-decoration-thickness: 2px;
+}
+
+& :where(.alert) {
+  --bs-alert-border-width: 0;
+}
+
+{% unless include.variant_scheme %}
+{% include skins/deeply-dark.css %}
+{% include skins/tophat-buttons.css labels='primary:#ffffff,danger:#ffffff' outlines='secondary:#787878,success:#40808e' vars=include.vars %}
+{% endunless %}

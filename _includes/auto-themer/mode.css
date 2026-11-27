@@ -1,14 +1,11 @@
 {%- case include.stage -%}
   {%- when 'skin' -%}
     {%- if include.skin %}
-      {% include {{ include.skin }} %}
-      --bs-primary-bg: var(--bs-primary-base);
-      --bs-primary-contrast: white;
-      --bs-primary-fg-emphasis: var(--bs-fg-body);
-      --bs-primary-focus-ring: var(--bs-link-color);
-      @supports (color: contrast-color(white)) {
-        --bs-primary-contrast: contrast-color(var(--bs-primary-bg));
-      }
+      {% include skins/controls.css %}
+      {% include {{ include.skin }} variant_scheme=include.variant_scheme vars=include.vars %}
+      {%- if include.variant_scheme -%}
+        {% include skins/adapt-scheme.css scheme=include.variant_scheme %}
+      {%- endif -%}
     {% endif -%}
   {%- when 'base' -%}
     {%- include auto-themer/tokens.css vars=include.vars stage='base' -%}
@@ -28,7 +25,9 @@
     {% endif -%}
   {%- when 'generated' -%}
     {%- if include.generate == true -%}
-      {% include auto-themer/surfaces.css %}
+      {%- unless include.variant_scheme -%}
+        {% include auto-themer/surfaces.css %}
+      {%- endunless -%}
       {%- assign roles = 'primary,accent,secondary,success,warning,danger,info,inverse' | split: ',' -%}
       {%- for role in roles -%}
         {%- assign reference = nil -%}

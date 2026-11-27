@@ -1,0 +1,42 @@
+color-scheme: dark;
+--bs-bg-body: #121212;
+--bs-fg-body: #c1c2c2;
+--bs-body-font-family: "Raleway", Helvetica, Arial, sans-serif;
+--bs-heading-font-family: "Raleway", Helvetica, Arial, sans-serif;
+--bs-heading-font-weight: 800;
+--bs-link-hover-color: rgb(67.2040816327, 228.7959183673, 124.8530612245);
+--bs-primary-base: #1ed760;
+--bs-secondary-base: #757575;
+--bs-success-base: #1ed760;
+--bs-warning-base: #ffa42b;
+--bs-danger-base: #e12a3c;
+--bs-info-base: #4cb3ff;
+--bs-link-color: var(--bs-primary-fg);
+
+{% include skins/roles.css names='primary,secondary,success,warning,danger,info' labels='black,white,black,black,black,black' %}
+
+--chulapa-skin-nav-bg: #121212;
+--chulapa-skin-nav-fg: #c1c2c2;
+--chulapa-skin-nav-hover: #1ed760;
+--chulapa-skin-nav-active: #1ed760;
+--chulapa-skin-nav-disabled: #414141;
+{% include skins/navbar.css %}
+
+& :where(blockquote) {
+  background-color: color-mix(in srgb, var(--bs-bg-body) 80%, var(--bs-primary-base));
+  color: color-mix(in srgb, var(--bs-fg-body) 95%, var(--bs-primary-base));
+}
+
+& :where(.table thead) {
+  --bs-table-bg: #1ed760;
+  --bs-table-color: black;
+}
+
+& :where(.pagination) {
+  --bs-pagination-hover-bg: #1ed760;
+  --bs-pagination-hover-color: black;
+}
+
+& :where(:not(.chulapa-brand)) {
+  font-variant-ligatures: none;
+}

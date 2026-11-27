@@ -1,0 +1,148 @@
+--bs-bg-body: #000;
+--bs-fg-body: #cccccc;
+--bs-link-color: #f0f0f0;
+--bs-link-hover-color: #bdbdbd;
+--tophat-deeply-gray-300: #000000;
+--tophat-deeply-gray-800: #555555;
+--tophat-deeply-panel: rgb(12.75, 12.75, 12.75);
+--tophat-deeply-recessed: rgb(21.628378378378386, 24.250000000000004, 26.871621621621628);
+--tophat-deeply-border: rgba(0, 0, 0, 0.6);
+--chulapa-skin-nav-bg: black;
+--chulapa-skin-nav-fg: rgb(127.5, 127.5, 127.5);
+--chulapa-skin-nav-hover: rgb(191.25, 191.25, 191.25);
+--chulapa-skin-nav-active: #fff;
+--chulapa-skin-nav-brand: #fff;
+--chulapa-skin-nav-disabled: #333333;
+--chulapa-skin-nav-hover-bg: rgb(25.5, 25.5, 25.5);
+
+{% include skins/navbar.css hover_background=true %}
+
+& :where(.navbar.bg-primary) {
+  background-color: #111111;
+}
+
+& :where(.chulapa-navbar .navbar-toggler) {
+  --bs-btn-color: rgba(255, 255, 255, 0.4);
+  --bs-btn-border-color: rgba(255, 255, 255, 0.1);
+  --bs-btn-bg: transparent;
+}
+
+& :where(.form-control) {
+  --bs-control-bg: var(--tophat-deeply-gray-300);
+  --bs-control-disabled-bg: #ccc;
+  --bs-control-disabled-color: #495057;
+  --bs-control-disabled-opacity: 1;
+  --bs-control-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+& :where(.menu) {
+  --bs-menu-bg: var(--tophat-deeply-gray-800);
+  --bs-menu-divider-bg: rgba(0, 0, 0, 0.15);
+  --bs-menu-item-color: var(--bs-fg-body);
+  --bs-menu-item-hover-color: #fff;
+  --bs-menu-item-hover-bg: var(--bs-bg-body);
+  --bs-menu-item-focus-color: #fff;
+  --bs-menu-item-focus-bg: var(--bs-bg-body);
+}
+
+& :where(.nav-tabs) {
+  --bs-nav-tabs-border-color: rgba(255, 255, 255, 0.3);
+  --bs-nav-tabs-link-hover-border-color: var(--bs-nav-tabs-border-color);
+  --bs-nav-tabs-link-active-bg: transparent;
+  --bs-nav-tabs-link-active-border-color: var(--bs-nav-tabs-border-color);
+}
+
+& :where(.pagination) {
+  --bs-pagination-color: #fff;
+  --bs-pagination-bg: transparent;
+  --bs-pagination-border-color: var(--tophat-deeply-border);
+  --bs-pagination-hover-color: #fff;
+  --bs-pagination-hover-bg: transparent;
+  --bs-pagination-hover-border-color: var(--tophat-deeply-border);
+  --bs-pagination-active-color: #fff;
+  --bs-pagination-active-bg: rgb(from var(--bs-primary-base) r g b / 0.9);
+  --bs-pagination-active-border-color: var(--tophat-deeply-border);
+  --bs-pagination-disabled-bg: rgba(85, 85, 85, 0.3);
+  --bs-pagination-disabled-border-color: var(--tophat-deeply-border);
+}
+
+& :where(.card) {
+  --bs-card-bg: var(--tophat-deeply-panel);
+  --bs-card-border-color: var(--tophat-deeply-border);
+  --bs-card-cap-bg: rgb(110.49999999999999, 110.49999999999999, 110.49999999999999);
+}
+
+& :where(.card .card-header, .card .card-footer) {
+  background-color: inherit;
+}
+
+& :where(.card.bg-primary, .card.theme-primary, .card.bg-light) {
+  --bs-card-color: var(--tophat-dark);
+}
+
+& :where(.card.bg-primary, .card.theme-primary) {
+  --bs-card-bg: var(--bs-primary-base);
+}
+
+& :where(.card.bg-light) {
+  --bs-card-bg: var(--tophat-light);
+}
+
+& :where(.dialog) {
+  --bs-dialog-bg: var(--tophat-deeply-panel);
+  --bs-dialog-header-border-color: rgba(0, 0, 0, 0.2);
+}
+
+& :where(.progress) {
+  --bs-progress-bg: var(--tophat-deeply-recessed);
+  --bs-progress-box-shadow: inset 0 0.1rem 0.1rem rgba(0, 0, 0, 0.1);
+}
+
+& :where(.progress-bar) {
+  --bs-progress-bar-color: #6c757d;
+  color: var(--bs-progress-bar-color);
+}
+
+& :where(.list-group) {
+  --bs-list-group-bg: var(--tophat-deeply-panel);
+  --bs-list-group-border-color: var(--tophat-deeply-border);
+  --bs-list-group-action-hover-bg: rgb(25.5, 25.5, 25.5);
+  --bs-list-group-active-bg: var(--bs-list-group-action-hover-bg);
+  --bs-list-group-active-color: #fff;
+  --bs-list-group-active-border-color: var(--bs-list-group-border-color);
+  --bs-list-group-disabled-bg: var(--bs-bg-body);
+  --bs-list-group-disabled-color: var(--tophat-deeply-gray-800);
+  --bs-list-group-action-color: #fff;
+}
+
+& :where(.breadcrumb) {
+  --bs-breadcrumb-bg: #212529;
+  --bs-breadcrumb-link-active-color: #adb5bd;
+}
+
+& :where(.toast) {
+  --bs-toast-bg: rgba(85, 85, 85, 0.4);
+  --bs-toast-header-bg: var(--bs-toast-bg);
+}
+
+& :where(blockquote) {
+  background-color: var(--tophat-deeply-recessed);
+  color: var(--bs-fg-body);
+}
+
+& :where(pre:not(.highlight pre)) {
+  background-color: var(--bs-fg-body);
+  color: var(--bs-bg-body);
+}
+
+& :where(.alert) {
+  --bs-theme-bg-subtle: var(--bs-theme-bg);
+  --bs-theme-fg: var(--bs-theme-contrast);
+  --bs-alert-link-color: var(--bs-theme-contrast, var(--bs-link-color));
+}
+
+& :where(.alert a) {
+  text-decoration: underline;
+}
+
+{% include skins/deeply-tables.css %}

@@ -1,15 +1,16 @@
 {%- assign resolved_skin = nil -%}
 {%- assign resolved_scheme = nil -%}
-{%- assign resolved_dark_variant = nil -%}
+{%- assign resolved_skin_variant = nil -%}
 {%- assign resolved_skin_fonts = nil -%}
-{%- case include.name -%}
-  {%- when 'gitdev' -%}
-    {%- assign resolved_skin = 'skins/gitdev.css' -%}
-    {%- assign resolved_scheme = 'light' -%}
-    {%- assign resolved_dark_variant = 'gitdev-dark' -%}
-    {%- assign resolved_skin_fonts = 'skins/gitdev-fonts.html' -%}
-  {%- when 'gitdev-dark' -%}
-    {%- assign resolved_skin = 'skins/gitdev-dark.css' -%}
-    {%- assign resolved_scheme = 'dark' -%}
-    {%- assign resolved_skin_fonts = 'skins/gitdev-fonts.html' -%}
-{%- endcase -%}
+{%- capture skin_catalog -%}{%- include skins/catalog.html -%}{%- endcapture -%}
+{%- assign skin_records = skin_catalog | newline_to_br | split: '<br />' -%}
+{%- for record in skin_records -%}
+  {%- assign fields = record | strip | split: '|' -%}
+  {%- if fields[0] == include.name and fields[0] != nil -%}
+    {%- assign resolved_skin = fields[0] | prepend: 'skins/' | append: '.css' -%}
+    {%- assign resolved_scheme = fields[1] -%}
+    {%- assign resolved_skin_variant = fields[2] -%}
+    {%- assign resolved_skin_fonts = fields[3] -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}

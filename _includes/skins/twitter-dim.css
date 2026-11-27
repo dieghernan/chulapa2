@@ -1,0 +1,43 @@
+color-scheme: dark;
+--bs-bg-body: #15202b;
+--bs-fg-body: #fff;
+--bs-body-font-family: "Libre Franklin", Roboto, Helvetica, Arial, sans-serif;
+--bs-heading-font-family: "Libre Franklin", Roboto, Helvetica, Arial, sans-serif;
+--bs-heading-font-weight: 800;
+--bs-link-color: #1d9bf0;
+--bs-link-hover-color: rgb(76.8257261411, 176.1618257261, 243.1742738589);
+--bs-primary-base: #1d9bf0;
+--bs-secondary-base: #788995;
+--bs-success-base: #00ba7c;
+--bs-warning-base: #ff7a00;
+--bs-danger-base: #e21674;
+--bs-info-base: #7856ff;
+
+{% include skins/roles.css names='primary,secondary,success,warning,danger,info' labels='black,black,black,black,black,white' %}
+--bs-secondary-bg: #697883;
+--bs-primary-bg: #177bbe;
+--bs-success-bg: #00875a;
+--bs-warning-bg: #bc5a00;
+
+--chulapa-skin-nav-bg: #15202b;
+--chulapa-skin-nav-fg: #fff;
+--chulapa-skin-nav-hover: #1d9bf0;
+--chulapa-skin-nav-active: #1d9bf0;
+--chulapa-skin-nav-disabled: #444d55;
+{% include skins/navbar.css %}
+{% include skins/twitter-common.css %}
+
+& :where(blockquote) {
+  background-color: rgb(22.6, 56.6, 82.4);
+  color: rgb(243.7, 250, 254.25);
+}
+
+& :where(.table thead) {
+  --bs-table-bg: #1d9bf0;
+  --bs-table-color: black;
+}
+
+& :where(.pagination) {
+  --bs-pagination-hover-bg: #1d9bf0;
+  --bs-pagination-hover-color: black;
+}

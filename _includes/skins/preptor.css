@@ -1,0 +1,21 @@
+color-scheme: light;
+--bs-body-font-family: Muli;
+--bs-heading-font-family: Lato;
+--tophat-light: #eeeeee;
+--tophat-dark: #353535;
+--bs-primary-base: #D80E70;
+--bs-secondary-base: #dddddd;
+--bs-success-base: #4EF037;
+--bs-danger-base: #fa4a5c;
+--bs-info-base: #00BBF0;
+--bs-warning-base: #f4f133;
+
+{% include skins/tophat.css labels='white,black,black,black,black,black,white' %}
+
+{% unless include.variant_scheme %}
+{% include skins/tophat-buttons.css labels='info:#ffffff,danger:#ffffff' outlines='secondary:#6e6e6e,success:#2b841e,info:#007a9c,warning:#7a781a,danger:#c83b4a' vars=include.vars %}
+{% endunless %}
+
+& :where(blockquote) {
+  background-color: color-mix(in srgb, light-dark(white, var(--bs-bg-body)) 80%, var(--bs-primary-base));
+}

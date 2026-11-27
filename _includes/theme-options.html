@@ -20,13 +20,25 @@
 {%- assign main_skin_scheme = resolved_scheme -%}
 {%- assign main_skin_fonts = resolved_skin_fonts -%}
 {%- assign use_dual_mode = main_theme_settings['use-dual-mode'] -%}
+{%- assign automatic_variant = false -%}
 {%- if has_dark_theme == false and use_dual_mode == true -%}
-  {%- assign dark_skin_name = resolved_dark_variant -%}
+  {%- assign automatic_variant = true -%}
+  {%- assign dark_skin_name = resolved_skin_variant -%}
 {%- endif -%}
 {%- include skins/resolve.html name=dark_skin_name -%}
 {%- assign dark_skin = resolved_skin -%}
 {%- assign dark_skin_scheme = resolved_scheme -%}
 {%- assign dark_skin_fonts = resolved_skin_fonts -%}
+{%- assign generated_variant_scheme = nil -%}
+{%- if automatic_variant and main_skin and dark_skin == nil -%}
+  {%- assign dark_skin = main_skin -%}
+  {%- if main_skin_scheme == 'dark' -%}
+    {%- assign generated_variant_scheme = 'light' -%}
+  {%- else -%}
+    {%- assign generated_variant_scheme = 'dark' -%}
+  {%- endif -%}
+  {%- assign dark_skin_scheme = generated_variant_scheme -%}
+{%- endif -%}
 {%- assign show_color_mode_selector = false -%}
 {%- if has_dark_theme or site['color-mode-selector'] == true -%}
   {%- assign show_color_mode_selector = true -%}

@@ -2,7 +2,7 @@
 {%- assign bootstrap_dist = 'https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.2/dist' -%}
 {%- include theme-options.html -%}
 <!doctype html>
-<html lang="{{ lang | escape }}" data-bs-theme="light">
+<html lang="{{ lang | escape }}" data-bs-theme="light"{% if automatic_variant and main_skin_scheme == 'dark' %} data-color-mode-reversed{% endif %}>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">

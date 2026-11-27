@@ -1,0 +1,24 @@
+color-scheme: light;
+font-variant-ligatures: none;
+--bs-heading-font-family: Raleway;
+--tophat-light: #eAeAeA;
+--tophat-dark: #223322;
+--bs-primary-base: #f6648C;
+--bs-secondary-base: #CACACA;
+--bs-success-base: #035668;
+--bs-danger-base: #ff4953;
+--bs-info-base: #3b78ba;
+--bs-warning-base: #0DE2EA;
+
+{% include skins/tophat.css labels='black,black,white,black,black,black,white' %}
+--chulapa-skin-nav-fg: #fff;
+--chulapa-skin-nav-brand: #fff;
+--chulapa-skin-nav-active: #fff;
+
+{% unless include.variant_scheme %}
+{% include skins/tophat-buttons.css labels='primary:#ffffff,danger:#ffffff' outlines='primary:#b84b69,secondary:#6f6f6f,warning:#077c81,danger:#cc3a42' vars=include.vars %}
+{% endunless %}
+
+& :where(.card.bg-primary) {
+  --bs-card-color: #fff;
+}

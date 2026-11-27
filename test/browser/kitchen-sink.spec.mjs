@@ -2,14 +2,15 @@ import { expect, test } from "@playwright/test";
 
 test.use({ reducedMotion: "reduce" });
 
-test("shows the documented Bootstrap component families without inserting demo navbars", async ({ page }) => {
+test("shows the documented Bootstrap component families with one example navbar", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("./");
   const demo = page.locator("#bootstrap-kitchen-sink");
-  await expect(page.locator(".navbar")).toHaveCount(1);
-  await expect(demo.locator(".navbar")).toHaveCount(0);
+  await expect(page.getByRole("navigation", { name: "Primary", exact: true })).toBeVisible();
+  await expect(demo.locator(".navbar")).toHaveCount(1);
+  await expect(demo.locator("section").first().getByRole("navigation", { name: "Example navbar" })).toBeVisible();
   for (const heading of [
-    "Surfaces and typography", "Images and figures", "Form controls", "Disabled forms",
+    "Navbar", "Surfaces and typography", "Images and figures", "Form controls", "Disabled forms",
     "Form sizing", "Input groups", "Floating labels", "Validation", "Accordion",
     "Breadcrumbs", "Buttons and button groups", "Carousel", "Menus",
     "Navigation and tabs", "Pagination", "Popovers and tooltips", "Progress bars",
@@ -41,7 +42,9 @@ test("shows the documented Bootstrap component families without inserting demo n
   const dividerMask = await breadcrumb.locator(".breadcrumb-divider").first()
     .evaluate((element) => getComputedStyle(element, "::before").maskImage);
   expect(dividerMask).toMatch(/^url\(/);
-  await expect(breadcrumb.locator('[aria-current="page"]')).toHaveClass("breadcrumb-link active");
+  const currentItem = breadcrumb.locator(".breadcrumb-item").filter({ hasText: "Breadcrumbs" });
+  await expect(currentItem).toHaveAttribute("aria-current", "page");
+  await expect(currentItem.locator(".breadcrumb-link.active")).toBeVisible();
   const alternative = demo.locator(".bd-callout-note");
   await expect(alternative).toHaveCSS("padding-inline-start", "28px");
   await expect(alternative).toHaveCSS("border-top-width", "1px");
@@ -106,10 +109,54 @@ test("runs the interactive examples in the standalone themed demo", async ({ pag
   expect(errors).toEqual([]);
 });
 
-test("runs Collapse, Drawer, Nav overflow and Toggler without a demo navbar", async ({ page }) => {
+test("shares Wandoo's navbar colors between the example and the site header", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("test/skins/wandoo/", { waitUntil: "domcontentloaded" });
+  const siteNav = page.getByRole("navigation", { name: "Primary", exact: true });
+  const exampleNav = page.getByRole("navigation", { name: "Example navbar" });
+  const exampleBrand = exampleNav.getByRole("link", { name: "Kitchen Sink" });
+  await expect(exampleNav).toHaveCSS("background-color", "rgb(255, 48, 79)");
+  await expect(exampleBrand).toHaveCSS("color", "rgb(0, 0, 0)");
+
+  await page.getByRole("combobox", { name: "Color mode" }).selectOption("dark");
+  await expect(page.locator("html")).toHaveCSS("color-scheme", "dark");
+  const headerBackground = await siteNav.evaluate((nav) => getComputedStyle(nav).backgroundColor);
+  const headerBrandColor = await siteNav.locator(".navbar-brand").evaluate((brand) => getComputedStyle(brand).color);
+  await expect(exampleNav).toHaveCSS("background-color", headerBackground);
+  await expect(exampleBrand).toHaveCSS("color", headerBrandColor);
+});
+
+test("preserves Towards' blue navbar and distinct brand and link colors", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("test/skins/towards/", { waitUntil: "domcontentloaded" });
+  const navbar = page.getByRole("navigation", { name: "Example navbar" });
+  const link = navbar.getByRole("link", { name: "Surfaces" });
+  await expect(navbar).toHaveCSS("background-color", "rgb(53, 88, 118)");
+  await expect(navbar.getByRole("link", { name: "Kitchen Sink" })).toHaveCSS("color", "rgb(255, 255, 255)");
+  await expect(link).toHaveCSS("color", "rgb(194, 205, 214)");
+  await link.hover();
+  await expect(link).toHaveCSS("color", "rgb(226, 231, 235)");
+
+  await page.getByRole("combobox", { name: "Color mode" }).selectOption("dark");
+  await expect(page.locator("html")).toHaveCSS("color-scheme", "dark");
+  const bodyBackground = await page.locator("body").evaluate((body) => getComputedStyle(body).backgroundColor);
+  await expect(navbar).toHaveCSS("background-color", bodyBackground);
+});
+
+test("runs Navbar, Collapse, Drawer, Nav overflow and Toggler", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("./");
   const demo = page.locator("#bootstrap-kitchen-sink");
+  const navbar = demo.getByRole("navigation", { name: "Example navbar" });
+  const navbarToggle = navbar.getByRole("button", { name: "Open example navigation" });
+  await navbarToggle.focus();
+  await page.keyboard.press("Enter");
+  const navbarMenu = page.getByRole("dialog", { name: "Kitchen Sink navigation" });
+  await expect(navbarMenu.getByRole("link", { name: "Surfaces" })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(navbarMenu).toBeHidden();
+  await expect(navbarToggle).toBeFocused();
+
   const notes = demo.getByRole("button", { name: "Toggle build notes" });
   await notes.click();
   await expect(notes).toHaveAttribute("aria-expanded", "true");
@@ -141,4 +188,8 @@ test("runs Collapse, Drawer, Nav overflow and Toggler without a demo navbar", as
   await demo.getByRole("button", { name: "Close sample" }).click();
   await expect(demo.locator("#sink-close-panel")).toHaveCount(0);
   await expect(demo.getByRole("button", { name: "Disabled close button" })).toBeDisabled();
+
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await expect(navbarToggle).toBeHidden();
+  await expect(navbar.getByRole("link", { name: "Surfaces" })).toBeVisible();
 });

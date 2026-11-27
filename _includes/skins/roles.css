@@ -1,0 +1,18 @@
+{%- assign skin_roles = include.names | split: ',' -%}
+{%- assign skin_labels = include.labels | split: ',' -%}
+{% for role in skin_roles %}
+--bs-{{ role }}-bg: var(--bs-{{ role }}-base);
+--bs-{{ role }}-bg-subtle: color-mix(in srgb, var(--bs-{{ role }}-base) 12%, var(--bs-bg-body));
+--bs-{{ role }}-bg-muted: color-mix(in srgb, var(--bs-{{ role }}-base) 20%, var(--bs-bg-body));
+--bs-{{ role }}-fg: color-mix(in srgb, var(--bs-{{ role }}-base) 30%, var(--bs-fg-body));
+--bs-{{ role }}-fg-emphasis: color-mix(in srgb, var(--bs-{{ role }}-base) 15%, var(--bs-fg-body));
+--bs-{{ role }}-border: var(--bs-{{ role }}-fg);
+--bs-{{ role }}-focus-ring: var(--bs-{{ role }}-fg-emphasis);
+--bs-{{ role }}-contrast: {{ skin_labels[forloop.index0] }};
+{% endfor %}
+
+@supports (color: contrast-color(white)) {
+  {% for role in skin_roles %}
+  --bs-{{ role }}-contrast: contrast-color(var(--bs-{{ role }}-bg));
+  {% endfor %}
+}

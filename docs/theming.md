@@ -81,11 +81,11 @@ Use a component class under `vars` for that scope.
 
 | Setting | Effect |
 | --- | --- |
-| `skin` | Selects `auto` or a bundled skin, currently `gitdev` and `gitdev-dark`. An omitted or unknown name adds no skin declarations. |
+| `skin` | Selects `auto` or a [bundled skin](#bundled-skins). An omitted or unknown name adds no skin declarations. |
 | `autothemer` | Generates a palette for the mode. `skin: auto` also enables generation. |
 | `vars` | Applies explicit Bootstrap or custom CSS tokens, with optional component classes. |
 | `highlight` | Selects `default`, `github` or `github.dark`. An omitted or unsupported dark value uses the main palette. |
-| `use-dual-mode` | Goes under `chulapa-skin` and enables the automatic dark variant. A separate dark configuration takes precedence. |
+| `use-dual-mode` | Goes under `chulapa-skin` and enables the other appearance. A separate dark configuration takes precedence. |
 
 The top-level `color-mode-selector` option shows the selector when set to
 `true`. An explicit dark configuration always shows it. The top-level
@@ -141,9 +141,9 @@ mode's font tokens to select which loaded families appear on the page.
 The bundled skins load their own default families when selected.
 [Font configuration in chulapa](https://dieghernan.github.io/chulapa/docs/24-change-fonts)
 
-## Automatic dark variant
+## Automatic color variants
 
-With `use-dual-mode: true`, the automatic dark variant shares all
+With `use-dual-mode: true`, the automatic variant shares all
 configured `chulapa-skin.vars` except `bg-body` and `fg-body`. The same
 rule covers their legacy aliases, fully prefixed names and tokens scoped
 to a component class.
@@ -165,10 +165,90 @@ chulapa-skin:
 
 Shared color overrides take precedence over generated colors in both modes.
 Check their contrast in each mode. Use `light-dark()` for a shared color
-token that needs a different value in each mode. Bootstrap, the dark skin
-or the Auto Themer supply the dark body foreground and background. An
+token that needs a different value in each mode. Bootstrap, the alternate
+skin or the Auto Themer supply the alternate body foreground and background. An
 explicit `chulapa-skin-dark` defines an independent configuration and
 can set its own body colors.
+
+A light skin without a matching dark skin retains its typography, geometry
+and primary color in the automatic dark variant. Chulapa2 generates its
+dark surfaces and adapts the default text and links. For example:
+
+```yaml
+color-mode-selector: true
+chulapa-skin:
+  skin: focal
+  use-dual-mode: true
+```
+
+For a dark primary skin, dual mode chooses its named light counterpart or
+generates a light variant. The primary skin still appears on the first visit.
+System mode picks the light or dark appearance matching the device.
+
+## Bundled skins
+
+The catalog includes the 16 skins attributed to `dieghernan` in the
+[original Chulapa skin collection](https://github.com/dieghernan/chulapa/tree/3984fa552/docs/collections/_skins).
+
+| Family | Names | Automatic choice with dual mode |
+| --- | --- | --- |
+| Butterfly | `butterfly`, `butterfly-dark`, `butterfly-dim` | Butterfly Dark from Butterfly, or Butterfly from either dark skin |
+| GitDev | `gitdev`, `gitdev-dark` | The other GitDev skin |
+| Twitter | `twitter`, `twitter-dim`, `twitter-lights-out` | Lights Out from Twitter, or Twitter from either dark skin |
+| Other light skins | `academia`, `chulapa`, `focal`, `media`, `navi`, `pear`, `towards` | Generated from the selected skin |
+| Other dark skins | `listen` | Generated light variant |
+
+Each name resolves through one catalog entry to a CSS fragment and its font
+stylesheet. The fragments keep the authored base colors and set Bootstrap
+tokens for typography, semantic colors and rendered components. Footer and
+hero options from the original skins will apply as those Chulapa layouts
+are rebuilt.
+
+### TopHat
+
+See the [skin migration guide](skin-migration.md) for differences in component
+markup, legacy variables and migration checks.
+
+The catalog also includes `deeply`, `electro`, `graymor`, `hootstrap`, `lymcha`,
+`mickie`, `minco`, `monotone`, `preptor`, `skeeblu`, `sunset` and
+`wandoo`. These adapters retain the values used by Chulapa's wrappers,
+including their palette overrides and font choices. Hootstrap retains its
+Chulapa name and maps to upstream Hollar.
+
+Bootstrap 6 assigns the original light and dark shades to the adaptive
+inverse role. The automatic alternate variant preserves the configured palette
+and derives its body surfaces, readable foregrounds and link colors from
+the same CSS tokens. The MIT notice travels with the generated TopHat CSS.
+
+Deeply retains the effective dark component values from Chulapa's Sass
+build. It applies those values through Bootstrap 6 component tokens,
+including full-color alerts and themed table rows. Its generated light
+variant keeps the same palette and typography and uses light component
+surfaces. The adapters use Jekyll and CSS.
+[Pinned TopHat sources](https://github.com/ThemesGuide/top-hat/tree/2274176073d2e4783c78df080c6c3396e2abc2b4)
+· [Chulapa integration](https://github.com/dieghernan/chulapa/tree/3984fa552/_sass/vendor/tophat)
+
+Some retained light-mode combinations fall below the contrast thresholds.
+The test baseline records their measured ratios and detects regressions.
+The affected combinations are filled button labels in Electro, Graymor,
+Mickie, Minco, Preptor, Skeeblu and Wandoo, and navigation links in Mickie
+and Skeeblu. Mickie also has an exception for the navbar focus indicator.
+Deeply retains its original white primary and danger button labels in dark
+mode and white text on themed table rows. Some of those pairs are below
+4.5:1.
+
+Run `npm test -- test/browser/skins.spec.mjs` to build skin fixtures and
+test computed colors in Chromium. The checks pin the original primary
+colors and exercise text contrast, button and badge states and focus at
+mobile and desktop widths. Skins without a named alternate also run with
+their generated variant in manual and system modes.
+Custom tokens and user content require their own contrast review.
+
+Run `npm run preview:test` to open the
+[skin gallery](http://127.0.0.1:4173/chulapa2/test/skins/focal/). The skin
+selector loads another skin on the same kitchen sink and keeps the color
+mode selection. The primary appearance of an originally dark skin
+remains dark.
 
 ## Generator and intentional overrides
 

@@ -1,0 +1,22 @@
+color-scheme: light;
+--bs-body-font-family: Open Sans;
+--bs-heading-font-family: 'Autour One';
+--tophat-light: #FDFBF7;
+--tophat-dark: #555555;
+--bs-primary-base: #528078;
+--bs-secondary-base: #eed75a;
+--bs-success-base: #FEC100;
+--bs-danger-base: #703B3B;
+--bs-info-base: #63e792;
+--bs-warning-base: #FFE869;
+
+{% include skins/tophat.css labels='black,black,black,white,black,black,white' %}
+--bs-primary-bg: #517e77;
+
+{% unless include.variant_scheme %}
+{% include skins/tophat-buttons.css labels='primary:#fff' outlines='primary:#4e7a72,secondary:#837632,success:#8c6a00,info:#367f50,warning:#807434' vars=include.vars %}
+{% endunless %}
+
+& :where(.card.bg-primary, .card.bg-secondary) {
+  --bs-card-color: #fff;
+}
