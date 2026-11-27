@@ -94,6 +94,7 @@ It keeps the Chulapa typeface and rebuilds the theme for Bootstrap 6.</p>
 <p>Compare Bootstrap surfaces, component states and typography in the current theme.</p>
 <p><a href="https://getbootstrap.com/docs/6.0/examples/cheatsheet/">Bootstrap 6 Cheatsheet</a></p>
 <ul class="list-inline">
+  <li class="list-inline-item"><a href="#sink-navbar">Navbar</a></li>
   <li class="list-inline-item"><a href="#surfaces">Surfaces</a></li>
   <li class="list-inline-item"><a href="#sink-images">Images</a></li>
   <li class="list-inline-item"><a href="#palette">Colors</a></li>
@@ -106,76 +107,237 @@ It keeps the Chulapa typeface and rebuilds the theme for Bootstrap 6.</p>
 </ul>
 
 <div id="bootstrap-kitchen-sink" class="not-prose d-grid gap-4">
+
+  <section id="sink-navbar" aria-labelledby="sink-navbar-title">
+    <h3 id="sink-navbar-title">Navbar</h3>
+    <nav class="chulapa-navbar navbar md:navbar-expand bg-1 border rounded" aria-label="Example navbar">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#bootstrap-kitchen-sink">Kitchen Sink</a>
+        <button class="btn-icon navbar-toggler" type="button" data-bs-toggle="drawer" data-bs-target="#sink-navbar-menu" aria-controls="sink-navbar-menu" aria-label="Open example navigation">
+          <span class="navbar-toggler-icon" aria-hidden="true"></span>
+        </button>
+        <dialog class="drawer drawer-end" id="sink-navbar-menu" aria-labelledby="sink-navbar-menu-title">
+          <div class="drawer-header">
+            <h4 class="drawer-title" id="sink-navbar-menu-title">Kitchen Sink navigation</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="drawer" aria-label="Close example navigation"></button>
+          </div>
+          <div class="drawer-body">
+            <ul class="navbar-nav">
+              <li class="nav-item"><a class="nav-link" href="#surfaces">Surfaces</a></li>
+              <li class="nav-item"><a class="nav-link" href="#forms">Forms</a></li>
+              <li class="nav-item"><a class="nav-link" href="#components">Components</a></li>
+            </ul>
+          </div>
+        </dialog>
+      </div>
+    </nav>
+  </section>
+
   <section id="surfaces" aria-labelledby="surfaces-title">
     <h3 id="surfaces-title">Surfaces and typography</h3>
     <div class="row g-2 mb-3">
       
       <div class="col-6 md:col-3">
-        <div class="bg-1 border rounded p-3">Surface 1</div>
+      <div class="bg-1 border rounded p-3">Surface 1</div>
       </div>
       
       <div class="col-6 md:col-3">
-        <div class="bg-2 border rounded p-3">Surface 2</div>
+      <div class="bg-2 border rounded p-3">Surface 2</div>
       </div>
       
       <div class="col-6 md:col-3">
-        <div class="bg-3 border rounded p-3">Surface 3</div>
+      <div class="bg-3 border rounded p-3">Surface 3</div>
       </div>
       
       <div class="col-6 md:col-3">
-        <div class="bg-4 border rounded p-3">Surface 4</div>
+      <div class="bg-4 border rounded p-3">Surface 4</div>
       </div>
       
     </div>
     <div class="mb-3">
-      
-      
+    
+    
       <div class="fs-xs">Type scale xs</div>
-      
+    
       <div class="fs-sm">Type scale sm</div>
-      
+    
       <div class="fs-md">Type scale md</div>
-      
+    
       <div class="fs-lg">Type scale lg</div>
-      
+    
       <div class="fs-xl">Type scale xl</div>
-      
+    
       <div class="fs-2xl">Type scale 2xl</div>
-      
+    
       <div class="fs-3xl">Type scale 3xl</div>
-      
-      <div class="fs-4xl">Type scale 4xl</div>
-      
-      <div class="fs-5xl">Type scale 5xl</div>
-      
-      <div class="fs-6xl">Type scale 6xl</div>
-      
+    
     </div>
-    <p>Body text with <strong>emphasis</strong>, <mark>highlighted text</mark> and <code>inline code</code>.</p>
-    <blockquote class="blockquote">A quote shows how text and borders sit on a neutral background.</blockquote>
-    
-    
+
+    <div class="mb-3">
+      <div class="row g-2 mb-3">
+        <div class="lg:col-6">
+        
+          <p class="h1">h1. heading</p>
+        
+          <p class="h2">h2. heading</p>
+        
+          <p class="h3">h3. heading</p>
+        
+          <p class="h4">h4. heading</p>
+        
+          <p class="h5">h5. heading</p>
+        
+          <p class="h6">h6. heading</p>
+        
+          <p class="h4"> Heading <small class="fg-2">with .fg-2 muted text</small></p>
+        </div>
+        <div class="lg:col-6">
+          <p class="h3">Emphasis classes</p>
+        
+        
+          <p class="fg-primary">This is a text with fg-primary class</p>
+          <p class="fg-accent">This is a text with fg-accent class</p>
+          <p class="fg-secondary">This is a text with fg-secondary class</p>
+          <p class="fg-success">This is a text with fg-success class</p>
+          <p class="fg-warning">This is a text with fg-warning class</p>
+          <p class="fg-danger">This is a text with fg-danger class</p>
+          <p class="fg-info">This is a text with fg-info class</p>
+          <p class="fg-inverse">This is a text with fg-inverse class</p></div>
+      </div>
+    </div>
+    <div class="mb-3">
+          <p class="h3">Example body text</p>
+          <p>Nullam quis risus eget <a href="#">urna mollis ornare</a> vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
+          <p>Body text with <strong>emphasis</strong>, <mark>highlighted text</mark> and <code>inline code</code>.</p>
+          <p><del>This line of text is meant to be treated as deleted text.</del></p>
+          <p><s>This line of text is meant to be treated as no longer accurate.</s></p>
+          <p><ins>This line of text is meant to be treated as an addition to the document.</ins></p>
+          <p><u>This line of text will render as underlined.</u></p>
+          <p><small>This line of text is meant to be treated as fine print.</small></p>
+          <p><strong>This line rendered as bold text.</strong></p>
+          <p><em>This line rendered as italicized text.</em></p>
+          <p>An abbreviation of the word attribute is <abbr title="attribute">attr</abbr>.</p>
+       </div>
+
+    <div class="row g-2 mb-3">
+      <div class="md:col-6">
+      <blockquote class="blockquote">A quote shows how text and borders sit on a neutral background.</blockquote>
+      </div>
+      <div class="md:col-6">
+        <figure class="blockquote">
+        <blockquote>
+        <p>A well-known quote, contained in a blockquote element.</p>
+        </blockquote>
+        <figcaption class="blockquote-footer">
+        Someone famous in <cite title="Source Title">Source Title</cite>
+        </figcaption>
+        </figure>
+      </div>
+    </div>
+
+
+
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Report the outcome of a build.</span>
 <span class="k">def</span> <span class="nf">build_status</span><span class="p">(</span><span class="n">ready</span><span class="p">)</span>
-  <span class="k">return</span> <span class="s2">"Complete"</span> <span class="k">if</span> <span class="n">ready</span>
+<span class="k">return</span> <span class="s2">"Complete"</span> <span class="k">if</span> <span class="n">ready</span>
 
-  <span class="s2">"Waiting"</span>
+<span class="s2">"Waiting"</span>
 <span class="c1"># Ligatures &lt;-</span>
 <span class="k">end</span>
 </code></pre></div></div>
 
 
     <div class="table-responsive">
-      <table class="table table-striped table-hover">
-        <caption>Build stages</caption>
-        <thead><tr><th scope="col">Stage</th><th scope="col">Result</th></tr></thead>
-        <tbody>
-          <tr><th scope="row">Compile</th><td>Complete</td></tr>
-          <tr><th scope="row">Validate</th><td>In progress</td></tr>
-          <tr><th scope="row">Publish</th><td>Waiting</td></tr>
-        </tbody>
-      </table>
+    <table class="table table-striped table-hover">
+    <caption>Build stages</caption>
+    <thead><tr><th scope="col">Stage</th><th scope="col">Result</th></tr></thead>
+    <tbody>
+    <tr><th scope="row">Compile</th><td>Complete</td></tr>
+    <tr><th scope="row">Validate</th><td>In progress</td></tr>
+    <tr><th scope="row">Publish</th><td>Waiting</td></tr>
+    </tbody>
+    </table>
     </div>
+    <div>
+      <p class="h4">Simple reponsive small table</p>
+      <div class="table-responsive">
+      <table class="table table-sm">
+        <thead>
+           <tr>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+             <th>Header</th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+           </tr>
+           <tr>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+           </tr>
+           <tr>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+             <td>Cell</td>
+           </tr>
+         </tbody>
+       </table>
+       </div>
+    </div>
+
   </section>
 
   <section id="sink-images" aria-labelledby="sink-images-title">
@@ -477,6 +639,40 @@ It keeps the Chulapa typeface and rebuilds the theme for Bootstrap 6.</p>
         </ul>
       </div>
     </div>
+    <div class="contains-inline my-3">
+      <div class="card-group">
+      <div class="card">
+        <img src="https://dieghernan.github.io/chulapa2/assets/img/kitchen-sink/forest.webp" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h4 class="card-title">Card title</h4>
+          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+        </div>
+        <div class="card-footer">
+          <small class="fg-2">Last updated 3 mins ago</small>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://dieghernan.github.io/chulapa2/assets/img/kitchen-sink/dunes.webp" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h4 class="card-title">Card title</h4>
+          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+        </div>
+        <div class="card-footer">
+          <small class="fg-2">Last updated 3 mins ago</small>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://dieghernan.github.io/chulapa2/assets/img/kitchen-sink/harbor.webp" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h4 class="card-title">Card title</h4>
+          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+        </div>
+        <div class="card-footer">
+          <small class="fg-2">Last updated 3 mins ago</small>
+        </div>
+      </div>
+      </div>
+    </div>
     <details class="mt-3">
       <summary>Show validation details</summary>
       <p>The keyboard can open this disclosure and reach the confirmation dialog.</p>
@@ -558,7 +754,7 @@ It keeps the Chulapa typeface and rebuilds the theme for Bootstrap 6.</p>
     <li class="breadcrumb-divider" aria-hidden="true"></li>
     <li class="breadcrumb-item"><a class="breadcrumb-link" href="#components">Components</a></li>
     <li class="breadcrumb-divider" aria-hidden="true"></li>
-    <li class="breadcrumb-item"><span class="breadcrumb-link active" aria-current="page">Breadcrumbs</span></li>
+    <li class="breadcrumb-item" aria-current="page"><span class="breadcrumb-link active">Breadcrumbs</span></li>
   </ol>
 </nav>
 
@@ -851,7 +1047,7 @@ It keeps the Chulapa typeface and rebuilds the theme for Bootstrap 6.</p>
 <div class="d-flex flex-wrap align-items-center gap-3">
   <div id="sink-close-panel" class="alert theme-info">
     Dismissible sample
-    <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#sink-close-panel" aria-label="Close sample"></button>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close sample"></button>
   </div>
   <button type="button" class="btn-close" disabled="" aria-label="Disabled close button"></button>
 </div>
