@@ -1,0 +1,75 @@
+{%- if show_color_mode_selector == nil -%}
+  {%- include snippets/theme-options.html -%}
+{%- endif -%}
+{%- assign nav_items = site.navbar.nav -%}
+{%- assign brand_title = site.navbar.brand.title | default: site.title -%}
+{%- assign brand_url = site.navbar.brand.url | default: '/' -%}
+{%- assign page_path = include.pageurl | default: page.url | remove: '.html' | append: '/' | replace: '//', '/' -%}
+{%- assign expand = site.navbar.expand | default: 'md' -%}
+{%- case expand -%}
+  {%- when 'always' -%}
+    {%- assign nav_expand = ' navbar-expand' -%}
+    {%- assign menu_expand = ' ms-auto' -%}
+  {%- when 'never' -%}
+    {%- assign nav_expand = '' -%}
+    {%- assign menu_expand = '' -%}
+  {%- when 'sm', 'md', 'lg', 'xl' -%}
+    {%- assign nav_expand = expand | prepend: ' ' | append: ':navbar-expand' -%}
+    {%- assign menu_expand = expand | prepend: ' ' | append: ':ms-auto' -%}
+  {%- else -%}
+    {%- assign nav_expand = ' md:navbar-expand' -%}
+    {%- assign menu_expand = ' md:ms-auto' -%}
+{%- endcase %}
+<nav class="chulapa-navbar navbar{{ nav_expand }} bg-1 border-bottom" aria-label="Primary">
+  <div class="container">
+    <a class="navbar-brand chulapa-brand d-inline-flex align-items-center gap-2" href="{{ brand_url | absolute_url | escape }}">
+      {% if site.navbar.brand.img %}
+      <img src="{{ site.navbar.brand.img | absolute_url | escape }}" width="30" height="30" alt="">
+      {% endif %}
+      {{ brand_title | escape }}
+    </a>
+    {% if nav_items.size > 0 or show_color_mode_selector %}
+    <button class="btn-icon navbar-toggler" type="button" data-bs-toggle="drawer" data-bs-target="#primary-menu" aria-controls="primary-menu" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon" aria-hidden="true"></span>
+    </button>
+    <dialog class="drawer drawer-end" id="primary-menu" aria-labelledby="primary-menu-title">
+      <div class="drawer-header">
+        <h2 class="drawer-title" id="primary-menu-title">Menu</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="drawer" aria-label="Close menu"></button>
+      </div>
+      <div class="drawer-body">
+        <ul class="navbar-nav text-start{{ menu_expand }}">
+          {% for item in nav_items %}
+          {% if item.child.size > 0 %}
+          {% assign child_active = false %}
+          {% for child in item.child %}
+            {% assign child_path = child.url | remove: '.html' | append: '/' | replace: '//', '/' %}
+            {% if child_path == page_path %}{% assign child_active = true %}{% endif %}
+          {% endfor %}
+          <li class="nav-item position-relative">
+            <button class="nav-link{% if child_active %} active{% endif %}" type="button" data-bs-toggle="menu"
+                    data-bs-placement="bottom-end" aria-expanded="false" id="primary-submenu-{{ forloop.index }}"
+                    aria-controls="primary-submenu-{{ forloop.index }}-items">
+              {{ item.title | escape }} <span aria-hidden="true">▾</span>
+            </button>
+            <div class="menu" id="primary-submenu-{{ forloop.index }}-items" aria-labelledby="primary-submenu-{{ forloop.index }}">
+              {% for child in item.child %}
+              {% assign child_path = child.url | remove: '.html' | append: '/' | replace: '//', '/' %}
+              <a class="menu-item{% if child_path == page_path %} active{% endif %}" href="{{ child.url | absolute_url | escape }}"{% if child_path == page_path %} aria-current="page"{% endif %}>{{ child.title | escape }}</a>
+              {% endfor %}
+            </div>
+          </li>
+          {% elsif item.url %}
+          {% assign item_path = item.url | remove: '.html' | append: '/' | replace: '//', '/' %}
+          <li class="nav-item">
+            <a class="nav-link{% if item_path == page_path %} active{% endif %}" href="{{ item.url | absolute_url | escape }}"{% if item_path == page_path %} aria-current="page"{% endif %}>{{ item.title | escape }}</a>
+          </li>
+          {% endif %}
+          {% endfor %}
+          {% include components/theme-selector.html %}
+        </ul>
+      </div>
+    </dialog>
+    {% endif %}
+  </div>
+</nav>

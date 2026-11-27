@@ -30,6 +30,7 @@ exclude:
   - .grok
   - .posit
   - AGENTS.md
+  - development
   - README.md
   - node_modules
   - package.json
@@ -39,4 +40,5 @@ exclude:
   - scripts
   - skills-lock.json
   - test/browser
+  - test/README.md
   - test-results

@@ -11,6 +11,11 @@ color-scheme: {{ include.scheme }};
 --chulapa-skin-nav-hover: var(--bs-link-hover-color);
 --chulapa-skin-nav-active: var(--bs-link-color);
 --chulapa-skin-nav-hover-bg: var(--bs-bg-2);
+--chulapa-footer-bg: initial;
+--chulapa-footer-color: initial;
+--chulapa-footer-link-color: initial;
+--chulapa-footer-link-hover-color: initial;
+--chulapa-footer-blend: initial;
 
 & :where(.table thead) {
   --bs-table-bg: var(--bs-bg-2);

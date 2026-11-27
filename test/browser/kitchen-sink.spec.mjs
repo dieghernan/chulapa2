@@ -1,4 +1,6 @@
 import { expect, test } from "@playwright/test";
+import { colorMode } from "./color-mode-control.mjs";
+import { readContrast } from "./contrast.mjs";
 
 test.use({ reducedMotion: "reduce" });
 
@@ -56,7 +58,7 @@ test("runs the interactive examples in the standalone themed demo", async ({ pag
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("test/dual/test/auto-themer/kitchen-sink/");
   const demo = page.locator("#bootstrap-kitchen-sink");
-  await page.getByRole("combobox", { name: "Color mode" }).selectOption("dark");
+  await colorMode(page).choose("dark");
 
   const summary = demo.locator("summary.accordion-header").filter({ hasText: "Build details" });
   const chevron = summary.locator("svg.accordion-icon");
@@ -118,7 +120,7 @@ test("shares Wandoo's navbar colors between the example and the site header", as
   await expect(exampleNav).toHaveCSS("background-color", "rgb(255, 48, 79)");
   await expect(exampleBrand).toHaveCSS("color", "rgb(0, 0, 0)");
 
-  await page.getByRole("combobox", { name: "Color mode" }).selectOption("dark");
+  await colorMode(page).choose("dark");
   await expect(page.locator("html")).toHaveCSS("color-scheme", "dark");
   const headerBackground = await siteNav.evaluate((nav) => getComputedStyle(nav).backgroundColor);
   const headerBrandColor = await siteNav.locator(".navbar-brand").evaluate((brand) => getComputedStyle(brand).color);
@@ -137,10 +139,45 @@ test("preserves Towards' blue navbar and distinct brand and link colors", async 
   await link.hover();
   await expect(link).toHaveCSS("color", "rgb(226, 231, 235)");
 
-  await page.getByRole("combobox", { name: "Color mode" }).selectOption("dark");
+  await colorMode(page).choose("dark");
   await expect(page.locator("html")).toHaveCSS("color-scheme", "dark");
   const bodyBackground = await page.locator("body").evaluate((body) => getComputedStyle(body).backgroundColor);
   await expect(navbar).toHaveCSS("background-color", bodyBackground);
+});
+
+test("inherits the navbar palette in the theme menu at mobile and desktop widths", async ({ page }) => {
+  for (const width of [390, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("test/skins/towards/");
+    const navbar = page.getByRole("navigation", { name: "Primary", exact: true });
+    const drawer = navbar.getByRole("button", { name: "Toggle navigation" });
+    if (await drawer.isVisible()) await drawer.click();
+
+    const selector = colorMode(page);
+    const menu = navbar.locator("#site-color-mode-options");
+    const dark = menu.getByRole("button", { name: "Dark theme" });
+    const navbarBackground = () => navbar.evaluate((nav) => getComputedStyle(nav).backgroundColor);
+    await selector.trigger.click();
+    await expect(menu).toHaveCSS("background-color", await navbarBackground());
+    await expect(dark).toHaveCSS("color", "rgb(194, 205, 214)");
+    await expect(selector.selected).toHaveCSS("color", "rgb(255, 255, 255)");
+    expect((await readContrast(dark)).text).toBeGreaterThanOrEqual(4.5);
+    await dark.hover();
+    await expect(dark).toHaveCSS("color", "rgb(226, 231, 235)");
+
+    await selector.trigger.press("ArrowDown");
+    await page.keyboard.press("ArrowDown");
+    await expect(dark).toBeFocused();
+    await expect(dark).toHaveCSS("outline-style", "solid");
+    expect((await readContrast(dark)).focus).toBeGreaterThanOrEqual(3);
+    await page.keyboard.press("Enter");
+    await expect(selector.trigger).toHaveAttribute("aria-expanded", "false");
+    await selector.trigger.click();
+    await expect(menu).toHaveCSS("background-color", await navbarBackground());
+    expect((await readContrast(menu.getByRole("button", { name: "System theme" }))).text)
+      .toBeGreaterThanOrEqual(4.5);
+    await page.evaluate(() => localStorage.removeItem("chulapa2-color-mode"));
+  }
 });
 
 test("runs Navbar, Collapse, Drawer, Nav overflow and Toggler", async ({ page }) => {

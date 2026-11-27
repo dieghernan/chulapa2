@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { colorMode } from "./color-mode-control.mjs";
 
 const light = {
   background: "rgb(246, 248, 250)",
@@ -47,16 +48,16 @@ test("styles Kramdown code with the selected GitHub palette in each mode", async
   await page.emulateMedia({ colorScheme: "dark" });
   await page.goto("test/gitdev/");
   const sample = codeSample(page);
-  const selector = page.getByRole("combobox", { name: "Color mode" });
-  await expect(selector).toHaveValue("light");
+  const themeMenu = colorMode(page);
+  await expect(themeMenu.selected).toHaveAttribute("data-color-mode", "light");
   await expectPalette(sample, light);
   await expectReadableCode(sample);
-  await selector.selectOption("");
+  await themeMenu.choose("system");
   await expectPalette(sample, dark);
   await expectReadableCode(sample);
   await page.emulateMedia({ colorScheme: "light" });
   await expectPalette(sample, light);
-  await selector.selectOption("dark");
+  await themeMenu.choose("dark");
   await page.reload();
   await expectPalette(sample, dark);
   await page.goto("test/gitdev/test/markdown/");
@@ -68,7 +69,7 @@ test("inherits the primary highlighter when the dark setting is omitted", async 
   await page.goto("test/gitdev-dual/");
   const sample = codeSample(page);
   await expectPalette(sample, light);
-  await page.getByRole("combobox", { name: "Color mode" }).selectOption("dark");
+  await colorMode(page).choose("dark");
   await expectPalette(sample, light);
   await expect(sample.block).toHaveCSS("color", "rgb(36, 41, 47)");
 });
@@ -77,6 +78,6 @@ test("uses the default stylesheet for unset or unknown highlighters", async ({ p
   for (const url of ["./", "test/primary/"]) {
     await page.goto(url);
     await expectPalette(codeSample(page), fallback);
-    await expect(page.locator('link[href$="/assets/css/highlight.css"]')).toHaveCount(1);
+    await expect(page.locator('link[href$="/assets/css/highlighter.css"]')).toHaveCount(1);
   }
 });

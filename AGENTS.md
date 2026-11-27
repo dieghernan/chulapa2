@@ -129,6 +129,12 @@ Preserve the recognizable visual identity of chulapa, including:
 
 Visual continuity is more important than pixel-perfect reproduction.
 
+When migrating a layout or component, compare the rendered result with
+Chulapa at representative widths and in both color modes when applicable.
+Preserve the recognizable typography, proportions, spacing, placement, and
+interaction states. Record intentional visual differences and remaining
+limitations in the relevant migration guide.
+
 Differences introduced by native Bootstrap 6 components are acceptable when they improve accessibility, consistency, performance or maintainability.
 
 ## 6. User-facing compatibility
@@ -147,7 +153,9 @@ Prioritize compatibility with:
 - Auto Themer configuration.
 - Font Awesome (native in chulapa -> opt-in in chulapa2).
 
-Internal implementation compatibility is not required.
+When migrating a component or feature, keep the original repository-relative
+paths and filenames of its layouts, includes, and assets. Rebuild their
+internals around Bootstrap 6 as needed.
 
 Do not preserve obsolete Bootstrap classes or implementation details at the expense of architectural simplicity.
 
@@ -362,6 +370,8 @@ Release chulapa2 when:
 ## 13. Instructions for development agents
 
 Use the Bootstrap 6 skills in `.agents/skills` as upstream reference material.
+For skin migration, use the [repository migration agent](.github/agents/skin-migration.agent.md)
+and the [test guide](test/README.md).
 For chulapa2, follow the sections for application code and keep customizations
 in project-owned files. Steps for contributing components or utilities to
 Bootstrap itself apply to upstream development. Follow the vendor and skin

@@ -1,4 +1,8 @@
 color-scheme: light;
+--chulapa-footer-bg: #242424;
+--chulapa-footer-color: #fff;
+--chulapa-footer-link-color: #ffffff8a;
+--chulapa-footer-link-hover-color: hsl(0 0% 73.860239887% / 0.6806588235);
 --bs-fg-3: #757575;
 --bs-body-font-family: "Source Serif 4", Georgia, Cambria, "Times New Roman", Times, serif;
 --bs-heading-font-family: "Mona Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -41,6 +45,6 @@ color-scheme: light;
   text-decoration-thickness: 2px;
 }
 
-& :where(:not(.chulapa-brand)) {
+& :where(:not(.chulapa-brand, .chulapa)) {
   font-variant-ligatures: none;
 }
