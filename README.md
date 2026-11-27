@@ -45,7 +45,9 @@ palette generation is off. Restart the preview after editing the file.
 The GitHub Pages workflow publishes only `_site/` from the regular build.
 Keep drafts that need to stay private out of the public Git repository.
 
-The home page includes a Bootstrap 6 kitchen sink. Compare the
+The published home page uses the Auto Themer, the color mode selector and
+Fira Code. The test preview starts from Bootstrap defaults and builds
+separate themed fixtures. Compare the kitchen sink in the
 [default preview](http://127.0.0.1:4173/chulapa2/) with the
 [Auto Themer preview](http://127.0.0.1:4173/chulapa2/test/dual/) and the
 [GitDev preview](http://127.0.0.1:4173/chulapa2/test/gitdev/).

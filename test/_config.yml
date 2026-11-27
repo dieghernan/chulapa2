@@ -1,5 +1,11 @@
 url: "http://127.0.0.1:4173"
 
+# Start the browser fixtures from Bootstrap defaults.
+chulapa-skin: false
+chulapa-skin-dark: false
+color-mode-selector: false
+googlefonts: []
+
 auto-themer-preview:
   chulapa-skin:
     autothemer: true

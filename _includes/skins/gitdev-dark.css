@@ -17,8 +17,3 @@ color-scheme: dark;
 --gitdev-navbar-hover: #8b949e;
 
 {% include skins/gitdev-common.css %}
-
-& .highlight pre {
-  background-color: color-mix(in srgb, var(--bs-bg-body) 5%, var(--bs-fg-body));
-  color: var(--bs-bg-body);
-}
