@@ -28,6 +28,14 @@
   {%- assign option_name = option_key -%}
   {%- if option_prefix == '--' -%}
     {%- assign option_name = option_name | remove_first: '--' -%}
+  {%- elsif option_key == 'hero-chulapa-bg-color' or option_key == 'hero-chulapa-text-color' -%}
+    {%- if option_key == 'hero-chulapa-bg-color' -%}
+      {%- assign option_name = 'chulapa-hero-bg' -%}
+    {%- else -%}
+      {%- assign option_name = 'chulapa-hero-color' -%}
+    {%- endif -%}
+    {%- assign prefixed_name = option_name | prepend: '--' -%}
+    {%- if include.vars[prefixed_name] != nil -%}{%- continue -%}{%- endif -%}
   {%- else -%}
     {%- case option_name -%}
       {%- when 'primary' -%}{%- assign option_name = 'primary-base' -%}

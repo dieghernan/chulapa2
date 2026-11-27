@@ -29,6 +29,6 @@ color-scheme: light;
   --bs-table-color: black;
 }
 
-& :where(:not(.chulapa-brand, .chulapa)) {
+& :where(:not(.chulapa)) {
   font-variant-ligatures: none;
 }

@@ -2,9 +2,20 @@
 layout: minimal
 main_content: true
 ---
-<main id="main-content" class="container py-5" tabindex="-1">
-  <article class="prose">
-    {% if page.title %}<h1>{{ page.title | escape }}</h1>{% endif %}
-    {{ content }}
-  </article>
+{% capture page_header %}
+  {% unless page.show_header == false %}
+    {% include components/headers.html %}
+  {% endunless %}
+{% endcapture %}
+{% assign page_header = page_header | strip %}
+<main id="main-content" tabindex="-1">
+  {{ page_header }}
+  <div class="container">
+    <div class="row justify-content-center">
+      <article class="col-12 lg:col-8 prose py-5">
+        {% if page_header == empty and page.title %}<h1>{{ page.title | escape }}</h1>{% endif %}
+        {{ content }}
+      </article>
+    </div>
+  </div>
 </main>

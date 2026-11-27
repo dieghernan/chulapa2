@@ -16,6 +16,8 @@ color-scheme: {{ include.scheme }};
 --chulapa-footer-link-color: initial;
 --chulapa-footer-link-hover-color: initial;
 --chulapa-footer-blend: initial;
+--chulapa-hero-bg: initial;
+--chulapa-hero-color: initial;
 
 & :where(.table thead) {
   --bs-table-bg: var(--bs-bg-2);

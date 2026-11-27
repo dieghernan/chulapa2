@@ -14,6 +14,7 @@ color-scheme: light;
 
 {% include skins/tophat.css labels='black,black,white,white,black,black,white' %}
 --bs-link-color: #cc2640;
+--chulapa-hero-color: #000000;
 
 {% unless include.variant_scheme %}
 {% include skins/tophat-buttons.css labels='primary:#ffffff' outlines='primary:#d92943,secondary:#6f6f6f,warning:#077c81' vars=include.vars %}

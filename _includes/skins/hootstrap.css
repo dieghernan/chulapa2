@@ -13,6 +13,7 @@ color-scheme: light;
 
 {% include skins/tophat.css labels='black,black,black,white,black,black,white' %}
 --bs-primary-bg: #517e77;
+--chulapa-hero-color: #000000;
 
 {% unless include.variant_scheme %}
 {% include skins/tophat-buttons.css labels='primary:#fff' outlines='primary:#4e7a72,secondary:#837632,success:#8c6a00,info:#367f50,warning:#807434' vars=include.vars %}

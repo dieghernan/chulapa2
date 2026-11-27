@@ -20,6 +20,11 @@ The browser loads the pinned Bootstrap 6 CSS and JavaScript from jsDelivr.
 Viewing the Bootstrap styles and interactive components requires access to
 the CDN.
 
+## Migrate from chulapa
+
+See the [migration draft](development/migrating-from-chulapa.md) for the
+settings that keep working and the HTML and CSS changes a chulapa site needs.
+
 ## Run the browser tests
 
 See the [test guide](test/README.md) for the test suite, drafts, and themed
@@ -114,6 +119,10 @@ footer:
 `navbar.expand` accepts `sm`, `md`, `lg`, `xl`, `always` and `never`.
 At the selected breakpoint, Bootstrap 6 switches between the side drawer
 and inline navigation according to the navbar's width. The default is `md`.
+The mobile drawer uses the same title as the navbar brand. Brand, link and
+submenu labels support inline HTML, such as `<span class="chulapa">chulapa2</span>`
+for the wordmark. Keep the site `title` in plain text for the browser tab and
+metadata.
 The brand uses the site title and home URL when its settings are omitted.
 
 ## Choose a bundled skin
@@ -187,3 +196,9 @@ Chulapa is a typeface of the City Council of Madrid, designed and produced
 by Joancarles Casasín and Pablo Gámez from an idea by Silvia Fernández
 Palomar. The project includes Chulapa Bold under
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+## Photo credits
+
+Plaza Mayor, Madrid. Photo by [Juan Gomez](https://unsplash.com/es/@nosoylasonia?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/es/fotos/edificio-de-hormigon-rojo-y-beige-XO3v5IAeAR4?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText).
+
+Mercado de San Miguel, Madrid. Photo by [Bas van der Linden](https://unsplash.com/es/@basvdlinden98?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/es/fotos/un-grupo-de-personas-sentadas-en-las-mesas-de-un-restaurante-m9GyQa8Ylmo?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText).

@@ -2,10 +2,12 @@
 {%- if show_color_mode_selector == nil -%}
   {%- include snippets/theme-options.html -%}
 {%- endif -%}
+{%- assign document_site_title = site.title | strip_html | strip -%}
+{%- assign document_page_title = page.title | strip_html | strip -%}
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% if page.title and page.title != site.title %}{{ page.title | escape }} · {% endif %}{{ site.title | escape }}</title>
+  <title>{% if document_page_title != empty and document_page_title != document_site_title %}{{ document_page_title | escape_once }} · {% endif %}{{ document_site_title | escape_once }}</title>
   {% if show_color_mode_selector %}
   <script src="{{ '/assets/js/color-mode.js' | absolute_url }}"></script>
   {% endif %}

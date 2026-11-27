@@ -15,11 +15,15 @@ chulapa-skin:
   vars:
     font-mono: "Fira Code, ui-monospace, monospace"
 navbar:
+  brand:
+    title: '<span class="chulapa">chulapa2</span>'
   nav:
     - title: Home
       url: /
     - title: About
       url: /#about
+footer:
+  copyright: '&copy; 2026 <span class="chulapa">chulapa2</span>'
 
 exclude:
   - .Rproj.user
