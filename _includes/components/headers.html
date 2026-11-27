@@ -11,6 +11,7 @@
     <div class="container pt-2">
       <div class="row justify-content-center">
         <div class="col-12 lg:col-8">
+          <!-- FIX: never escape displayed text in headers, by design it is possible to pass html -->
           <h1>{{ page.title | markdownify | strip | remove_first: '<p>' | remove: '</p>' }}</h1>
           {% if page.subtitle %}
           <p class="lead">{{ page.subtitle | markdownify | strip | remove_first: '<p>' | remove: '</p>' }}</p>
