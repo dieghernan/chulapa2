@@ -10,7 +10,8 @@
 {% endif %}
 {% assign alternate_mode_icon = 'bi-moon-stars-fill' %}
 {% assign alternate_mode_label = 'Dark theme' %}
-{% if dark_skin_scheme == 'light' %}
+{% assign alternate_scheme = dark_skin_scheme | default: alternate_mode %}
+{% if alternate_scheme == 'light' %}
   {% assign alternate_mode_icon = 'bi-sun-fill' %}
   {% if automatic_variant %}
     {% assign alternate_mode_label = 'Light theme' %}
@@ -26,10 +27,10 @@
     <span class="bi bi-chevron-expand" aria-hidden="true"></span>
   </button>
   <div class="menu" id="site-color-mode-options" aria-labelledby="site-color-mode">
-    <button type="button" class="menu-item" data-color-mode="light" aria-pressed="false">
+    <button type="button" class="menu-item" data-color-mode="{{ main_mode }}" aria-pressed="false">
       <span class="bi {{ main_mode_icon }}" aria-hidden="true"></span> {{ main_mode_label }}
     </button>
-    <button type="button" class="menu-item" data-color-mode="dark" aria-pressed="false">
+    <button type="button" class="menu-item" data-color-mode="{{ alternate_mode }}" aria-pressed="false">
       <span class="bi {{ alternate_mode_icon }}" aria-hidden="true"></span> {{ alternate_mode_label }}
     </button>
     <button type="button" class="menu-item" data-color-mode="system" aria-pressed="false">

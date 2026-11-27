@@ -97,6 +97,7 @@ for (const [skin, scheme] of catalog) {
       const html = page.locator("html");
       await expect(html).toHaveCSS("--bs-primary-base", identity[skin]);
       await expect(html).toHaveCSS("color-scheme", scheme);
+      await expect(html).toHaveAttribute("data-bs-theme", scheme);
       const [navbarBackground, brandColor] = navbarIdentity[skin];
       const navigation = page.getByRole("navigation", { name: "Primary", exact: true });
       await expect(navigation).toHaveCSS("background-color", navbarBackground);
@@ -183,7 +184,7 @@ for (const [skin, primaryScheme] of catalog.filter(([, , alternate]) => !alterna
     const titleFont = await font(heading);
     const primaryBackground = await body.evaluate((node) => getComputedStyle(node).backgroundColor);
 
-    for (const mode of ["dark", "system"]) {
+    for (const mode of [alternateScheme, "system"]) {
       await themeMenu.choose(mode);
       await expect(page.locator("html")).toHaveCSS("color-scheme", alternateScheme);
       await expect(page.locator("html")).toHaveCSS("--bs-primary-base", identity[skin]);
@@ -198,6 +199,33 @@ for (const [skin, primaryScheme] of catalog.filter(([, , alternate]) => !alterna
     await expect(body).toHaveCSS("background-color", primaryBackground);
   });
 }
+
+test("keeps the original primary link color where Chulapa used it", async ({ page }) => {
+  // Chulapa used Bootstrap 4's default link color, the primary, for these skins.
+  for (const [skin, color] of [
+    ["academia", "rgb(21, 101, 192)"],
+    ["butterfly-dark", "rgb(16, 131, 254)"],
+    ["listen", "rgb(30, 215, 96)"],
+    ["towards", "rgb(53, 88, 118)"],
+    ["twitter-lights-out", "rgb(29, 155, 240)"],
+  ]) {
+    await page.goto(`test/skins/${skin}/`);
+    await expect(page.locator('[data-contrast="article-link"]'), skin).toHaveCSS("color", color);
+  }
+});
+
+test("applies Bootstrap's dark rules to a dark primary skin", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.goto("test/skins/listen/");
+  const root = page.locator("html");
+  await expect(root).toHaveAttribute("data-bs-theme", "dark");
+  await expect(root).toHaveCSS("--bs-shadow-strength", "2.4");
+  const select = page.locator("select.form-control").first();
+  const darkCaret = await select.evaluate((element) => getComputedStyle(element).backgroundImage);
+  await colorMode(page).choose("light");
+  await expect(root).toHaveAttribute("data-bs-theme", "light");
+  await expect(select).not.toHaveCSS("background-image", darkCaret);
+});
 
 test("switches between skins in the shared kitchen sink and keeps the color preference", async ({ page }) => {
   await page.goto("test/skins/focal/");
@@ -257,6 +285,8 @@ test("uses the named light skin when starting from its dark counterpart", async 
     await page.emulateMedia({ colorScheme: "dark" });
     await expect(root).toHaveCSS("--bs-primary-base", identity[skin]);
     await expect(root).toHaveCSS("color-scheme", "dark");
-    await themeMenu.choose("light");
+    // Stored modes name the scheme, so return to the dark primary skin.
+    await themeMenu.choose("dark");
+    await expect(root).toHaveAttribute("data-bs-theme", "dark");
   }
 });

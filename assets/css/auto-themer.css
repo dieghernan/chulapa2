@@ -22,31 +22,25 @@
 
 /* Bootstrap's root defaults are unlayered. Keep these rules at :root specificity. */
 {%- assign stages = 'generated,skin,base,explicit' | split: ',' -%}
-{%- assign modes = 'light,dark' | split: ',' -%}
+{%- assign slots = 'main,alternate' | split: ',' -%}
 {%- for stage in stages -%}
-  {%- for mode in modes -%}
-    {%- assign system_scheme = mode -%}
-    {%- if automatic_variant and main_skin_scheme == 'dark' -%}
-      {%- if mode == 'light' -%}
-        {%- assign system_scheme = 'dark' -%}
-      {%- else -%}
-        {%- assign system_scheme = 'light' -%}
-      {%- endif -%}
-    {%- endif -%}
+  {%- for slot in slots -%}
     {%- capture declarations -%}
-      {%- if mode == 'light' -%}
+      {%- if slot == 'main' -%}
         {%- include auto-themer/mode.css vars=main_theme_settings.vars skin=main_skin generate=light_generate stage=stage -%}
       {%- else -%}
         {%- include auto-themer/mode.css vars=dark_vars skin=dark_skin variant_scheme=generated_variant_scheme generate=dark_generate stage=stage skip_body_colors=automatic_variant -%}
       {%- endif -%}
     {%- endcapture -%}
     {%- assign declarations = declarations | strip -%}
-    {%- unless declarations == empty %}
+    {%- unless declarations == empty -%}
+      {%- assign mode = main_mode -%}
+      {%- if slot == 'alternate' -%}{%- assign mode = alternate_mode -%}{%- endif %}
 :root:where([data-bs-theme="{{ mode }}"]) {
   {{ declarations }}
 }
 
-@media (prefers-color-scheme: {{ system_scheme }}) {
+@media (prefers-color-scheme: {{ mode }}) {
   :root:where(:not([data-bs-theme])) {
     {{ declarations }}
   }

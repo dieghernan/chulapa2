@@ -185,6 +185,13 @@ For a dark primary skin, dual mode chooses its named light counterpart or
 generates a light variant. The primary skin still appears on the first visit.
 System mode picks the light or dark appearance matching the device.
 
+The page's `data-bs-theme` follows the primary skin's scheme, so a dark
+skin starts with `dark` and Bootstrap's dark rules apply to it. The
+alternate configuration takes the other mode. When both configurations use
+the same scheme, the alternate still takes the other mode and Bootstrap's
+rules for that mode apply to it. A generated variant is only available as
+the alternate appearance, never as the primary one.
+
 ## Bundled skins
 
 The catalog includes the 16 skins attributed to `dieghernan` in the

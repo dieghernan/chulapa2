@@ -1,7 +1,7 @@
 {%- include snippets/page-language.html -%}
 {%- include snippets/theme-options.html -%}
 <!doctype html>
-<html lang="{{ page_language | escape }}" data-bs-theme="light"{% if automatic_variant and main_skin_scheme == 'dark' %} data-color-mode-reversed{% endif %}>
+<html lang="{{ page_language | escape }}" data-bs-theme="{{ main_mode }}">
   {% include head.html %}
   <body class="d-flex flex-column min-vh-100">
     <a class="visually-hidden-focusable" href="#main-content">Skip to content</a>
