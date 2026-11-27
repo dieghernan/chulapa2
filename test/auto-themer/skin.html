@@ -13,14 +13,21 @@ published: false
     {% assign fields = row | strip | split: '|' %}
     {% assign name = fields[0] %}
     {% if name %}
-  <option value="{{ site.skin_preview_path }}/{{ name }}/"{% if name == site.chulapa-skin.skin %} selected{% endif %}>{{ name }}</option>
+  <option value="{{ name | escape }}"{% if name == site.chulapa-skin.skin %} selected{% endif %}>{{ name | escape }}</option>
     {% endif %}
   {% endfor %}
 </select>
 <p class="form-text mb-3" id="skin-preview-help">Changing the skin reloads this preview and keeps the selected color mode.</p>
 <script type="module">
   document.getElementById("skin-preview").addEventListener("change", (event) => {
-    window.location.assign(event.target.value);
+    const skin = event.currentTarget.value;
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(skin)) return;
+
+    const destination = new URL(window.location.href);
+    destination.pathname = destination.pathname.replace(/[^/]+\/?$/, `${encodeURIComponent(skin)}/`);
+    destination.search = "";
+    destination.hash = "";
+    window.location.assign(destination.href);
   });
 </script>
 {% include demos/bootstrap-kitchen-sink.html %}
