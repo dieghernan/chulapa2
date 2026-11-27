@@ -98,6 +98,11 @@
   min-block-size: 40vh;
 }
 
+/* Chulapa's splash fills the screen; svh keeps it within mobile browser bars. */
+.chulapa-splash {
+  min-block-size: 100svh;
+}
+
 @supports (color: contrast-color(white)) {
   .chulapa-hero {
     --_hero-contrast: contrast-color(var(--_hero-bg));

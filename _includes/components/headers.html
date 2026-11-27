@@ -1,16 +1,18 @@
 {% assign header_type = include.headertype | default: page.header_type %}
-{% assign supported_headers = 'base,post,image,hero' | split: ',' %}
+{% assign supported_headers = 'base,post,image,hero,splash' | split: ',' %}
 {% if page.title and supported_headers contains header_type %}
+  {% assign is_hero = false %}
+  {% if header_type == 'hero' or header_type == 'splash' %}{% assign is_hero = true %}{% endif %}
   {% assign header_image = include.imghero | default: page.header_img | strip %}
   {% assign header_projects = include.projects | default: page.project_links %}
-  <header class="chulapa-header {% if header_type == 'post' %}text-start{% else %}text-center{% endif %}{% if header_type == 'hero' %} chulapa-hero d-flex align-items-center position-relative z-0{% unless header_image == empty %} chulapa-hero-photo{% endunless %}{% endif %}">
+  <header class="chulapa-header {% if header_type == 'post' %}text-start{% else %}text-center{% endif %}{% if is_hero %} chulapa-hero{% if header_type == 'splash' %} chulapa-splash{% endif %} d-flex align-items-center position-relative z-0{% unless header_image == empty %} chulapa-hero-photo{% endunless %}{% endif %}">
     {% unless header_image == empty %}
     {% if header_type == 'image' %}
     <div class="container">
       <img class="chulapa-header-image d-block mx-auto" src="{{ header_image | absolute_url | escape_once }}"
            alt="{{ page.header_img_alt | escape }}">
     </div>
-    {% elsif header_type == 'hero' %}
+    {% elsif is_hero %}
     <img class="position-absolute top-0 start-0 z-n1 d-block w-100 h-100 object-fit-cover" src="{{ header_image | absolute_url | escape_once }}"
          alt="{{ page.header_img_alt | escape }}">
     {% else %}
@@ -18,16 +20,16 @@
          alt="{{ page.header_img_alt | escape }}">
     {% endif %}
     {% endunless %}
-    <div class="container {% if header_type == 'hero' %}py-7{% else %}pt-7{% endif %}">
+    <div class="container {% if is_hero %}py-7{% else %}pt-7{% endif %}">
       <div class="row justify-content-center">
-        <div class="col-12{% unless header_type == 'hero' %} lg:col-8{% endunless %}">
-          <h1 class="{% if header_type == 'hero' %}fs-5xl{% else %}fs-4xl{% endif %}">{{ page.title | markdownify | strip | remove_first: '<p>' | remove: '</p>' }}</h1>
+        <div class="col-12{% unless is_hero %} lg:col-8{% endunless %}">
+          <h1 class="{% if header_type == 'splash' %}fs-6xl{% elsif is_hero %}fs-5xl{% else %}fs-4xl{% endif %}">{{ page.title | markdownify | strip | remove_first: '<p>' | remove: '</p>' }}</h1>
           {% if page.subtitle %}
-          {% if header_type == 'hero' %}<hr class="mx-auto my-5">{% endif %}
-          <p class="chulapa-subtitle {% if header_type == 'hero' %}fs-2xl{% else %}fs-lg{% endif %}">{{ page.subtitle | markdownify | strip | remove_first: '<p>' | remove: '</p>' }}</p>
+          {% if is_hero %}<hr class="mx-auto my-5">{% endif %}
+          <p class="chulapa-subtitle {% if header_type == 'splash' %}fs-3xl{% elsif is_hero %}fs-2xl{% else %}fs-lg{% endif %}">{{ page.subtitle | markdownify | strip | remove_first: '<p>' | remove: '</p>' }}</p>
           {% endif %}
-          {% if header_projects.size > 0 and header_type == 'hero' %}
-          <div class="btn-group-vertical mt-3" role="group">
+          {% if header_projects.size > 0 and is_hero %}
+          <div class="btn-group-vertical {% if header_type == 'splash' %}mt-12{% else %}mt-3{% endif %}" role="group">
             {% for project in header_projects %}
             {% if project.url and project.label %}
             <a class="btn btn-outline btn-lg chulapa-btn-project" href="{{ project.url | absolute_url | escape_once }}">
@@ -51,7 +53,7 @@
             {% endfor %}
           </ul>
           {% endif %}
-          {% unless header_type == 'hero' %}
+          {% unless is_hero %}
           <hr class="mb-0">
           {% endunless %}
         </div>

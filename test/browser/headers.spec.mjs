@@ -174,6 +174,33 @@ for (const width of [390, 1280]) {
     expect(focused.showsFocus).toBe(true);
     expect(focused.focus).toBeGreaterThanOrEqual(3);
   });
+
+  test(`renders splash headers with and without a photo at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("test/gitdev/test/headers/splash-photo/", { waitUntil: "domcontentloaded" });
+
+    // Splash reuses the hero styles, fills the screen and uses larger type.
+    const splash = page.locator(".chulapa-hero.chulapa-splash");
+    const heading = splash.getByRole("heading", { level: 1, name: "Welcome to Madrid" });
+    const photo = splash.getByRole("img", { name: /Plaza Mayor/ });
+    const group = splash.getByRole("group");
+    await expect(splash).toHaveCSS("min-block-size", "900px");
+    await expect.poll(() => photo.evaluate((image) => image.naturalWidth)).toBeGreaterThan(0);
+    await expect(heading).toHaveCSS("color", "rgb(255, 255, 255)");
+    await expect(heading).toHaveCSS("font-size", width === 390 ? "64.375px" : "80px");
+    await expect(splash.locator(".chulapa-subtitle")).toHaveCSS("font-size", width === 390 ? "32px" : "40px");
+    await expect(splash.locator("hr")).toHaveCSS("border-top-color", "rgb(255, 255, 255)");
+    await expect(group).toHaveClass(/\bbtn-group-vertical\b/);
+    await expect(group).toHaveCSS("margin-top", "48px");
+
+    await selectDarkMode(page);
+    await splash.getByRole("link", { name: "View the splash without a photo" }).click();
+    await expect(page).toHaveURL(/\/test\/gitdev\/test\/headers\/splash\/$/);
+    await expect(splash.locator("img")).toHaveCount(0);
+    await expect(splash).toHaveCSS("background-color", "rgb(36, 41, 47)");
+    expect((await readContrast(heading)).text).toBeGreaterThanOrEqual(4.5);
+    expect((await readContrast(splash.locator(".chulapa-subtitle"))).text).toBeGreaterThanOrEqual(4.5);
+  });
 }
 
 test("preserves hero skin colors and resolves legacy YAML aliases", async ({ page }) => {

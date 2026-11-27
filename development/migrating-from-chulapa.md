@@ -18,7 +18,7 @@ These settings and front matter keys behave as in chulapa:
   `hero-chulapa-bg-color` and `hero-chulapa-text-color`.
 - `googlefonts`, `navbar` and `footer`.
 - The `default` and `minimal` layouts.
-- The `base`, `post`, `image` and `hero` values of `header_type`, with
+- The `base`, `post`, `image`, `hero` and `splash` values of `header_type`, with
   `title`, `subtitle`, `header_img`, `header_img_alt` and `project_links`.
 - The Kramdown callout classes, such as `{: .callout-note}`.
 
@@ -83,6 +83,8 @@ are renamed:
 | `.header-chulapa-img` | `.chulapa-header-banner` |
 | `.hero-chulapa` | `.chulapa-hero` |
 | `.hero-chulapa-image` | `.chulapa-hero-photo` |
+| `.splash-chulapa` | `.chulapa-hero.chulapa-splash` |
+| `.splash-chulapa-image` | `.chulapa-splash.chulapa-hero-photo` |
 
 Page subtitles use `.chulapa-subtitle`, as in chulapa, without `.lead`.
 Skins and colors are CSS custom properties instead of Sass variables.
@@ -91,8 +93,7 @@ Set them through `vars` or the custom properties in the
 
 ## Not available yet
 
-- The `splash` header and the other chulapa layouts, such as `archive`,
-  `landingpage` and `search`.
+- The other chulapa layouts, such as `archive`, `landingpage` and `search`.
 - Font Awesome, which becomes opt-in.
 - The legacy `navbar-chulapa-*` options in `vars`.
 - Installing chulapa2 as a theme.

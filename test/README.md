@@ -33,6 +33,7 @@ changing sources or configuration.
 | [Post header with an image](http://127.0.0.1:4173/chulapa2/test/headers/post-image/) and [without an image](http://127.0.0.1:4173/chulapa2/test/headers/post/) | Start-aligned title and divider aligned with the editorial column. |
 | [Image header with a photo](http://127.0.0.1:4173/chulapa2/test/headers/image-photo/) and [without a photo](http://127.0.0.1:4173/chulapa2/test/headers/image/) | Centered photo at its original aspect ratio, with a viewport-relative height limit. |
 | [Hero with a photo](http://127.0.0.1:4173/chulapa2/test/gitdev/test/headers/hero-photo/) and [without a photo](http://127.0.0.1:4173/chulapa2/test/gitdev/test/headers/hero/) | Overlay contrast, project links, and the active skin's surface in GitDev and GitDev Dark. |
+| [Splash with a photo](http://127.0.0.1:4173/chulapa2/test/gitdev/test/headers/splash-photo/) and [without a photo](http://127.0.0.1:4173/chulapa2/test/gitdev/test/headers/splash/) | Full-screen hero with larger type and the same skin colors. |
 
 Use the [Unsplash Madrid collection](https://unsplash.com/es/colecciones/Cb6qszx7yKU/chulapa2)
 or the [Pexels Madrid collection](https://www.pexels.com/es-es/collections/chulapa2-56djped/)

@@ -67,6 +67,13 @@ photo inverts white and the overlay color, matching the hero without a
 photo, instead of using each skin's dark and light grays. The image element
 exposes `header_img_alt` when set.
 
+The `splash` header is the hero with `.chulapa-splash`. As in Chulapa, it
+fills the screen and places the project links 3rem below the subtitle.
+It uses `100svh` so mobile browser bars do not hide its lower edge. The
+title uses `fs-6xl` and the subtitle `fs-3xl`. Chulapa's 6rem title becomes
+5rem at desktop widths and about 64px instead of 48px on a 390px screen;
+the 2.5rem subtitle is unchanged at desktop widths.
+
 Without a photo, the hero defaults to the navbar surface and computes its
 own contrasting foreground. Academia derives its original darker blue from
 the primary color and Twitter uses its primary blue. Chulapa, Listen,
