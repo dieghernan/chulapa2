@@ -22,6 +22,8 @@ navbar:
       url: /
     - title: About
       url: /#about
+footer:
+  copyright: '&copy; 2026 <span class="chulapa">chulapa2</span>'
 
 exclude:
   - .Rproj.user

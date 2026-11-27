@@ -2,7 +2,9 @@
   {%- include snippets/theme-options.html -%}
 {%- endif -%}
 {%- assign nav_items = site.navbar.nav -%}
-{%- assign brand_title = site.navbar.brand.title | default: site.title -%}
+{%- comment -%} The brand title accepts HTML; site.title is plain text, so escape the fallback. {%- endcomment -%}
+{%- assign brand_title = site.navbar.brand.title | strip -%}
+{%- if brand_title == '' -%}{%- assign brand_title = site.title | escape -%}{%- endif -%}
 {%- assign brand_url = site.navbar.brand.url | default: '/' -%}
 {%- assign page_path = include.pageurl | default: page.url | remove: '.html' | append: '/' | replace: '//', '/' -%}
 {%- assign expand = site.navbar.expand | default: 'md' -%}

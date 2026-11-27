@@ -73,6 +73,8 @@ chulapa-skin-dark:
   autothemer: false
   vars:
     primary-base: "#809bb5"
+    # Precedence check, not a contrast bug: the explicit custom property must
+    # override the legacy alias. The test expects the #182637 surface.
     hero-chulapa-bg-color: "#fff"
     "--chulapa-hero-bg": "#182637"
     hero-chulapa-text-color: "#f4e8d1"

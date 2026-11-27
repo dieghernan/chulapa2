@@ -49,6 +49,9 @@ test("loads Bootstrap from the CDN and renders Markdown with the Chulapa font", 
   await expect(page).toHaveTitle("chulapa2");
   await expect(page.getByRole("main").getByRole("heading", { level: 1 }).locator(".chulapa"))
     .toHaveText("chulapa2");
+  // As in Chulapa, the site sets its wordmark through footer.copyright.
+  await expect(page.getByRole("contentinfo").locator("p", { hasText: "©" }).locator(".chulapa"))
+    .toHaveText("chulapa2");
   await expect(nav.getByRole("link", { name: "Home" })).toHaveAttribute("aria-current", "page");
   expect(errors).toEqual([]);
 });

@@ -21,7 +21,7 @@
       {{ site.footer.copyright }}
       {% else %}
       {% assign footer_owner = site.author.name | default: site.github.owner_name | default: site.title %}
-      &copy; {{ site.time | date: '%Y' }} {% if footer_owner == 'chulapa2' %}<span class="chulapa">chulapa2</span>{% else %}{{ footer_owner | escape }}{% endif %}
+      &copy; {{ site.time | date: '%Y' }} {{ footer_owner | escape }}
       {% endif %}
     </p>
     <!-- Theme attribution -->
