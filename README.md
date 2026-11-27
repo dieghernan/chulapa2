@@ -114,7 +114,10 @@ footer:
 `navbar.expand` accepts `sm`, `md`, `lg`, `xl`, `always` and `never`.
 At the selected breakpoint, Bootstrap 6 switches between the side drawer
 and inline navigation according to the navbar's width. The default is `md`.
-The mobile drawer uses the same title as the navbar brand.
+The mobile drawer uses the same title as the navbar brand. Brand, link and
+submenu labels support inline HTML, such as `<span class="chulapa">chulapa2</span>`
+for the wordmark. Keep the site `title` in plain text for the browser tab and
+metadata.
 The brand uses the site title and home URL when its settings are omitted.
 
 ## Choose a bundled skin

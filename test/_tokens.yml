@@ -11,11 +11,11 @@ navbar:
   nav:
     - title: Home
       url: /
-    - title: About
+    - title: '<span>About</span>'
       url: /#about
-    - title: Examples
+    - title: '<em>Examples</em>'
       child:
-        - title: Minimal example
+        - title: '<span>Minimal example</span>'
           url: /test/minimal
 
 footer:

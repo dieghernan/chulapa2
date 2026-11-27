@@ -20,7 +20,7 @@ test("loads Bootstrap from the CDN and renders Markdown with the Chulapa font", 
     expect(loaded.has(await element.getAttribute(attribute))).toBe(true);
   }
 
-  await expect(page).toHaveTitle("Markdown fixture · <span class=\"chulapa\">chulapa2</span>");
+  await expect(page).toHaveTitle("Markdown fixture · chulapa2");
   await expect(page.getByRole("heading", { level: 1, name: "Markdown fixture" })).toBeVisible();
   await expect(page.getByRole("heading", { level: 2, name: "Article content" })).toBeVisible();
   await expect(page.locator("main strong")).toHaveText("strong text");
@@ -30,12 +30,15 @@ test("loads Bootstrap from the CDN and renders Markdown with the Chulapa font", 
   const nav = page.getByRole("navigation", { name: "Primary" });
   await expect(nav).toHaveCSS("display", "flex");
   const brand = nav.getByRole("link", { name: "chulapa2" });
+  await expect(brand.locator(".chulapa")).toHaveCSS("font-family", "Chulapa, sans-serif");
+  await expect(brand.locator(".chulapa"))
+    .toHaveCSS("font-variant-ligatures", "common-ligatures discretionary-ligatures");
   expect(await page.evaluate(async () => {
     const fonts = await document.fonts.load('700 1rem "Chulapa"');
     return fonts.some((font) => font.status === "loaded");
   })).toBe(true);
 
-  const attribution = page.getByRole("contentinfo").getByRole("link", { name: "Chulapa2 Jekyll Theme" });
+  const attribution = page.getByRole("contentinfo").getByRole("link", { name: "chulapa2 Jekyll Theme" });
   await expect(attribution).toHaveAttribute("href", "https://dieghernan.github.io/chulapa2/");
   await expect(attribution.locator(".chulapa")).toHaveCSS("font-family", "Chulapa, sans-serif");
   await expect(attribution.locator(".chulapa"))
@@ -43,6 +46,9 @@ test("loads Bootstrap from the CDN and renders Markdown with the Chulapa font", 
 
   await page.getByRole("link", { name: "link to the home page" }).click();
   await expect(page).toHaveURL(/\/chulapa2\/$/);
+  await expect(page).toHaveTitle("chulapa2");
+  await expect(page.getByRole("main").getByRole("heading", { level: 1 }).locator(".chulapa"))
+    .toHaveText("chulapa2");
   await expect(nav.getByRole("link", { name: "Home" })).toHaveAttribute("aria-current", "page");
   expect(errors).toEqual([]);
 });
@@ -65,7 +71,7 @@ test("supports desktop keyboard navigation and skips to the main content", async
 test("renders the minimal shell with a configured classic navbar and footer", async ({ page }) => {
   await page.setViewportSize({ width: 980, height: 900 });
   await page.goto("test/tokens/test/minimal/");
-  await expect(page).toHaveTitle("Minimal fixture · <span class=\"chulapa\">chulapa2</span>");
+  await expect(page).toHaveTitle("Minimal fixture · chulapa2");
   await expect(page.locator("html")).toHaveAttribute("lang", "en-US");
   await expect(page.getByRole("main")).toHaveCount(1);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("A full-width page");
@@ -86,8 +92,11 @@ test("renders the minimal shell with a configured classic navbar and footer", as
   const drawer = page.getByRole("dialog", { name: await brand.innerText(), exact: true });
   await expect(drawer).toBeVisible();
   await expect(drawer.getByRole("heading", { name: "Demo brand", exact: true })).toBeVisible();
+  await expect(drawer.getByRole("link", { name: "About" }).locator("span")).toHaveText("About");
+  await expect(submenu.locator("em")).toHaveText("Examples");
   await submenu.press("Enter");
-  const submenuItem = navbar.getByText("Minimal example");
+  const submenuItem = drawer.getByRole("link", { name: "Minimal example" });
+  await expect(submenuItem.locator("span")).toHaveText("Minimal example");
   await expect(submenuItem).toHaveAttribute("aria-current", "page");
   const navBackground = await navbar.evaluate((nav) => getComputedStyle(nav).backgroundColor);
   await expect(navbar.locator(".menu").filter({ has: page.getByText("Minimal example") }))
@@ -136,6 +145,9 @@ test("opens and dismisses the mobile drawer with the keyboard", async ({ page })
   await expect(toggle).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(drawer).toBeVisible();
+  const title = drawer.getByRole("heading", { name: "chulapa2", exact: true }).locator(".chulapa");
+  await expect(title).toHaveCSS("font-family", "Chulapa, sans-serif");
+  await expect(title).toHaveCSS("font-variant-ligatures", "common-ligatures discretionary-ligatures");
   await expect(drawer.locator(".navbar-nav")).toHaveCSS("text-align", "start");
   await expect(drawer.getByRole("button", { name: "Close menu" })).toBeFocused();
   await page.keyboard.press("Tab");

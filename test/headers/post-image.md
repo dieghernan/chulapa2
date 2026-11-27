@@ -1,6 +1,6 @@
 ---
 layout: default
-title: A morning at the market
+title: 'A morning at the <em>market</em>'
 subtitle: Madrid's Mercado de San Miguel
 header_type: post
 header_img: /test/_fixtures/bas-van-der-linden-m9GyQa8Ylmo-unsplash.jpg

@@ -33,11 +33,11 @@ color-scheme: light;
   --bs-table-color: black;
 }
 
-& :where(.nav, .card-header, .badge, .pagination, .breadcrumb, .footnotes, label, .navbar-brand:not(.chulapa-brand)) {
+& :where(.nav, .card-header, .badge, .pagination, .breadcrumb, .footnotes, label, .navbar-brand) {
   font-family: var(--bs-heading-font-family);
 }
 
-& :where(label, .navbar-brand:not(.chulapa-brand)) {
+& :where(label, .navbar-brand) {
   font-weight: var(--bs-heading-font-weight);
 }
 
@@ -45,6 +45,6 @@ color-scheme: light;
   text-decoration-thickness: 2px;
 }
 
-& :where(:not(.chulapa-brand, .chulapa)) {
+& :where(:not(.chulapa)) {
   font-variant-ligatures: none;
 }

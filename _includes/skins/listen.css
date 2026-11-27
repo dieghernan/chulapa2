@@ -40,6 +40,6 @@ color-scheme: dark;
   --bs-pagination-hover-color: black;
 }
 
-& :where(:not(.chulapa-brand, .chulapa)) {
+& :where(:not(.chulapa)) {
   font-variant-ligatures: none;
 }

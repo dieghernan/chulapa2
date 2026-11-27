@@ -20,11 +20,12 @@
       {% if site.footer.copyright %}
       {{ site.footer.copyright }}
       {% else %}
-      &copy; {{ site.time | date: '%Y' }} {{ site.author.name | default: site.github.owner_name | default: site.title | escape }}
+      {% assign footer_owner = site.author.name | default: site.github.owner_name | default: site.title %}
+      &copy; {{ site.time | date: '%Y' }} {% if footer_owner == 'chulapa2' %}<span class="chulapa">chulapa2</span>{% else %}{{ footer_owner | escape }}{% endif %}
       {% endif %}
     </p>
     <!-- Theme attribution -->
     <p class="chulapa-footer-brand mb-0">
-      Powered by <a href="https://dieghernan.github.io/chulapa2/"><span class="chulapa">Chulapa2</span> Jekyll Theme</a>
+      Powered by <a href="https://dieghernan.github.io/chulapa2/"><span class="chulapa">chulapa2</span> Jekyll Theme</a>
     </p>
   </div>

@@ -80,3 +80,14 @@
 .header-chulapa-img {
   height: 20vh;
 }
+
+.chulapa-header-image {
+  max-inline-size: 100%;
+  max-block-size: 30vh;
+}
+
+@media (min-width: 1024px) {
+  .chulapa-header-image {
+    max-block-size: 25vh;
+  }
+}

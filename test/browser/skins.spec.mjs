@@ -211,7 +211,8 @@ test("switches between skins in the shared kitchen sink and keeps the color pref
   await expect(themeMenu.selected).toHaveAttribute("data-color-mode", "dark");
   await expect(page.locator("#bootstrap-kitchen-sink")).toBeVisible();
   await expect(page.locator("html")).toHaveCSS("--bs-primary-base", identity.media);
-  const wordmark = page.getByRole("contentinfo").locator(".chulapa");
+  const wordmark = page.getByRole("contentinfo")
+    .getByRole("link", { name: "chulapa2 Jekyll Theme" }).locator(".chulapa");
   await expect(wordmark).toHaveCSS("font-variant-ligatures", "common-ligatures discretionary-ligatures");
   await skin.selectOption({ label: "listen" });
   await expect(page).toHaveURL(/\/test\/skins\/listen\/$/);

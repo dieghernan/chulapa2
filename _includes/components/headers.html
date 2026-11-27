@@ -1,23 +1,29 @@
 {% assign header_type = include.headertype | default: page.header_type %}
-{% assign supported_headers = 'base,post' | split: ',' %}
+{% assign supported_headers = 'base,post,image' | split: ',' %}
 {% if page.title and supported_headers contains header_type %}
   {% assign header_image = include.imghero | default: page.header_img | strip %}
   {% assign header_projects = include.projects | default: page.project_links %}
-  <header class="header-chulapa {% if header_type == 'base' %}text-center{% else %}text-start{% endif %}">
+  <header class="header-chulapa {% if header_type == 'post' %}text-start{% else %}text-center{% endif %}">
     {% unless header_image == empty %}
+    {% if header_type == 'image' %}
+    <div class="container">
+      <img class="chulapa-header-image d-block mx-auto" src="{{ header_image | absolute_url | escape_once }}"
+           alt="{{ page.header_img_alt | escape }}">
+    </div>
+    {% else %}
     <img class="header-chulapa-img d-block w-100 object-fit-cover" src="{{ header_image | absolute_url | escape_once }}"
          alt="{{ page.header_img_alt | escape }}">
+    {% endif %}
     {% endunless %}
     <div class="container pt-2">
       <div class="row justify-content-center">
         <div class="col-12 lg:col-8">
-          <!-- FIX: never escape displayed text in headers, by design it is possible to pass html -->
           <h1>{{ page.title | markdownify | strip | remove_first: '<p>' | remove: '</p>' }}</h1>
           {% if page.subtitle %}
           <p class="lead">{{ page.subtitle | markdownify | strip | remove_first: '<p>' | remove: '</p>' }}</p>
           {% endif %}
           {% if header_projects.size > 0 %}
-          <ul class="list-unstyled d-flex flex-wrap{% if header_type == 'base' %} justify-content-center{% endif %} gap-2 my-2">
+          <ul class="list-unstyled d-flex flex-wrap{% unless header_type == 'post' %} justify-content-center{% endunless %} gap-2 my-2">
             {% for project in header_projects %}
             {% if project.url and project.label %}
             <li>

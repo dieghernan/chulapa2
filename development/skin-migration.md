@@ -35,6 +35,12 @@ column. The `default` layout centers this column at eight Bootstrap grid
 columns from `lg` and uses the full container width below that breakpoint.
 The home page kitchen sink uses `minimal` and keeps the full container width.
 
+The `image` header centers the uncropped image above the title and keeps its
+intrinsic aspect ratio. Bootstrap 6's `lg` breakpoint switches the maximum
+image height from 30% to 25% of the viewport. Chulapa interpolated the
+height across the medium-to-large range. With no photo, the centered title
+and divider remain aligned with the editorial column.
+
 ## Contrast rules for maintainer-authored skins
 
 Look for an import of `chulapa/skins/authored-contrast` in the original skin.
