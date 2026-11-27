@@ -1,10 +1,10 @@
 ---
 layout: default
 title: Madrid with a banner
-subtitle: Plaza de España at sunset
+subtitle: Plaza Mayor at sunrise
 header_type: base
-header_img: /test/_fixtures/chulapa-madrid-hd.webp
-header_img_alt: Plaza de España Metro entrance in Madrid at sunset
+header_img: /test/_fixtures/juan-gomez-XO3v5IAeAR4-unsplash.jpg
+header_img_alt: Red and beige buildings on Plaza Mayor in Madrid
 project_links:
   - label: View the text-only header
     url: /test/headers/base/

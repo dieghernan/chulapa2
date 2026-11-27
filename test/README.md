@@ -33,9 +33,7 @@ changing sources or configuration.
 
 Use the [Unsplash Madrid collection](https://unsplash.com/es/colecciones/Cb6qszx7yKU/chulapa2)
 or the [Pexels Madrid collection](https://www.pexels.com/es-es/collections/chulapa2-56djped/)
-for new image fixtures when collection access is available. The first base
-header fixture reuses [Chulapa's Madrid banner](https://github.com/dieghernan/chulapa/blob/main/docs/assets/img/site/chulapa-madrid-hd.webp)
-from [Unsplash](https://images.unsplash.com/photo-1545290614-5ceedf604139).
+for new image fixtures when collection access is available.
 
 The prototype reads its palette configuration from
 [`test/_config.yml`](_config.yml). Use six-digit hex colors for

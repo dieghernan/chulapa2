@@ -9,10 +9,10 @@ for (const width of [390, 1280]) {
 
     const header = page.locator(".header-chulapa");
     const heading = page.getByRole("heading", { level: 1, name: "Madrid with a banner" });
-    const banner = header.getByRole("img", { name: /Plaza de España Metro entrance/ });
+    const banner = header.getByRole("img", { name: /Plaza Mayor in Madrid/ });
     await expect(heading).toBeVisible();
     await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
-    await expect(banner).toHaveAttribute("src", /\/chulapa2\/test\/dual\/test\/_fixtures\/chulapa-madrid-hd\.webp$/);
+    await expect(banner).toHaveAttribute("src", /\/chulapa2\/test\/dual\/test\/_fixtures\/juan-gomez-XO3v5IAeAR4-unsplash\.jpg$/);
     await expect.poll(() => banner.evaluate((image) => image.naturalWidth)).toBeGreaterThan(0);
     await expect(banner).toHaveCSS("object-fit", "cover");
     await expect(banner).toHaveCSS("height", "180px");

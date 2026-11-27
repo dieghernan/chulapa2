@@ -187,3 +187,7 @@ Chulapa is a typeface of the City Council of Madrid, designed and produced
 by Joancarles Casasín and Pablo Gámez from an idea by Silvia Fernández
 Palomar. The project includes Chulapa Bold under
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+## Photo credits
+
+Plaza Mayor, Madrid. Photo by [Juan Gomez](https://unsplash.com/es/@nosoylasonia?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/es/fotos/edificio-de-hormigon-rojo-y-beige-XO3v5IAeAR4?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText).
