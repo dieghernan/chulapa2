@@ -5,16 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>chulapa2</title>
     
+    <script src="https://dieghernan.github.io/chulapa2/assets/js/color-mode.js"></script>
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.2/dist/css/bootstrap.min.css"
           integrity="sha384-MKn5NWVBEuQXJE7TSKSgPUmMiSCmVTfCsR+VSSeQpHnoyJQZZFn/kBn+Ht5jZDPQ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://dieghernan.github.io/chulapa2/assets/css/brand.css">
         
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
     
+    
+    
+      
+      
+      
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&amp;display=swap">
+      
+    
+      
+      
+      
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&amp;display=swap">
+      
     
 
     
+    <link rel="stylesheet" href="https://dieghernan.github.io/chulapa2/assets/css/auto-themer.css">
+    
+    <link rel="stylesheet" href="https://dieghernan.github.io/chulapa2/assets/css/highlight.css">
+    <link rel="stylesheet" href="https://dieghernan.github.io/chulapa2/assets/css/callouts.css">
   </head>
   <body>
     <a class="visually-hidden-focusable" href="#main-content">Skip to content</a>
@@ -43,6 +64,15 @@
           
         </ul>
         
+        <div class="mt-3 md:mt-0 md:ms-auto" id="site-color-mode-control" hidden>
+          <label class="visually-hidden" for="site-color-mode">Color mode</label>
+          <select class="form-control form-control-sm" id="site-color-mode">
+            <option value="">System theme</option>
+            <option value="light">Light theme</option>
+            <option value="dark">Dark theme</option>
+          </select>
+        </div>
+        
       </div>
     </dialog>
   </div>
@@ -63,8 +93,19 @@ It keeps the Chulapa typeface and rebuilds the theme for Bootstrap 6.</p>
 
 <p>Compare Bootstrap surfaces, component states and typography in the current theme.</p>
 <p><a href="https://getbootstrap.com/docs/6.0/examples/cheatsheet/">Bootstrap 6 Cheatsheet</a></p>
+<ul class="list-inline">
+  <li class="list-inline-item"><a href="#surfaces">Surfaces</a></li>
+  <li class="list-inline-item"><a href="#sink-images">Images</a></li>
+  <li class="list-inline-item"><a href="#palette">Colors</a></li>
+  <li class="list-inline-item"><a href="#forms">Forms</a></li>
+  <li class="list-inline-item"><a href="#components">Components</a></li>
+  <li class="list-inline-item"><a href="#sink-accordion-title">Accordion</a></li>
+  <li class="list-inline-item"><a href="#sink-breadcrumbs-title">Breadcrumbs</a></li>
+  <li class="list-inline-item"><a href="#sink-callouts-title">Callouts</a></li>
+  <li class="list-inline-item"><a href="#sink-avatar-title">More components</a></li>
+</ul>
 
-<div class="not-prose d-grid gap-4">
+<div id="bootstrap-kitchen-sink" class="not-prose d-grid gap-4">
   <section id="surfaces" aria-labelledby="surfaces-title">
     <h3 id="surfaces-title">Surfaces and typography</h3>
     <div class="row g-2 mb-3">
@@ -86,8 +127,44 @@ It keeps the Chulapa typeface and rebuilds the theme for Bootstrap 6.</p>
       </div>
       
     </div>
+    <div class="mb-3">
+      
+      
+      <div class="fs-xs">Type scale xs</div>
+      
+      <div class="fs-sm">Type scale sm</div>
+      
+      <div class="fs-md">Type scale md</div>
+      
+      <div class="fs-lg">Type scale lg</div>
+      
+      <div class="fs-xl">Type scale xl</div>
+      
+      <div class="fs-2xl">Type scale 2xl</div>
+      
+      <div class="fs-3xl">Type scale 3xl</div>
+      
+      <div class="fs-4xl">Type scale 4xl</div>
+      
+      <div class="fs-5xl">Type scale 5xl</div>
+      
+      <div class="fs-6xl">Type scale 6xl</div>
+      
+    </div>
     <p>Body text with <strong>emphasis</strong>, <mark>highlighted text</mark> and <code>inline code</code>.</p>
     <blockquote class="blockquote">A quote shows how text and borders sit on a neutral background.</blockquote>
+    
+    
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Report the outcome of a build.</span>
+<span class="k">def</span> <span class="nf">build_status</span><span class="p">(</span><span class="n">ready</span><span class="p">)</span>
+  <span class="k">return</span> <span class="s2">"Complete"</span> <span class="k">if</span> <span class="n">ready</span>
+
+  <span class="s2">"Waiting"</span>
+<span class="c1"># Ligatures &lt;-</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+
     <div class="table-responsive">
       <table class="table table-striped table-hover">
         <caption>Build stages</caption>
@@ -98,6 +175,21 @@ It keeps the Chulapa typeface and rebuilds the theme for Bootstrap 6.</p>
           <tr><th scope="row">Publish</th><td>Waiting</td></tr>
         </tbody>
       </table>
+    </div>
+  </section>
+
+  <section id="sink-images" aria-labelledby="sink-images-title">
+    <h3 id="sink-images-title">Images and figures</h3>
+    <div class="row g-3">
+      <div class="col-12 md:col-8">
+        <img class="img-fluid rounded" src="https://dieghernan.github.io/chulapa2/assets/img/kitchen-sink/harbor.webp" width="800" height="400" loading="lazy" alt="Illustrated blue harbor with the sun rising over hills" />
+      </div>
+      <div class="col-12 md:col-4">
+        <figure class="figure">
+          <img class="figure-img img-fluid img-thumbnail rounded" src="https://dieghernan.github.io/chulapa2/assets/img/kitchen-sink/dunes.webp" width="800" height="400" loading="lazy" alt="Illustrated ochre dunes" />
+          <figcaption class="figure-caption">A framed image and its caption.</figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
@@ -189,6 +281,34 @@ It keeps the Chulapa typeface and rebuilds the theme for Bootstrap 6.</p>
     </div>
   </section>
 
+  <section id="sink-callouts" aria-labelledby="sink-callouts-title">
+    <h3 id="sink-callouts-title">Callouts</h3>
+    
+    
+<p class="callout-note" role="note" aria-label="Note">The preview uses your current configuration.</p>
+
+<p class="callout-tip" role="note" aria-label="Tip">Review the page locally before publishing.</p>
+
+<p class="callout-important" role="note" aria-label="Important">Update links when you change a permalink.</p>
+
+<p class="callout-warning" role="note" aria-label="Warning">Check redirects before sharing a new URL. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+<p class="callout-caution" role="note" aria-label="Caution">Removing a redirect can break incoming links.</p>
+
+
+    <h4>Alternative callouts</h4>
+    <p>Compare the alternative style based on the
+      <a href="https://getbootstrap.com/docs/6.0/customize/components/#creating-your-own">Bootstrap documentation callouts</a>.</p>
+
+    <div class="bd-callout-note"><p>Note callout</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></div>
+    <div class="bd-callout-tip"><p>Tip callout</p></div>
+    <div class="bd-callout-important"><p>Important callout</p></div>
+    <div class="bd-callout-warning"><p>Warning callout</p></div>
+    <div class="bd-callout-caution"><p>Caution callout</p></div>
+
+  </section>
+
   <section id="forms" aria-labelledby="forms-title">
     <h3 id="forms-title">Form controls</h3>
     <div class="row g-3">
@@ -239,21 +359,117 @@ It keeps the Chulapa typeface and rebuilds the theme for Bootstrap 6.</p>
         <input class="form-range-input" type="range" id="sink-range" min="5" max="30" value="15" />
       </div>
     </div>
+    <div class="row g-3 mt-2">
+  <div class="col-12 md:col-6 form-field">
+    <label for="sink-password">Password</label>
+    <input class="form-control" id="sink-password" type="password" autocomplete="off" />
+  </div>
+  <div class="col-12 md:col-6 form-field">
+    <label for="sink-file">Attach a sample file</label>
+    <input class="form-control" id="sink-file" type="file" />
+  </div>
+</div>
+
+<h4 class="mt-4">Disabled forms</h4>
+<fieldset class="row g-3" disabled="">
+  <legend class="fs-md">Account options</legend>
+  <div class="col-12 md:col-6 form-field">
+    <label for="sink-disabled-select">Region</label>
+    <select class="form-control" id="sink-disabled-select"><option>Europe</option></select>
+  </div>
+  <div class="col-12 md:col-6 form-field">
+    <input class="check" id="sink-disabled-check" type="checkbox" checked="" />
+    <label for="sink-disabled-check">Remember preferences</label>
+  </div>
+</fieldset>
+
+<h4 class="mt-4">Form sizing</h4>
+<div class="row g-3">
+  
+  
+  <div class="col-12 md:col-4 form-field">
+    <label for="sink-size-sm">Sm input</label>
+    <input class="form-control form-control-sm" id="sink-size-sm" type="text" />
+  </div>
+  
+  <div class="col-12 md:col-4 form-field">
+    <label for="sink-size-default">Default input</label>
+    <input class="form-control" id="sink-size-default" type="text" />
+  </div>
+  
+  <div class="col-12 md:col-4 form-field">
+    <label for="sink-size-lg">Lg input</label>
+    <input class="form-control form-control-lg" id="sink-size-lg" type="text" />
+  </div>
+  
+</div>
+
+<h4 class="mt-4">Input groups</h4>
+<div class="row g-3">
+  <div class="col-12 md:col-6 form-field">
+    <label for="sink-handle">Account handle</label>
+    <div class="input-group">
+      <span id="sink-at" class="input-group-text">@</span>
+      <input type="text" class="form-control" id="sink-handle" aria-describedby="sink-at" />
+    </div>
+  </div>
+  <div class="col-12 md:col-6 form-field">
+    <label for="sink-amount">Budget</label>
+    <div class="input-group">
+      <span id="sink-euros" class="input-group-text">EUR</span>
+      <input type="text" class="form-control" id="sink-amount" inputmode="decimal" aria-describedby="sink-euros" />
+    </div>
+  </div>
+</div>
+
+<h4 class="mt-4">Floating labels</h4>
+<div class="row g-3">
+  <div class="col-12 md:col-6">
+    <div class="form-floating">
+      <label for="sink-floating-email">Contact email</label>
+      <input type="email" class="form-control" id="sink-floating-email" placeholder="reader@example.com" />
+    </div>
+  </div>
+  <div class="col-12 md:col-6">
+    <div class="form-floating">
+      <label for="sink-floating-password">Access code</label>
+      <input type="password" class="form-control" id="sink-floating-password" placeholder="Access code" autocomplete="off" />
+    </div>
+  </div>
+</div>
+
+<h4 class="mt-4">Validation</h4>
+<div class="row g-3">
+  <div class="col-12 md:col-6 form-field">
+    <label for="sink-valid">Project name</label>
+    <input class="form-control is-valid" id="sink-valid" value="Chulapa" aria-describedby="sink-valid-feedback" />
+    <div class="valid-feedback" id="sink-valid-feedback">Project name is available.</div>
+  </div>
+  <div class="col-12 md:col-6 form-field">
+    <label for="sink-invalid">Contact address</label>
+    <input type="email" class="form-control is-invalid" id="sink-invalid" value="reader" aria-invalid="true" aria-describedby="sink-invalid-feedback" />
+    <div class="invalid-feedback" id="sink-invalid-feedback">Enter a full email address.</div>
+  </div>
+</div>
+
   </section>
 
   <section id="components" aria-labelledby="components-title">
     <h3 id="components-title">Cards, feedback and interaction</h3>
     <div class="row g-3">
       <div class="col-12 md:col-6">
+        <h4>Card</h4>
         <div class="card">
+          <img class="card-img-top" src="https://dieghernan.github.io/chulapa2/assets/img/kitchen-sink/forest.webp" width="800" height="400" loading="lazy" alt="Illustrated green woodland" />
           <div class="card-body">
-            <h4 class="card-title fs-lg">Build report</h4>
+            <p class="card-title fs-lg">Build report</p>
             <p class="card-text">Three of four checks are complete.</p>
             <progress class="progress theme-success" value="75" max="100" aria-label="Checks complete"></progress>
           </div>
         </div>
       </div>
       <div class="col-12 md:col-6">
+        <h4>List group</h4>
         <ul class="list-group">
           <li class="list-group-item">Queued <span class="badge theme-secondary">2</span></li>
           <li class="list-group-item">Running <span class="badge theme-info">1</span></li>
@@ -265,6 +481,7 @@ It keeps the Chulapa typeface and rebuilds the theme for Bootstrap 6.</p>
       <summary>Show validation details</summary>
       <p>The keyboard can open this disclosure and reach the confirmation dialog.</p>
     </details>
+    <h4 class="mt-3">Dialog</h4>
     <button type="button" class="btn-solid theme-primary mt-3" data-bs-toggle="dialog" data-bs-target="#sink-dialog" aria-controls="sink-dialog">
       Open dialog
     </button>
@@ -277,13 +494,438 @@ It keeps the Chulapa typeface and rebuilds the theme for Bootstrap 6.</p>
         <p>Review the publication settings before continuing.</p>
       </div>
     </dialog>
+    <button type="button" class="btn-outline theme-primary mt-3" data-bs-toggle="dialog" data-bs-target="#sink-static-dialog" aria-controls="sink-static-dialog">Open static dialog</button>
+    <dialog class="dialog" id="sink-static-dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="sink-static-title">
+      <div class="dialog-header">
+        <h4 class="dialog-title" id="sink-static-title">Confirm the sample</h4>
+      </div>
+      <div class="dialog-body">
+        <p>Use the confirmation button to close this dialog.</p>
+      </div>
+      <div class="dialog-footer">
+        <button type="button" class="btn-solid theme-primary" data-bs-dismiss="dialog">Confirm sample</button>
+      </div>
+    </dialog>
+    <h4 class="mt-4" id="sink-accordion-title">Accordion</h4>
+<div class="accordion">
+  
+  
+  <details class="accordion-item" name="sink-accordion" open="">
+    <summary class="accordion-header">
+      Source details
+      <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path d="m2 5 6 6 6-6" />
+      </svg>
+    </summary>
+    <div class="accordion-body">Review the source settings for this example.</div>
+  </details>
+  
+  <details class="accordion-item" name="sink-accordion">
+    <summary class="accordion-header">
+      Build details
+      <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path d="m2 5 6 6 6-6" />
+      </svg>
+    </summary>
+    <div class="accordion-body">Review the build settings for this example.</div>
+  </details>
+  
+  <details class="accordion-item" name="sink-accordion">
+    <summary class="accordion-header">
+      Publish details
+      <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path d="m2 5 6 6 6-6" />
+      </svg>
+    </summary>
+    <div class="accordion-body">Review the publish settings for this example.</div>
+  </details>
+  
+</div>
+
+<h4 class="mt-4">Alerts</h4>
+<div class="alert theme-warning mt-3">
+  This sample alert can be dismissed.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Dismiss sample alert"></button>
+</div>
+
+<h4 class="mt-4">Badge</h4>
+<p>Build status <span class="badge theme-success">Ready</span> <span class="badge theme-info">Preview</span></p>
+
+<h4 class="mt-4" id="sink-breadcrumbs-title">Breadcrumbs</h4>
+<nav aria-label="Example breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a class="breadcrumb-link" href="#bootstrap-kitchen-sink">Kitchen sink</a></li>
+    <li class="breadcrumb-divider" aria-hidden="true"></li>
+    <li class="breadcrumb-item"><a class="breadcrumb-link" href="#components">Components</a></li>
+    <li class="breadcrumb-divider" aria-hidden="true"></li>
+    <li class="breadcrumb-item"><span class="breadcrumb-link active" aria-current="page">Breadcrumbs</span></li>
+  </ol>
+</nav>
+
+<h4 class="mt-4">Buttons and button groups</h4>
+<div class="d-flex flex-wrap gap-2 mb-3">
+  <button type="button" class="btn-subtle theme-primary btn-sm">Small subtle</button>
+  <button type="button" class="btn-text theme-primary">Text action</button>
+  <button type="button" class="btn-link">Link style</button>
+  <button type="button" class="btn-solid theme-primary btn-lg" disabled="">Disabled large action</button>
+</div>
+<div class="d-flex flex-wrap gap-3 align-items-start">
+  <div class="btn-group" role="group" aria-label="Horizontal actions">
+    <button type="button" class="btn-outline theme-primary">Back</button>
+    <button type="button" class="btn-outline theme-primary">Preview</button>
+    <button type="button" class="btn-outline theme-primary">Next</button>
+  </div>
+  <div class="btn-group-vertical" role="group" aria-label="Vertical actions">
+    <button type="button" class="btn-solid theme-secondary">Draft</button>
+    <button type="button" class="btn-solid theme-secondary">Published</button>
+  </div>
+</div>
+
+<h4 class="mt-4">Carousel</h4>
+<div class="carousel slide" id="sink-carousel" aria-label="Illustrated landscapes">
+  <div class="carousel-inner">
+    
+    
+    <div class="carousel-item active">
+      
+      <img class="d-block w-100 rounded" src="https://dieghernan.github.io/chulapa2/assets/img/kitchen-sink/harbor.webp" width="800" height="400" loading="lazy" alt="Illustrated harbor" />
+    </div>
+    
+    <div class="carousel-item">
+      
+      <img class="d-block w-100 rounded" src="https://dieghernan.github.io/chulapa2/assets/img/kitchen-sink/dunes.webp" width="800" height="400" loading="lazy" alt="Illustrated dunes" />
+    </div>
+    
+    <div class="carousel-item">
+      
+      <img class="d-block w-100 rounded" src="https://dieghernan.github.io/chulapa2/assets/img/kitchen-sink/forest.webp" width="800" height="400" loading="lazy" alt="Illustrated forest" />
+    </div>
+    
+  </div>
+  <div class="d-flex flex-wrap gap-2 align-items-center mt-3">
+    <div class="carousel-indicators">
+      
+      <button type="button" data-bs-target="#sink-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      
+      <button type="button" data-bs-target="#sink-carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      
+      <button type="button" data-bs-target="#sink-carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      
+    </div>
+    <button type="button" class="btn-outline theme-primary btn-sm" data-bs-target="#sink-carousel" data-bs-slide="prev">Previous slide</button>
+    <button type="button" class="btn-outline theme-primary btn-sm" data-bs-target="#sink-carousel" data-bs-slide="next">Next slide</button>
+  </div>
+</div>
+
+<h4 class="mt-4">Menus</h4>
+<div class="d-flex flex-wrap gap-2">
+  
+  
+  
+  <div class="position-relative">
+    <button type="button" class="btn-solid theme-secondary" data-bs-toggle="menu" data-bs-placement="bottom-start" aria-expanded="false">Menu Below</button>
+    <div class="menu">
+      <span class="menu-header">Go to an example</span>
+      <a class="menu-item" href="#surfaces">Surfaces</a>
+      <a class="menu-item" href="#forms">Form controls</a>
+      <hr class="menu-divider" />
+      <a class="menu-item" href="#palette">Palette</a>
+    </div>
+  </div>
+  
+  <div class="position-relative">
+    <button type="button" class="btn-solid theme-secondary" data-bs-toggle="menu" data-bs-placement="top-start" aria-expanded="false">Menu Above</button>
+    <div class="menu">
+      <span class="menu-header">Go to an example</span>
+      <a class="menu-item" href="#surfaces">Surfaces</a>
+      <a class="menu-item" href="#forms">Form controls</a>
+      <hr class="menu-divider" />
+      <a class="menu-item" href="#palette">Palette</a>
+    </div>
+  </div>
+  
+  <div class="position-relative">
+    <button type="button" class="btn-solid theme-secondary" data-bs-toggle="menu" data-bs-placement="left-start" aria-expanded="false">Menu Start</button>
+    <div class="menu">
+      <span class="menu-header">Go to an example</span>
+      <a class="menu-item" href="#surfaces">Surfaces</a>
+      <a class="menu-item" href="#forms">Form controls</a>
+      <hr class="menu-divider" />
+      <a class="menu-item" href="#palette">Palette</a>
+    </div>
+  </div>
+  
+  <div class="position-relative">
+    <button type="button" class="btn-solid theme-secondary" data-bs-toggle="menu" data-bs-placement="right-start" aria-expanded="false">Menu End</button>
+    <div class="menu">
+      <span class="menu-header">Go to an example</span>
+      <a class="menu-item" href="#surfaces">Surfaces</a>
+      <a class="menu-item" href="#forms">Form controls</a>
+      <hr class="menu-divider" />
+      <a class="menu-item" href="#palette">Palette</a>
+    </div>
+  </div>
+  
+</div>
+
+<h4 class="mt-4">Navigation and tabs</h4>
+<nav class="nav nav-pills mb-3" aria-label="Example section links">
+  <a class="nav-link active" href="#palette">Palette</a>
+  <a class="nav-link" href="#forms">Forms</a>
+  <span class="nav-link disabled" aria-disabled="true">Unavailable</span>
+</nav>
+<div class="nav nav-tabs" role="tablist" aria-label="Example views">
+  <button type="button" id="sink-overview-tab" class="nav-link active" data-bs-toggle="tab" data-bs-target="#sink-overview-panel" role="tab" aria-controls="sink-overview-panel" aria-selected="true">Overview</button>
+  <button type="button" id="sink-details-tab" class="nav-link" data-bs-toggle="tab" data-bs-target="#sink-details-panel" role="tab" aria-controls="sink-details-panel" aria-selected="false">Details</button>
+</div>
+<div class="tab-content border border-top-0 p-3">
+  <div id="sink-overview-panel" class="tab-pane show active" role="tabpanel" aria-labelledby="sink-overview-tab" tabindex="0">Build overview.</div>
+  <div id="sink-details-panel" class="tab-pane" role="tabpanel" aria-labelledby="sink-details-tab" tabindex="0">Build details.</div>
+</div>
+
+<h4 class="mt-4" id="sink-pagination">Pagination</h4>
+
+
+<nav aria-label="Sm example pagination">
+  <ul class="pagination pagination-sm flex-wrap">
+    <li class="page-item disabled"><span class="page-link">Previous</span></li>
+    <li class="page-item active"><a class="page-link" href="#sink-pagination" aria-current="page">1</a></li>
+    <li class="page-item"><a class="page-link" href="#surfaces">2</a></li>
+    <li class="page-item"><a class="page-link" href="#forms">3</a></li>
+  </ul>
+</nav>
+
+<nav aria-label="Default example pagination">
+  <ul class="pagination flex-wrap">
+    <li class="page-item disabled"><span class="page-link">Previous</span></li>
+    <li class="page-item active"><a class="page-link" href="#sink-pagination" aria-current="page">1</a></li>
+    <li class="page-item"><a class="page-link" href="#surfaces">2</a></li>
+    <li class="page-item"><a class="page-link" href="#forms">3</a></li>
+  </ul>
+</nav>
+
+<nav aria-label="Lg example pagination">
+  <ul class="pagination pagination-lg flex-wrap">
+    <li class="page-item disabled"><span class="page-link">Previous</span></li>
+    <li class="page-item active"><a class="page-link" href="#sink-pagination" aria-current="page">1</a></li>
+    <li class="page-item"><a class="page-link" href="#surfaces">2</a></li>
+    <li class="page-item"><a class="page-link" href="#forms">3</a></li>
+  </ul>
+</nav>
+
+
+<h4 class="mt-4">Popovers and tooltips</h4>
+
+<div class="d-flex flex-wrap gap-2 mb-3">
+  
+  <button type="button" class="btn-solid theme-secondary" data-bs-toggle="popover" data-bs-placement="top" data-bs-title="Build detail" data-bs-content="This panel is positioned beside its trigger.">Popover top</button>
+  
+  <button type="button" class="btn-solid theme-secondary" data-bs-toggle="popover" data-bs-placement="right" data-bs-title="Build detail" data-bs-content="This panel is positioned beside its trigger.">Popover right</button>
+  
+  <button type="button" class="btn-solid theme-secondary" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-title="Build detail" data-bs-content="This panel is positioned beside its trigger.">Popover bottom</button>
+  
+  <button type="button" class="btn-solid theme-secondary" data-bs-toggle="popover" data-bs-placement="left" data-bs-title="Build detail" data-bs-content="This panel is positioned beside its trigger.">Popover left</button>
+  
+</div>
+<div class="d-flex flex-wrap gap-2">
+  
+  <button type="button" class="btn-outline theme-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Shows the current build state.">Tooltip top</button>
+  
+  <button type="button" class="btn-outline theme-secondary" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Shows the current build state.">Tooltip right</button>
+  
+  <button type="button" class="btn-outline theme-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Shows the current build state.">Tooltip bottom</button>
+  
+  <button type="button" class="btn-outline theme-secondary" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Shows the current build state.">Tooltip left</button>
+  
+</div>
+
+<h4 class="mt-4">Progress bars</h4>
+
+
+
+<div class="progress mb-2" role="progressbar" aria-label="Success progress" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+  <div class="progress-bar theme-success w-25">25%</div>
+</div>
+
+<div class="progress mb-2" role="progressbar" aria-label="Info progress" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+  <div class="progress-bar theme-info w-50">50%</div>
+</div>
+
+<div class="progress mb-2" role="progressbar" aria-label="Warning progress" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+  <div class="progress-bar theme-warning w-75">75%</div>
+</div>
+
+<div class="progress mb-2" role="progressbar" aria-label="Danger progress" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+  <div class="progress-bar theme-danger w-100">100%</div>
+</div>
+
+<div class="progress-stacked">
+  <div class="progress w-25" role="progressbar" aria-label="Queued" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar"></div>
+  </div>
+  <div class="progress w-50" role="progressbar" aria-label="Completed" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar progress-bar-striped theme-success"></div>
+  </div>
+</div>
+
+<h4 class="mt-4">Scrollspy</h4>
+<nav id="sink-scrollspy-nav" class="nav nav-pills flex-wrap" aria-label="Scrollspy sections">
+  
+  <a class="nav-link active" href="#sink-scroll-1">Source</a>
+  
+  <a class="nav-link" href="#sink-scroll-2">Build</a>
+  
+  <a class="nav-link" href="#sink-scroll-3">Publish</a>
+  
+</nav>
+<div class="position-relative overflow-auto border rounded p-3 mt-2" style="height: 12rem" data-bs-spy="scroll" data-bs-target="#sink-scrollspy-nav" role="region" aria-label="Scrollable build stages" tabindex="0">
+  
+  <div style="min-height: 10rem">
+    <h4 id="sink-scroll-1" class="fs-md">Source stage</h4>
+    <p>Scroll this panel to see the active section change in the links above.</p>
+  </div>
+  
+  <div style="min-height: 10rem">
+    <h4 id="sink-scroll-2" class="fs-md">Build stage</h4>
+    <p>Scroll this panel to see the active section change in the links above.</p>
+  </div>
+  
+  <div style="min-height: 10rem">
+    <h4 id="sink-scroll-3" class="fs-md">Publish stage</h4>
+    <p>Scroll this panel to see the active section change in the links above.</p>
+  </div>
+  
+</div>
+
+<h4 class="mt-4">Spinners</h4>
+<div class="d-flex flex-wrap gap-3" role="status">
+  
+  
+  <span class="spinner-border fg-primary" aria-hidden="true"></span>
+  <span class="spinner-grow fg-primary" aria-hidden="true"></span>
+  
+  <span class="spinner-border fg-secondary" aria-hidden="true"></span>
+  <span class="spinner-grow fg-secondary" aria-hidden="true"></span>
+  
+  <span class="spinner-border fg-success" aria-hidden="true"></span>
+  <span class="spinner-grow fg-success" aria-hidden="true"></span>
+  
+  <span class="spinner-border fg-warning" aria-hidden="true"></span>
+  <span class="spinner-grow fg-warning" aria-hidden="true"></span>
+  
+  <span class="spinner-border fg-danger" aria-hidden="true"></span>
+  <span class="spinner-grow fg-danger" aria-hidden="true"></span>
+  
+  <span class="spinner-border fg-info" aria-hidden="true"></span>
+  <span class="spinner-grow fg-info" aria-hidden="true"></span>
+  
+  <span class="visually-hidden">Loading indicators</span>
+</div>
+
+<h4 class="mt-4">Toast</h4>
+<button type="button" class="btn-outline theme-primary" data-kitchen-toast="">Show toast</button>
+<div id="sink-toast" class="toast mt-3" role="status" aria-live="polite" aria-atomic="true">
+  <div class="toast-header">
+    <strong class="me-auto">Build complete</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close toast"></button>
+  </div>
+  <div class="toast-body">The example is ready to publish.</div>
+</div>
+
+<h4 class="mt-4" id="sink-avatar-title">Avatar</h4>
+<div class="d-flex flex-wrap align-items-center gap-2">
+  <span class="avatar theme-primary" role="img" aria-label="Alicia Rivera">AR</span>
+  <span class="avatar theme-success" role="img" aria-label="Luis Vega">LV</span>
+  <span class="avatar theme-warning" role="img" aria-label="Marta Díaz">MD</span>
+</div>
+
+<h4 class="mt-4">Chips</h4>
+<div class="d-flex flex-wrap gap-2">
+  <span class="chip">Draft</span>
+  <span class="chip theme-success active">Validated</span>
+  <span class="chip theme-warning">Needs review</span>
+  <a class="chip theme-info" href="#palette">View color palette</a>
+</div>
+
+<h4 class="mt-4">Close button</h4>
+<div class="d-flex flex-wrap align-items-center gap-3">
+  <div id="sink-close-panel" class="alert theme-info">
+    Dismissible sample
+    <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#sink-close-panel" aria-label="Close sample"></button>
+  </div>
+  <button type="button" class="btn-close" disabled="" aria-label="Disabled close button"></button>
+</div>
+
+<h4 class="mt-4">Collapse</h4>
+<button type="button" class="btn-outline theme-primary" data-bs-toggle="collapse" data-bs-target="#sink-collapse" aria-controls="sink-collapse" aria-expanded="false">Toggle build notes</button>
+<div class="collapse mt-2" id="sink-collapse">
+  <div class="card card-body">Review the generated files before publication.</div>
+</div>
+
+<h4 class="mt-4">Drawer</h4>
+<button type="button" class="btn-outline theme-primary" data-bs-toggle="drawer" data-bs-target="#sink-build-drawer" aria-controls="sink-build-drawer">Open build drawer</button>
+<dialog class="drawer drawer-end" id="sink-build-drawer" aria-labelledby="sink-build-drawer-title">
+  <div class="drawer-header">
+    <h4 class="drawer-title" id="sink-build-drawer-title">Build summary</h4>
+    <button type="button" class="btn-close" data-bs-dismiss="drawer" aria-label="Close build drawer"></button>
+  </div>
+  <div class="drawer-body">
+    <p>The build produced an HTML preview, a stylesheet and an asset report.</p>
+  </div>
+</dialog>
+
+<h4 class="mt-4">Nav overflow</h4>
+<nav aria-label="Overflow example" style="max-inline-size: 24rem">
+  <div class="nav-overflow" data-bs-toggle="nav-overflow">
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a class="nav-link" href="#surfaces">Surfaces</a></li>
+      <li class="nav-item"><a class="nav-link" href="#sink-images">Illustrations</a></li>
+      <li class="nav-item"><a class="nav-link" href="#palette">Color palette</a></li>
+      <li class="nav-item"><a class="nav-link" href="#sink-callouts">Editorial notes</a></li>
+      <li class="nav-item"><a class="nav-link" href="#forms">Form controls</a></li>
+      <li class="nav-item"><a class="nav-link" href="#components">Interactive components</a></li>
+    </ul>
+  </div>
+</nav>
+
+<h4 class="mt-4">Placeholder</h4>
+<div class="card">
+  <div class="card-body">
+    <p>Loading preview</p>
+    <div class="placeholder-wave" aria-hidden="true">
+      <span class="placeholder col-7"></span>
+      <span class="placeholder col-4"></span>
+      <span class="placeholder col-5"></span>
+    </div>
+  </div>
+</div>
+
+<h4 class="mt-4">Stepper</h4>
+<div class="contains-inline">
+  <ol class="stepper sm:stepper-horizontal" aria-label="Publication steps">
+    <li class="stepper-item active">Draft</li>
+    <li class="stepper-item active" aria-current="step">Review</li>
+    <li class="stepper-item">Publish</li>
+  </ol>
+</div>
+
+<h4 class="mt-4">Toggler</h4>
+<button type="button" class="btn-outline theme-primary" data-bs-toggle="toggler" data-bs-target="#sink-toggler-surface" aria-controls="sink-toggler-surface">Toggle surface tint</button>
+<div class="border rounded p-3 mt-2" id="sink-toggler-surface" data-bs-attribute="class" data-bs-value="bg-2">
+  This panel changes its background when the button is pressed.
+</div>
+
+
   </section>
 </div>
 
 
       </article>
     </main>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.2/dist/js/bootstrap.bundle.min.js"
+    <script type="module" data-bootstrap-bundle src="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-+PW0IDVGGwmpaBQvcXY+W0BcpHpITFB3dSfSoGvDdHtLbrLpSbpGcvtQRM/BJpz+" crossorigin="anonymous"></script>
+    
+    <script type="module" src="https://dieghernan.github.io/chulapa2/assets/js/kitchen-sink.js"></script>
+    
   </body>
 </html>

@@ -1,0 +1,150 @@
+/* Alternative for the kitchen sink, based on the Bootstrap 6 documentation. */
+:is(.bd-callout-note, .bd-callout-tip, .bd-callout-warning, .bd-callout-important, .bd-callout-caution) {
+    --bs-link-color: var(--bd-callout-color);
+    --bs-link-hover-color: var(--bd-callout-color);
+    --bs-code-color: var(--bd-callout-color);
+    color: var(--bd-callout-color, var(--bs-fg-body));
+    background-color: var(--bd-callout-bg, var(--bs-gray-100));
+    border: 1px solid var(--bd-callout-border, var(--bs-border-color));
+    border-radius: var(--bs-radius-5);
+    font-size: var(--bs-small-font-size, 87.5%);
+    padding: 1rem 1rem 1rem 1.75rem;
+    position: relative;
+    margin-block-end: var(--bs-spacer);
+}
+
+:is(.bd-callout-note, .bd-callout-tip, .bd-callout-warning, .bd-callout-important, .bd-callout-caution)::before {
+    --bs-offset: .5rem;
+    inset: var(--bs-offset) auto var(--bs-offset) var(--bs-offset);
+    content: "";
+    background-color: var(--bd-callout-band, var(--bd-callout-border, var(--bs-gray-300)));
+    border-radius: var(--bs-radius-2);
+    width: .25rem;
+    position: absolute;
+}
+
+:is(.bd-callout-note, .bd-callout-tip, .bd-callout-warning, .bd-callout-important, .bd-callout-caution) h4 {
+    margin-bottom: .25rem;
+}
+
+:is(.bd-callout-note, .bd-callout-tip, .bd-callout-warning, .bd-callout-important, .bd-callout-caution) a {
+    color: color-mix(in oklch, var(--bd-callout-color), var(--bs-fg-body) 50%);
+    font-weight: 500;
+}
+
+:is(.bd-callout-note, .bd-callout-tip, .bd-callout-warning, .bd-callout-important, .bd-callout-caution) > :last-child {
+    margin-bottom: 0;
+}
+
+@media (width >= 768px) {
+    :is(.bd-callout-note, .bd-callout-tip, .bd-callout-warning, .bd-callout-important, .bd-callout-caution) {
+        padding: 1.25rem 1.25rem 1.25rem 1.75rem;
+    }
+}
+
+.bd-callout-note {
+    --bd-callout-color: var(--bs-info-fg-emphasis);
+    --bd-callout-bg: color-mix(in oklch, var(--bs-info-bg-subtle), transparent 50%);
+    --bd-callout-border: var(--bs-info-border);
+    --bd-callout-band: color-mix(in oklch, var(--bs-info-border), var(--bs-info-fg-emphasis));
+}
+
+.bd-callout-warning {
+    --bd-callout-color: var(--bs-warning-fg-emphasis);
+    --bd-callout-bg: color-mix(in oklch, var(--bs-warning-bg-subtle), transparent 50%);
+    --bd-callout-border: var(--bs-warning-border);
+    --bd-callout-band: color-mix(in oklch, var(--bs-warning-border), var(--bs-warning-fg-emphasis));
+}
+
+.bd-callout-important {
+    --bd-callout-color: var(--bs-danger-fg-emphasis);
+    --bd-callout-bg: color-mix(in oklch, var(--bs-danger-bg-subtle), transparent 50%);
+    --bd-callout-border: var(--bs-danger-border);
+    --bd-callout-band: color-mix(in oklch, var(--bs-danger-border), var(--bs-danger-fg-emphasis));
+}
+
+.bd-callout-tip {
+    --bd-callout-color: var(--bs-success-fg-emphasis);
+    --bd-callout-bg: color-mix(in oklch, var(--bs-success-bg-subtle), transparent 50%);
+    --bd-callout-border: var(--bs-success-border);
+    --bd-callout-band: color-mix(in oklch, var(--bs-success-border), var(--bs-success-fg-emphasis));
+}
+
+.bd-callout-caution {
+    --bd-callout-color: var(--bs-primary-fg-emphasis);
+    --bd-callout-bg: color-mix(in oklch, var(--bs-primary-bg-subtle), transparent 50%);
+    --bd-callout-border: var(--bs-primary-border);
+    --bd-callout-band: color-mix(in oklch, var(--bs-primary-border), var(--bs-primary-fg-emphasis));
+}
+
+/* Legacy Kramdown callout classes. */
+
+:is(.callout-note, .callout-tip, .callout-important, .callout-warning, .callout-caution) {
+  --chulapa-callout-surface: color-mix(in oklab, var(--chulapa-callout-base) 10%, var(--bs-bg-body));
+  --chulapa-callout-header: color-mix(in oklab, var(--chulapa-callout-base) 8%, var(--chulapa-callout-surface));
+  padding: var(--bs-spacer);
+  margin-block-end: var(--bs-spacer);
+  font-size: var(--bs-small-font-size, 87.5%);
+  line-height: 1.5;
+  color: var(--bs-fg-body);
+  background-color: var(--chulapa-callout-surface);
+  border-inline-start: 0.25rem solid var(--chulapa-callout-accent);
+  border-radius: var(--bs-radius-5);
+  overflow-wrap: anywhere;
+}
+
+:is(.callout-note, .callout-tip, .callout-important, .callout-warning, .callout-caution)::before {
+  display: block;
+  margin: calc(-1 * var(--bs-spacer)) calc(-1 * var(--bs-spacer)) var(--bs-spacer);
+  padding: calc(var(--bs-spacer) * 0.4) var(--bs-spacer);
+  border-start-start-radius: inherit;
+  border-start-end-radius: inherit;
+  background-color: var(--chulapa-callout-header);
+  font-weight: var(--bs-font-weight-bold);
+  content: var(--chulapa-callout-icon) " " var(--chulapa-callout-title) / "";
+}
+
+:is(.callout-note, .callout-tip, .callout-important, .callout-warning, .callout-caution) > :last-child {
+  margin-block-end: 0;
+}
+
+.callout-note {
+  --chulapa-callout-base: var(--bs-info-base);
+  --chulapa-callout-accent: var(--bs-info-fg);
+  --chulapa-callout-icon: "ⓘ";
+  --chulapa-callout-title: "Note";
+}
+
+.callout-tip {
+  --chulapa-callout-base: var(--bs-success-base);
+  --chulapa-callout-accent: var(--bs-success-fg);
+  --chulapa-callout-icon: "✦";
+  --chulapa-callout-title: "Tip";
+}
+
+.callout-important {
+  --chulapa-callout-base: var(--bs-danger-base);
+  --chulapa-callout-accent: var(--bs-danger-fg);
+  --chulapa-callout-icon: "❗︎";
+  --chulapa-callout-title: "Important";
+}
+
+.callout-warning {
+  --chulapa-callout-base: var(--bs-warning-base);
+  --chulapa-callout-accent: var(--bs-warning-fg);
+  --chulapa-callout-icon: "⚠︎";
+  --chulapa-callout-title: "Warning";
+}
+
+.callout-caution {
+  --chulapa-callout-base: var(--bs-primary-base);
+  --chulapa-callout-accent: var(--bs-primary-fg);
+  --chulapa-callout-icon: "⚑";
+  --chulapa-callout-title: "Caution";
+}
+
+.callout-note:lang(es) { --chulapa-callout-title: "Nota"; }
+.callout-tip:lang(es) { --chulapa-callout-title: "Consejo"; }
+.callout-important:lang(es) { --chulapa-callout-title: "Importante"; }
+.callout-warning:lang(es) { --chulapa-callout-title: "Advertencia"; }
+.callout-caution:lang(es) { --chulapa-callout-title: "Precaución"; }
