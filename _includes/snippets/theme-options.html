@@ -26,7 +26,17 @@
   {%- endif -%}
   {%- assign dark_skin_scheme = generated_variant_scheme -%}
 {%- endif -%}
+{%- comment -%}
+  Bootstrap keys its dark rules on data-bs-theme, so the primary appearance
+  uses the mode matching its own scheme and the alternate uses the other one.
+{%- endcomment -%}
+{%- assign main_mode = 'light' -%}
+{%- assign alternate_mode = 'dark' -%}
+{%- if main_skin_scheme == 'dark' -%}
+  {%- assign main_mode = 'dark' -%}
+  {%- assign alternate_mode = 'light' -%}
+{%- endif -%}
 {%- assign show_color_mode_selector = false -%}
-{%- if dark_skin_enabled or site['color-mode-selector'] == true -%}
+{%- if dark_skin_enabled or use_dual_mode == true -%}
   {%- assign show_color_mode_selector = true -%}
 {%- endif -%}

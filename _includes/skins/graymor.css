@@ -13,11 +13,11 @@ color-scheme: light;
 --bs-radius-{{ step }}: 0;
 {% endfor %}
 
-{% include skins/tophat.css labels='white,black,white,white,black,black,white' navbar_hover=true %}
+{% include skins/tophat.css labels='white,black,white,white,black,black,var(--tophat-inverse-label)' navbar_hover=true %}
 --bs-link-color: color-mix(in srgb, var(--bs-primary-base) 70%, #007bff);
 
 {% unless include.variant_scheme %}
-{% include skins/tophat-buttons.css labels='info:#ffffff,warning:#ffffff' outlines='info:#4f767a,warning:#52777c' vars=include.vars %}
+{% include skins/tophat-buttons.css labels='info:#ffffff,warning:#ffffff' outlines='info:#4f767a,warning:#52777c' vars=include.vars variant_scheme=include.variant_scheme %}
 {% endunless %}
 
 & :where(.card.bg-primary, .card.bg-secondary) {

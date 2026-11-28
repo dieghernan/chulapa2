@@ -42,16 +42,17 @@ chulapa-skin:
 ```
 
 By default the site uses the primary configuration and hides the color mode
-selector. Set the top-level `color-mode-selector: true` to offer the
-Bootstrap color modes. Set `use-dual-mode: true` within `chulapa-skin` to
-use its bundled dark variant when available. The Auto Themer generates a
-dark palette from the same primary color when the skin has no dark variant.
-The automatic variant shares `vars` except the body foreground and background.
+selector. Set `use-dual-mode: true` within `chulapa-skin` to offer an
+alternate appearance with the selector. It uses the skin's bundled variant
+when available. Without one, the variant follows the primary
+configuration's `autothemer` setting: the Auto Themer generates it from the
+same primary, or Bootstrap's own mode applies when generation is off. The
+automatic variant shares `vars` except the body foreground, background and
+link colors.
 
 To configure dark mode separately, add `chulapa-skin-dark`. That
-configuration takes precedence over the matching dark palette and shows
-the selector even when `color-mode-selector` is `false`. The first visit
-uses the primary appearance.
+configuration takes precedence over the matching dark palette and also
+shows the selector. The first visit uses the primary appearance.
 Visitors can choose System to follow their device preference.
 To generate a palette from the separate configuration, set its
 `autothemer` flag to `true`. It uses its own `vars.primary` or the Bootstrap
@@ -138,7 +139,7 @@ chulapa-skin-dark:
 ```
 
 An explicit `chulapa-skin-dark` takes priority over the dark variant. Use
-`chulapa-skin.use-dual-mode: true` and `color-mode-selector: true` to offer
+`chulapa-skin.use-dual-mode: true` to offer
 GitDev Dark as the dark variant of GitDev without a separate dark block.
 For light skins without a bundled dark variant, such as Focal and Media,
 `use-dual-mode: true` generates dark surfaces and keeps the skin's palette

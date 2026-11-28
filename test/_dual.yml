@@ -18,6 +18,8 @@ chulapa-skin:
     body-bg: "#f7f3eb"
     "--bs-fg-body": "#203047"
     code-color: "#123456"
+    link-color: "#5a1f12"            # Light only
+    link-hover-color: "light-dark(#3d140b, #f3c9bd)"
     "--demo-border-color": "#352467"
     ".btn-solid":
       btn-border-radius: "13px"

@@ -1,7 +1,7 @@
 color-scheme: light;
 --bs-fg-body: #0b0f14;
---bs-body-font-family: "Inter", "Roboto";
---bs-heading-font-family: "Inter", "Roboto";
+--bs-body-font-family: "Inter", "Roboto", sans-serif;
+--bs-heading-font-family: "Inter", "Roboto", sans-serif;
 --bs-link-color: #0e6fcf;
 --bs-primary-base: #1083f3;
 --bs-secondary-base: #8d8e96;

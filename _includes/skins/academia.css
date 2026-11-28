@@ -8,7 +8,7 @@ color-scheme: light;
 --bs-success-base: #28a745;
 --bs-warning-base: #ffc107;
 --bs-info-base: #20a6bb;
---bs-link-color: var(--bs-primary-fg);
+--bs-link-color: var(--bs-primary-base);
 --bs-link-hover-color: color-mix(in srgb, var(--bs-link-color) 85%, var(--bs-fg-body));
 
 {% include skins/roles.css names='primary,secondary,success,warning,info' labels='white,white,black,black,black' %}

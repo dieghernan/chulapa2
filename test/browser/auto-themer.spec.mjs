@@ -293,14 +293,16 @@ test("uses the authored GitDev Dark palette with dual mode", async ({ page }) =>
 test("keeps a dark primary skin and allows a separate light alternate", async ({ page }) => {
   await page.goto("test/gitdev-alternate/");
   const themeMenu = colorMode(page);
-  await expect(themeMenu.selected).toHaveText("Primary theme");
-  await expect(themeMenu.selected).toHaveAttribute("data-color-mode", "light");
+  await expect(themeMenu.selected).toHaveText("Dark theme");
+  await expect(themeMenu.selected).toHaveAttribute("data-color-mode", "dark");
   const root = page.locator("html");
+  await expect(root).toHaveAttribute("data-bs-theme", "dark");
   await expect(root).toHaveCSS("color-scheme", "dark");
   await expect(root).toHaveCSS("--bs-primary-base", "#41516a");
   await expect(root).toHaveCSS("--bs-link-color", "#b1dcff");
 
-  await themeMenu.choose({ label: "Alternate theme" });
+  await themeMenu.choose({ label: "Light theme" });
+  await expect(root).toHaveAttribute("data-bs-theme", "light");
   await expect(root).toHaveCSS("color-scheme", "light");
   await expect(root).toHaveCSS("--bs-primary-base", "#22272e");
   await expect(root).toHaveCSS("--bs-link-color", "#0969da");

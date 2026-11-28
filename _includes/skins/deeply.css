@@ -10,7 +10,7 @@ color-scheme: dark;
 --bs-info-base: #0e7bbe;
 --bs-warning-base: #0DE2EA;
 
-{% include skins/tophat.css labels='black,white,white,black,white,black,white' %}
+{% include skins/tophat.css labels='black,white,white,black,black,black,var(--tophat-inverse-label)' %}
 
 & :where(a:not([class])) {
   text-decoration-thickness: 2px;
@@ -22,5 +22,5 @@ color-scheme: dark;
 
 {% unless include.variant_scheme %}
 {% include skins/deeply-dark.css %}
-{% include skins/tophat-buttons.css labels='primary:#ffffff,danger:#ffffff' outlines='secondary:#787878,success:#40808e' vars=include.vars %}
+{% include skins/tophat-buttons.css labels='primary:#ffffff,danger:#ffffff' outlines='secondary:#787878,success:#40808e' vars=include.vars variant_scheme=include.variant_scheme %}
 {% endunless %}

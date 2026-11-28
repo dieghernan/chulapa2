@@ -4,8 +4,8 @@ color-scheme: dark;
 --chulapa-footer-link-hover-color: rgb(14.5176470588%, 46.9882352941%, 81.7176470588%);
 --bs-bg-body: #000000;
 --bs-fg-body: #ffffff;
---bs-body-font-family: "Inter", "Roboto";
---bs-heading-font-family: "Inter", "Roboto";
+--bs-body-font-family: "Inter", "Roboto", sans-serif;
+--bs-heading-font-family: "Inter", "Roboto", sans-serif;
 --bs-link-hover-color: rgb(66.7875, 157.35, 254.2125);
 --bs-primary-base: #1083fe;
 --bs-secondary-base: #c5cfd9;
@@ -13,7 +13,7 @@ color-scheme: dark;
 --bs-warning-base: #ffba00;
 --bs-danger-base: #fa4c51;
 --bs-info-base: #54c7ec;
---bs-link-color: var(--bs-primary-fg);
+--bs-link-color: var(--bs-primary-base);
 
 {% include skins/roles.css names='primary,secondary,success,warning,danger,info' labels='black,black,white,black,black,black' %}
 --bs-primary-bg: #0e74e2;

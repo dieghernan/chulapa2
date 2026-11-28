@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { colorMode } from "./color-mode-control.mjs";
+import { readContrast } from "./contrast.mjs";
 
 test("follows the system and remembers explicit modes across pages", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "light" });
@@ -47,7 +48,11 @@ test("follows the system and remembers explicit modes across pages", async ({ pa
   await expect(body).toHaveCSS("background-color", lightBackground);
   await page.reload();
   await expect(themeMenu.selected).toHaveAttribute("data-color-mode", "system");
-  await expect(root).not.toHaveAttribute("data-bs-theme", /.+/);
+  // System mode resolves to the device preference, so Bootstrap's rules apply.
+  await expect(root).toHaveAttribute("data-bs-theme", "light");
+  await page.emulateMedia({ colorScheme: "dark" });
+  await expect(root).toHaveAttribute("data-bs-theme", "dark");
+  await expect(themeMenu.selected).toHaveAttribute("data-color-mode", "system");
 });
 
 test("lets visitors change the mode when browser storage is blocked", async ({ page }) => {
@@ -80,17 +85,24 @@ test("keeps a single primary configuration fixed even with a stored dark prefere
 
 test("applies an explicit primary without generating a palette", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "light" });
-  await page.goto("test/selector/");
+  await page.goto("test/explicit-primary/");
   const root = page.locator("html");
   const link = page.getByRole("main").getByRole("link", { name: "chulapa", exact: true });
   await expect(root).toHaveCSS("--bs-primary-base", "#285d70");
   await expect(root).toHaveCSS("--bs-primary-bg", "#285d70");
   await expect(root).toHaveCSS("--auto-themer-primary", "");
   await expect(link).toHaveCSS("color", "rgb(40, 93, 112)");
+  const stylesheet = await page.request.get("test/explicit-primary/assets/css/auto-themer.css");
+  expect(await stylesheet.text()).toContain('/* Unknown skin "flatly": no skin declarations applied. */');
+
+  // Without a skin, the automatic variant keeps the generator off as well and
+  // uses Bootstrap's dark mode with the shared primary.
   await colorMode(page).choose("dark");
   await expect(root).toHaveCSS("color-scheme", "dark");
-  await expect(root).not.toHaveCSS("--bs-primary-base", "#285d70");
   await expect(root).toHaveCSS("--auto-themer-primary", "");
+  await expect(root).toHaveCSS("--bs-primary-base", "#285d70");
+  await expect(root).toHaveCSS("--bs-primary-bg", "#285d70");
+  expect((await readContrast(link)).text).toBeGreaterThanOrEqual(4.5);
 });
 
 test("uses the primary color for an explicitly requested dark variant", async ({ page }) => {
@@ -99,7 +111,7 @@ test("uses the primary color for an explicitly requested dark variant", async ({
   const root = page.locator("html");
   const link = page.getByRole("main").getByRole("link", { name: "chulapa", exact: true });
   await colorMode(page).choose("system");
-  await expect(root).toHaveCSS("color-scheme", "light dark");
+  await expect(root).toHaveCSS("color-scheme", "dark");
   await expect(root).toHaveCSS("--auto-themer-primary", "#285d70");
   const darkColor = await link.evaluate((element) => getComputedStyle(element).color);
   await colorMode(page).choose("light");
@@ -107,7 +119,7 @@ test("uses the primary color for an explicitly requested dark variant", async ({
   await expect(link).not.toHaveCSS("color", darkColor);
 });
 
-test("shares configured tokens except body colors with the automatic dark variant", async ({ page }) => {
+test("shares configured tokens except body and link colors with the automatic dark variant", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "dark" });
   await page.goto("test/dual/");
   const themeMenu = colorMode(page);
@@ -117,6 +129,7 @@ test("shares configured tokens except body colors with the automatic dark varian
   const blockCode = page.locator("#surfaces .highlight pre code").first();
   const field = page.locator("#sink-email");
   const button = page.getByRole("button", { name: "Primary button", exact: true });
+  const link = page.getByRole("main").getByRole("link", { name: "chulapa", exact: true });
 
   for (const mode of ["light", "dark", "system"]) {
     await themeMenu.choose(mode);
@@ -138,16 +151,23 @@ test("shares configured tokens except body colors with the automatic dark varian
     if (mode === "light") {
       await expect(body).toHaveCSS("background-color", "rgb(247, 243, 235)");
       await expect(body).toHaveCSS("color", "rgb(32, 48, 71)");
+      await expect(link).toHaveCSS("color", "rgb(90, 31, 18)");
     } else {
       await expect(body).not.toHaveCSS("background-color", "rgb(247, 243, 235)");
       await expect(body).not.toHaveCSS("color", "rgb(32, 48, 71)");
+      await expect(link).not.toHaveCSS("color", "rgb(90, 31, 18)");
+      expect((await readContrast(link)).text, mode).toBeGreaterThanOrEqual(4.5);
     }
+    // A light-dark() value covers both modes, so the variant keeps it.
+    await link.hover();
+    await expect(link).toHaveCSS("color", mode === "light" ? "rgb(61, 20, 11)" : "rgb(243, 201, 189)");
+    await page.mouse.move(0, 0);
   }
 });
 
-test("shows the selector with two configurations even when explicitly disabled", async ({ page }) => {
+test("shows the selector with an explicit dark configuration", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "dark" });
-  await page.goto("test/hide-selector/");
+  await page.goto("test/explicit-dark/");
   const themeMenu = colorMode(page);
   const root = page.locator("html");
   await expect(themeMenu.trigger).toBeVisible();
@@ -165,7 +185,7 @@ test("uses Bootstrap's primary when the explicit dark configuration has no prima
   );
   expect(bootstrapPrimary).not.toBe("");
 
-  await page.goto("test/hide-selector/");
+  await page.goto("test/explicit-dark/");
   await expect(root).toHaveCSS("--auto-themer-primary", "#285d70");
   await colorMode(page).choose("dark");
   await expect(root).toHaveCSS("--auto-themer-primary", bootstrapPrimary);

@@ -23,19 +23,18 @@ Rouge palettes from chulapa's _sass/highlight directory.
   {% include highlight/palette.css name=primary_highlight %}
 }
 {% else %}
-  {% assign modes = 'light,dark' | split: ',' %}
-  {% for mode in modes %}
+  {% include snippets/theme-options.html %}
+  {% assign slots = 'main,alternate' | split: ',' %}
+  {% for slot in slots %}
     {% assign name = primary_highlight %}
-    {% if mode == 'dark' %}{% assign name = alternate_highlight %}{% endif %}
+    {% assign mode = main_mode %}
+    {% if slot == 'alternate' %}
+      {% assign name = alternate_highlight %}
+      {% assign mode = alternate_mode %}
+    {% endif %}
     {% capture rules %}{% include highlight/palette.css name=name %}{% endcapture %}
 :root:where([data-bs-theme="{{ mode }}"]) {
   {{ rules }}
-}
-
-@media (prefers-color-scheme: {{ mode }}) {
-  :root:where(:not([data-bs-theme])) {
-    {{ rules }}
-  }
 }
   {% endfor %}
 {% endif %}

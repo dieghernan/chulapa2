@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { expect, test } from "@playwright/test";
 import { colorMode } from "./color-mode-control.mjs";
-import { readContrasts } from "./contrast.mjs";
+import { readContrast, readContrasts } from "./contrast.mjs";
 
 const authored = JSON.parse(readFileSync(new URL("./skin-identity.json", import.meta.url)));
 const navbarIdentity = JSON.parse(readFileSync(new URL("./skin-navbar-identity.json", import.meta.url)));
@@ -97,6 +97,7 @@ for (const [skin, scheme] of catalog) {
       const html = page.locator("html");
       await expect(html).toHaveCSS("--bs-primary-base", identity[skin]);
       await expect(html).toHaveCSS("color-scheme", scheme);
+      await expect(html).toHaveAttribute("data-bs-theme", scheme);
       const [navbarBackground, brandColor] = navbarIdentity[skin];
       const navigation = page.getByRole("navigation", { name: "Primary", exact: true });
       await expect(navigation).toHaveCSS("background-color", navbarBackground);
@@ -207,7 +208,7 @@ for (const [skin, primaryScheme] of catalog.filter(([, , alternate]) => !alterna
     const titleFont = await font(heading);
     const primaryBackground = await body.evaluate((node) => getComputedStyle(node).backgroundColor);
 
-    for (const mode of ["dark", "system"]) {
+    for (const mode of [alternateScheme, "system"]) {
       await themeMenu.choose(mode);
       await expect(page.locator("html")).toHaveCSS("color-scheme", alternateScheme);
       await expect(page.locator("html")).toHaveCSS("--bs-primary-base", identity[skin]);
@@ -222,6 +223,96 @@ for (const [skin, primaryScheme] of catalog.filter(([, , alternate]) => !alterna
     await expect(body).toHaveCSS("background-color", primaryBackground);
   });
 }
+
+test("keeps the original primary link color where Chulapa used it", async ({ page }) => {
+  // Chulapa used Bootstrap 4's default link color, the primary, for these skins.
+  for (const [skin, color] of [
+    ["academia", "rgb(21, 101, 192)"],
+    ["butterfly-dark", "rgb(16, 131, 254)"],
+    ["listen", "rgb(30, 215, 96)"],
+    ["towards", "rgb(53, 88, 118)"],
+    ["twitter-lights-out", "rgb(29, 155, 240)"],
+  ]) {
+    await page.goto(`test/skins/${skin}/`);
+    await expect(page.locator('[data-contrast="article-link"]'), skin).toHaveCSS("color", color);
+  }
+});
+
+test("keeps the primary hue in generated variant links and navigation", async ({ page }) => {
+  // Generated variants adjust only the primary's OKLCH lightness for their surface.
+  const srgb = (locator) => locator.evaluate((element) => {
+    const context = document.createElement("canvas").getContext("2d");
+    context.fillStyle = getComputedStyle(element).color;
+    context.fillRect(0, 0, 1, 1);
+    return [...context.getImageData(0, 0, 1, 1).data].slice(0, 3);
+  });
+  for (const [skin, variant, color] of [
+    ["listen", "light", [0, 96, 25]],
+    ["academia", "dark", [121, 186, 255]],
+  ]) {
+    await page.goto(`test/skins/${skin}/`);
+    await colorMode(page).choose(variant);
+    await expect(page.locator("html")).toHaveCSS("color-scheme", variant);
+    const navigation = page.getByRole("navigation", { name: "Primary", exact: true });
+    const active = navigation.locator(".nav-link[aria-current]").first();
+    const article = page.locator('[data-contrast="article-link"]');
+    for (const target of [active, article]) {
+      expect(await srgb(target), skin).toEqual(color);
+      expect((await readContrast(target)).text, skin).toBeGreaterThanOrEqual(4.5);
+    }
+    // Bootstrap underlines links in every state, so hover must change color.
+    await article.hover();
+    await expect.poll(() => srgb(article), skin).not.toEqual(color);
+    expect((await readContrast(article)).text, skin).toBeGreaterThanOrEqual(4.5);
+    await page.mouse.move(0, 0);
+  }
+});
+
+test("sets Media's interface elements in its heading face", async ({ page }) => {
+  await page.goto("test/skins/media/");
+  const main = page.getByRole("main");
+  for (const target of [
+    main.locator('[data-contrast="solid-primary"]'),
+    page.locator("#skin-field"),
+    page.getByRole("contentinfo"),
+  ]) {
+    await expect(target).toHaveCSS("font-family", /^"Mona Sans"/);
+  }
+  await expect(main.locator("p").first()).toHaveCSS("font-family", /^"Source Serif 4"/);
+});
+
+test("keeps fallback role labels aligned with contrast-color()", async ({ page }) => {
+  // Browsers without contrast-color() use the fixed labels passed to roles.css.
+  const topHatRoles = "primary,secondary,success,danger,info,warning,inverse".split(",");
+  for (const [skin] of catalog) {
+    const source = readFileSync(new URL(`../../_includes/skins/${skin}.css`, import.meta.url), "utf8");
+    const own = source.match(/skins\/roles\.css names='([^']*)' labels='([^']*)'/);
+    const topHat = source.match(/skins\/tophat\.css labels='([^']*)'/);
+    if (!own && !topHat) continue;
+    const names = own ? own[1].split(",") : topHatRoles;
+    const labels = (own ? own[2] : topHat[1]).split(",");
+    await page.goto(`test/skins/${skin}/`);
+    const mismatches = await page.evaluate((roles) => {
+      const probe = document.body.appendChild(document.createElement("span"));
+      const resolve = (value) => { probe.style.color = value; return getComputedStyle(probe).color; };
+      return roles.filter(([role, label]) => resolve(label) !== resolve(`var(--bs-${role}-contrast)`)).map(([role]) => role);
+    }, names.map((name, index) => [name, labels[index]]));
+    expect(mismatches, skin).toEqual([]);
+  }
+});
+
+test("applies Bootstrap's dark rules to a dark primary skin", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.goto("test/skins/listen/");
+  const root = page.locator("html");
+  await expect(root).toHaveAttribute("data-bs-theme", "dark");
+  await expect(root).toHaveCSS("--bs-shadow-strength", "2.4");
+  const select = page.locator("select.form-control").first();
+  const darkCaret = await select.evaluate((element) => getComputedStyle(element).backgroundImage);
+  await colorMode(page).choose("light");
+  await expect(root).toHaveAttribute("data-bs-theme", "light");
+  await expect(select).not.toHaveCSS("background-image", darkCaret);
+});
 
 test("switches between skins in the shared kitchen sink and keeps the color preference", async ({ page }) => {
   await page.goto("test/skins/focal/");
@@ -282,6 +373,8 @@ test("uses the named light skin when starting from its dark counterpart", async 
     await page.emulateMedia({ colorScheme: "dark" });
     await expect(root).toHaveCSS("--bs-primary-base", identity[skin]);
     await expect(root).toHaveCSS("color-scheme", "dark");
-    await themeMenu.choose("light");
+    // Stored modes name the scheme, so return to the dark primary skin.
+    await themeMenu.choose("dark");
+    await expect(root).toHaveAttribute("data-bs-theme", "dark");
   }
 });

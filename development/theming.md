@@ -87,9 +87,10 @@ Use a component class under `vars` for that scope.
 | `highlight` | Selects `default`, `github` or `github.dark`. An omitted or unsupported dark value uses the main palette. |
 | `use-dual-mode` | Goes under `chulapa-skin` and enables the other appearance. A separate dark configuration takes precedence. |
 
-The top-level `color-mode-selector` option shows the selector when set to
-`true`. An explicit dark configuration always shows it. The top-level
-`googlefonts` list loads fonts available to either mode.
+The color mode selector appears when the site has an alternate appearance:
+`use-dual-mode: true` or a `chulapa-skin-dark` configuration. Without
+either, the site uses a single appearance and loads no selector or script.
+The top-level `googlefonts` list loads fonts available to either mode.
 
 ## Configure tokens
 
@@ -143,10 +144,14 @@ The bundled skins load their own default families when selected.
 
 ## Automatic color variants
 
-With `use-dual-mode: true`, the automatic variant shares all
-configured `chulapa-skin.vars` except `bg-body` and `fg-body`. The same
-rule covers their legacy aliases, fully prefixed names and tokens scoped
-to a component class.
+With `use-dual-mode: true`, the automatic variant shares all configured
+`chulapa-skin.vars` except `bg-body`, `fg-body`, `link-color` and
+`link-hover-color`. The variant derives those from its own surface, unless
+the value contains the literal text `light-dark(` to cover both modes. The same rule covers
+their legacy aliases, fully prefixed names and tokens scoped to a component
+class. The variant also follows the primary configuration's `autothemer`
+setting. Without a skin and with generation off, it uses Bootstrap's own
+mode with the shared tokens.
 
 ```yaml
 chulapa-skin:
@@ -175,7 +180,6 @@ and primary color in the automatic dark variant. Chulapa2 generates its
 dark surfaces and adapts the default text and links. For example:
 
 ```yaml
-color-mode-selector: true
 chulapa-skin:
   skin: focal
   use-dual-mode: true
@@ -185,10 +189,17 @@ For a dark primary skin, dual mode chooses its named light counterpart or
 generates a light variant. The primary skin still appears on the first visit.
 System mode picks the light or dark appearance matching the device.
 
+The page's `data-bs-theme` follows the primary skin's scheme, so a dark
+skin starts with `dark` and Bootstrap's dark rules apply to it. The
+alternate configuration takes the other mode. When both configurations use
+the same scheme, the alternate still takes the other mode and Bootstrap's
+rules for that mode apply to it. A generated variant is only available as
+the alternate appearance, never as the primary one.
+
 ## Bundled skins
 
 The catalog includes the 16 skins attributed to `dieghernan` in the
-[original Chulapa skin collection](https://github.com/dieghernan/chulapa/tree/3984fa552/docs/collections/_skins).
+[original Chulapa skin collection](https://github.com/dieghernan/chulapa/tree/main/docs/collections/_skins).
 
 | Family | Names | Automatic choice with dual mode |
 | --- | --- | --- |
@@ -200,9 +211,9 @@ The catalog includes the 16 skins attributed to `dieghernan` in the
 
 Each name resolves through one catalog entry to a CSS fragment and its font
 stylesheet. The fragments keep the authored base colors and set Bootstrap
-tokens for typography, semantic colors and rendered components. Footer and
-hero options from the original skins will apply as those Chulapa layouts
-are rebuilt.
+tokens for typography, semantic colors and rendered components, including
+the footer and hero surfaces described in the
+[skin migration guide](skin-migration.md).
 
 ### TopHat
 
@@ -226,7 +237,7 @@ including full-color alerts and themed table rows. Its generated light
 variant keeps the same palette and typography and uses light component
 surfaces. The adapters use Jekyll and CSS.
 [Pinned TopHat sources](https://github.com/ThemesGuide/top-hat/tree/2274176073d2e4783c78df080c6c3396e2abc2b4)
-· [Chulapa integration](https://github.com/dieghernan/chulapa/tree/3984fa552/_sass/vendor/tophat)
+· [Chulapa integration](https://github.com/dieghernan/chulapa/tree/main/_sass/vendor/tophat)
 
 Some retained light-mode combinations fall below the contrast thresholds.
 The test baseline records their measured ratios and detects regressions.

@@ -107,6 +107,45 @@ in the [site migration guide](migrating-from-chulapa.md#update-custom-css).
 YAML options such as `hero-chulapa-bg-color` and `navbar-chulapa-bg-color`
 are configuration, not classes, and keep their names.
 
+## Unsupported Chulapa skins
+
+chulapa2 bundles the 16 skins by dieghernan and the 12 TopHat skins. A
+`skin` name outside the catalog adds no skin declarations, and the
+generated `auto-themer.css` starts with a comment naming it. Rebuild these
+Chulapa skins from their palette with the Auto Themer:
+
+```yaml
+chulapa-skin:
+  skin: auto
+  vars:
+    primary-base: "#2c3e50"   # Flatly
+```
+
+| Chulapa skin | `primary-base` | Also set |
+| --- | --- | --- |
+| `cerulean` | `#2fa4e7` | |
+| `cyborg` | `#2a9fd6` | `bg-body: "#060606"` |
+| `darkly` | `#375a7f` | `bg-body: "#222"` |
+| `flatly` | `#2c3e50` | |
+| `journal` | `#eb6864` | |
+| `litera` | `#4582ec` | |
+| `lux` | `#1a1a1a` | |
+| `materia` | `#2196f3` | |
+| `minty` | `#78c2ad` | |
+| `pulse` | `#593196` | |
+| `sketchy` | `#333` | |
+| `slate` | `#3a3f44` | `bg-body: "#272b30"` |
+| `solar` | `#b58900` | `bg-body: "#002b36"` |
+| `united` | `#e95420` | |
+| `universal` | `#986dbd` | |
+| `yeti` | `#008cba` | |
+
+The primaries come from the Bootswatch 4.6 variables and the Bootstrapious
+wrapper bundled with Chulapa. Dark themes also need a readable `fg-body`
+for their background. Bootswatch's typography and component styles are
+not reproduced. For `none`, omit `skin`. For `dark-bg`, set
+`bg-body: "#000"`, `fg-body: "#fff"` and `code-color: "#e9468e"`.
+
 ## Contrast rules for maintainer-authored skins
 
 Look for an import of `chulapa/skins/authored-contrast` in the original skin.
@@ -197,6 +236,22 @@ assignments when migrating a skin. [Towards preview in Chulapa][legacy-towards]
 corresponding chulapa2 settings and verify that explicit values override the
 skin defaults. Check the original derived colors again when users customize
 the backgrounds of maintainer-authored skins.
+
+## Body links
+
+Bootstrap 4 sets `$link-color` to the primary. Academia, Butterfly Dark,
+Listen, Towards and Twitter Lights Out leave it unset, so their links use
+the original primary color in chulapa2 as well. Each pair already
+measures at least 5.7:1 on its page background.
+
+Generated variants keep each role's OKLCH hue and chroma, capped at 0.14,
+for role foregrounds, body links and the navbar's hover and active links.
+Only the lightness changes: at most 0.42 on a light surface and at least
+0.78 on a dark one, as in the Auto Themer. Hover uses 0.34 and 0.86,
+since Bootstrap underlines links in every state. Listen's light variant uses green and
+Academia's dark variant uses blue. Skins with a gray primary keep gray
+links. Academia's original navbar accent is its secondary color, and the
+variant uses the closely matching primary instead.
 
 ## Footer and attribution
 

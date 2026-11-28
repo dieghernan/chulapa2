@@ -9,20 +9,18 @@ color-scheme: light;
 --bs-warning-base: #fcb900;
 --bs-danger-base: #cf2e2e;
 --bs-info-base: #8ed1fc;
---bs-link-color: var(--bs-primary-fg);
+--bs-link-color: var(--bs-primary-base);
 --bs-link-hover-color: color-mix(in srgb, var(--bs-link-color) 85%, var(--bs-fg-body));
 
 {% include skins/roles.css names='primary,secondary,success,warning,danger,info' labels='white,white,black,black,white,black' %}
 --bs-success-bg: #008756;
 
-{% unless include.variant_scheme %}
 --chulapa-skin-nav-bg: var(--bs-primary-base);
 --chulapa-skin-nav-fg: #c2cdd6;
 --chulapa-skin-nav-hover: #e2e7eb;
 --chulapa-skin-nav-active: #ffffff;
 --chulapa-skin-nav-brand: #ffffff;
 --chulapa-skin-nav-disabled: #5d7991;
-{% endunless %}
 {% include skins/navbar.css %}
 
 & :where(a:not([class])) {

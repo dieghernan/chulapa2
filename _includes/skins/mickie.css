@@ -10,14 +10,14 @@ font-variant-ligatures: none;
 --bs-info-base: #3b78ba;
 --bs-warning-base: #0DE2EA;
 
-{% include skins/tophat.css labels='black,black,white,black,black,black,white' %}
+{% include skins/tophat.css labels='black,black,white,black,white,black,var(--tophat-inverse-label)' %}
 --chulapa-skin-nav-fg: #fff;
 --chulapa-skin-nav-brand: #fff;
 --chulapa-skin-nav-active: #fff;
 --chulapa-hero-color: #000000;
 
 {% unless include.variant_scheme %}
-{% include skins/tophat-buttons.css labels='primary:#ffffff,danger:#ffffff' outlines='primary:#b84b69,secondary:#6f6f6f,warning:#077c81,danger:#cc3a42' vars=include.vars %}
+{% include skins/tophat-buttons.css labels='primary:#ffffff,danger:#ffffff' outlines='primary:#b84b69,secondary:#6f6f6f,warning:#077c81,danger:#cc3a42' vars=include.vars variant_scheme=include.variant_scheme %}
 {% endunless %}
 
 & :where(.card.bg-primary) {
