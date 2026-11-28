@@ -30,6 +30,10 @@ to resolve questions about conformance.
 
 ## Liquid and generated HTML
 
+- The generated `head` and footer must be readable: one element per line,
+  consistently indented by nesting, with no blank-line runs or tags joined
+  on one line. Keep the generated `body` readable where practical; Markdown
+  and include output may break its indentation.
 - Inspect the generated HTML. Use Liquid whitespace trims around calculations
   deliberately and preserve spaces between inline words and newlines between
   emitted tags. Resolve front matter values such as page language before

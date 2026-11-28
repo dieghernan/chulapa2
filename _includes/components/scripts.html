@@ -1,9 +1,9 @@
 {%- include snippets/bootstrap-cdn.html -%}
 <script type="module" data-bootstrap-bundle src="{{ bootstrap_dist }}/js/bootstrap.bundle.min.js"
-        integrity="sha384-+PW0IDVGGwmpaBQvcXY+W0BcpHpITFB3dSfSoGvDdHtLbrLpSbpGcvtQRM/BJpz+" crossorigin="anonymous"></script>
-{% if include.theme %}
-<script type="module" src="{{ '/assets/js/navbar.js' | absolute_url }}"></script>
-{% endif %}
-{% if content contains 'id="bootstrap-kitchen-sink"' %}
-<script type="module" src="{{ '/assets/js/kitchen-sink.js' | absolute_url }}"></script>
-{% endif %}
+            integrity="sha384-+PW0IDVGGwmpaBQvcXY+W0BcpHpITFB3dSfSoGvDdHtLbrLpSbpGcvtQRM/BJpz+" crossorigin="anonymous"></script>
+    {%- if include.theme %}
+    <script type="module" src="{{ '/assets/js/navbar.js' | absolute_url }}"></script>
+    {%- endif %}
+    {%- if content contains 'id="bootstrap-kitchen-sink"' %}
+    <script type="module" src="{{ '/assets/js/kitchen-sink.js' | absolute_url }}"></script>
+    {%- endif -%}

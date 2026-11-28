@@ -71,6 +71,33 @@ test("supports desktop keyboard navigation and skips to the main content", async
   await expect(page).toHaveURL(/#about$/);
 });
 
+test("keeps the header on minimal pages that supply their own main element", async ({ page }) => {
+  await page.goto("test/minimal-header/");
+  await expect(page.locator(".chulapa-header").getByRole("heading", { level: 1 }))
+    .toHaveText("Minimal page with a header");
+  await expect(page.locator("#main-content")).toHaveCount(1);
+});
+
+test("emits a readable head and footer", async ({ request }) => {
+  // The html-style rule: one element per line, indented by nesting, no blank lines.
+  for (const path of ["", "test/markdown/", "test/tokens/", "test/dual/test/headers/hero-photo/"]) {
+    const html = await (await request.get(path)).text();
+    for (const [open, close, indent] of [["<head>", "</head>", 2], ["<footer", "</footer>", 4]]) {
+      const start = html.lastIndexOf("\n", html.indexOf(open)) + 1;
+      const block = html.slice(start, html.indexOf(close, start) + close.length).split(/\r?\n/);
+      expect(block.filter((line) => line.trim() === ""), `${path} ${open} blank lines`).toEqual([]);
+      expect(block[0].length - block[0].trimStart().length, `${path} ${open} indent`).toBe(indent);
+      expect(block.at(-1).trim(), `${path} ${close}`).toBe(close);
+      expect(block.at(-1).length - block.at(-1).trimStart().length, `${path} ${close} indent`).toBe(indent);
+      const inner = block.slice(1, -1).filter((line) => !line.trimStart().startsWith("integrity="));
+      for (const line of inner) {
+        const depth = line.length - line.trimStart().length;
+        expect(depth > indent && depth % 2 === 0, `${path} ${open}: ${line.trim()}`).toBe(true);
+      }
+    }
+  }
+});
+
 test("renders the minimal shell with a configured classic navbar and footer", async ({ page }) => {
   await page.setViewportSize({ width: 980, height: 900 });
   await page.goto("test/tokens/test/minimal/");
