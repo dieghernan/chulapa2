@@ -55,8 +55,12 @@
     {%- capture link_value -%}
       {%- include auto-themer/token-value.html value=configured_link -%}
     {%- endcapture -%}
-    {%- if link_value != empty and configured_hover == nil %}
+    {%- assign shares_link = true -%}
+    {%- if include.skip_mode_colors -%}
+      {%- unless link_value contains 'light-dark(' -%}{%- assign shares_link = false -%}{%- endunless -%}
+    {%- endif -%}
+    {%- if link_value != empty and configured_hover == nil and shares_link %}
       --bs-link-hover-color: var(--bs-link-color);
     {% endif -%}
-    {%- include auto-themer/tokens.css vars=include.vars stage='explicit' skip_body_colors=include.skip_body_colors -%}
+    {%- include auto-themer/tokens.css vars=include.vars stage='explicit' skip_mode_colors=include.skip_mode_colors -%}
 {%- endcase -%}

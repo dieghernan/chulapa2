@@ -47,7 +47,8 @@ alternate appearance with the selector. It uses the skin's bundled variant
 when available. Without one, the variant follows the primary
 configuration's `autothemer` setting: the Auto Themer generates it from the
 same primary, or Bootstrap's own mode applies when generation is off. The
-automatic variant shares `vars` except the body foreground and background.
+automatic variant shares `vars` except the body foreground, background and
+link colors.
 
 To configure dark mode separately, add `chulapa-skin-dark`. That
 configuration takes precedence over the matching dark palette and also

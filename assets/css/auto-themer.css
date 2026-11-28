@@ -27,7 +27,7 @@
       {%- if slot == 'main' -%}
         {%- include auto-themer/mode.css vars=main_theme_settings.vars skin=main_skin generate=light_generate stage=stage -%}
       {%- else -%}
-        {%- include auto-themer/mode.css vars=dark_vars skin=dark_skin variant_scheme=generated_variant_scheme generate=dark_generate stage=stage skip_body_colors=automatic_variant -%}
+        {%- include auto-themer/mode.css vars=dark_vars skin=dark_skin variant_scheme=generated_variant_scheme generate=dark_generate stage=stage skip_mode_colors=automatic_variant -%}
       {%- endif -%}
     {%- endcapture -%}
     {%- assign declarations = declarations | strip -%}

@@ -113,7 +113,7 @@ test("uses the primary color for an explicitly requested dark variant", async ({
   await expect(link).not.toHaveCSS("color", darkColor);
 });
 
-test("shares configured tokens except body colors with the automatic dark variant", async ({ page }) => {
+test("shares configured tokens except body and link colors with the automatic dark variant", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "dark" });
   await page.goto("test/dual/");
   const themeMenu = colorMode(page);
@@ -123,6 +123,7 @@ test("shares configured tokens except body colors with the automatic dark varian
   const blockCode = page.locator("#surfaces .highlight pre code").first();
   const field = page.locator("#sink-email");
   const button = page.getByRole("button", { name: "Primary button", exact: true });
+  const link = page.getByRole("main").getByRole("link", { name: "chulapa", exact: true });
 
   for (const mode of ["light", "dark", "system"]) {
     await themeMenu.choose(mode);
@@ -144,10 +145,17 @@ test("shares configured tokens except body colors with the automatic dark varian
     if (mode === "light") {
       await expect(body).toHaveCSS("background-color", "rgb(247, 243, 235)");
       await expect(body).toHaveCSS("color", "rgb(32, 48, 71)");
+      await expect(link).toHaveCSS("color", "rgb(90, 31, 18)");
     } else {
       await expect(body).not.toHaveCSS("background-color", "rgb(247, 243, 235)");
       await expect(body).not.toHaveCSS("color", "rgb(32, 48, 71)");
+      await expect(link).not.toHaveCSS("color", "rgb(90, 31, 18)");
+      expect((await readContrast(link)).text, mode).toBeGreaterThanOrEqual(4.5);
     }
+    // A light-dark() value covers both modes, so the variant keeps it.
+    await link.hover();
+    await expect(link).toHaveCSS("color", mode === "light" ? "rgb(61, 20, 11)" : "rgb(243, 201, 189)");
+    await page.mouse.move(0, 0);
   }
 });
 
