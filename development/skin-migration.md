@@ -143,6 +143,15 @@ The generated alternate uses its body surface and foreground for the navbar.
 The shared rules apply to `.chulapa-navbar`, which both the site header and the
 Kitchen Sink example use.
 
+The brand keeps Chulapa's bold 1.25rem with Bootstrap's `fs-lg` and
+`fw-bold` utilities, and the active link and the menu toggle that contains
+the current page are bold. Links use the body font and weight unless the
+skin changes them: GitDev and Focal keep their heavier navigation and Media
+uses its heading font, as in Chulapa. The Chulapa skin keeps its body font in
+the navbar; only headings, buttons and the footer use the Chulapa typeface.
+Pear scaled its brand to its 1.125rem body size in Chulapa; chulapa2 uses
+the shared 1.25rem.
+
 Chulapa's classic dropdowns share the navbar's background and link colors.
 In chulapa2, map those values to `--bs-menu-bg` and `--bs-menu-color`
 on menus inside `.chulapa-navbar`. Map the hover, focus, active and disabled

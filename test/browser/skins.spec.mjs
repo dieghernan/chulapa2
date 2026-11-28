@@ -119,6 +119,30 @@ for (const [skin, scheme] of catalog) {
   });
 }
 
+test("keeps Chulapa's navbar typography in the skins that customize it", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  // Chulapa's brand is 1.25rem and bold, and the active link is bold. Media
+  // keeps its heavier brand and heading-font navigation, and the Chulapa skin
+  // keeps its body font in the navbar.
+  for (const [skin, brandWeight, linkFont] of [
+    ["gitdev", "700", /^"Inter Tight"/],
+    ["focal", "700", /^"Fira Sans"/],
+    ["media", "900", /^"Mona Sans"/],
+    ["chulapa", "700", /^"Ibarra Real Nova"/],
+  ]) {
+    await page.goto(`test/skins/${skin}/`);
+    const navigation = page.getByRole("navigation", { name: "Primary", exact: true });
+    const brand = navigation.locator(".navbar-brand");
+    const links = navigation.locator(".nav-link");
+    const active = navigation.locator('.nav-link[aria-current="page"]');
+    await expect(brand, skin).toHaveCSS("font-size", "20px");
+    await expect(brand, skin).toHaveCSS("font-weight", brandWeight);
+    await expect(links.first(), skin).toHaveCSS("font-family", linkFont);
+    expect(Number(await active.evaluate((link) => getComputedStyle(link).fontWeight)), skin)
+      .toBeGreaterThanOrEqual(700);
+  }
+});
+
 test("preserves TopHat's explicit button geometry and Chulapa fill overrides", async ({ page }) => {
   const button = page.locator('[data-contrast="solid-primary"]');
   await page.goto("test/skins/electro/");
