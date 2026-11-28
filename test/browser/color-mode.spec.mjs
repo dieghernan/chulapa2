@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { colorMode } from "./color-mode-control.mjs";
+import { readContrast } from "./contrast.mjs";
 
 test("follows the system and remembers explicit modes across pages", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "light" });
@@ -83,11 +84,19 @@ test("applies an explicit primary without generating a palette", async ({ page }
   await page.goto("test/explicit-primary/");
   const root = page.locator("html");
   const link = page.getByRole("main").getByRole("link", { name: "chulapa", exact: true });
-  await expect(page.locator("#site-color-mode")).toHaveCount(0);
   await expect(root).toHaveCSS("--bs-primary-base", "#285d70");
   await expect(root).toHaveCSS("--bs-primary-bg", "#285d70");
   await expect(root).toHaveCSS("--auto-themer-primary", "");
   await expect(link).toHaveCSS("color", "rgb(40, 93, 112)");
+
+  // Without a skin, the automatic variant keeps the generator off as well and
+  // uses Bootstrap's dark mode with the shared primary.
+  await colorMode(page).choose("dark");
+  await expect(root).toHaveCSS("color-scheme", "dark");
+  await expect(root).toHaveCSS("--auto-themer-primary", "");
+  await expect(root).toHaveCSS("--bs-primary-base", "#285d70");
+  await expect(root).toHaveCSS("--bs-primary-bg", "#285d70");
+  expect((await readContrast(link)).text).toBeGreaterThanOrEqual(4.5);
 });
 
 test("uses the primary color for an explicitly requested dark variant", async ({ page }) => {

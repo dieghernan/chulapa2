@@ -44,9 +44,10 @@ chulapa-skin:
 By default the site uses the primary configuration and hides the color mode
 selector. Set `use-dual-mode: true` within `chulapa-skin` to offer an
 alternate appearance with the selector. It uses the skin's bundled variant
-when available. The Auto Themer generates a dark palette from the same
-primary color when the skin has no dark variant. The automatic variant
-shares `vars` except the body foreground and background.
+when available. Without one, the variant follows the primary
+configuration's `autothemer` setting: the Auto Themer generates it from the
+same primary, or Bootstrap's own mode applies when generation is off. The
+automatic variant shares `vars` except the body foreground and background.
 
 To configure dark mode separately, add `chulapa-skin-dark`. That
 configuration takes precedence over the matching dark palette and also

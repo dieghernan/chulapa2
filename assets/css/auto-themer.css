@@ -13,11 +13,9 @@
     {%- assign dark_generate = true -%}
   {%- endif -%}
 {%- elsif automatic_variant -%}
+  {%- comment -%} The automatic variant follows the primary's generator setting. {%- endcomment -%}
   {%- assign dark_vars = main_theme_settings.vars -%}
-  {%- assign dark_generate = true -%}
-  {%- if dark_skin -%}
-    {%- assign dark_generate = main_theme_settings.autothemer -%}
-  {%- endif -%}
+  {%- assign dark_generate = light_generate -%}
 {%- endif -%}
 
 /* Bootstrap's root defaults are unlayered. Keep these rules at :root specificity. */

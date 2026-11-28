@@ -147,7 +147,9 @@ The bundled skins load their own default families when selected.
 With `use-dual-mode: true`, the automatic variant shares all
 configured `chulapa-skin.vars` except `bg-body` and `fg-body`. The same
 rule covers their legacy aliases, fully prefixed names and tokens scoped
-to a component class.
+to a component class. The variant also follows the primary
+configuration's `autothemer` setting. Without a skin and with generation
+off, it uses Bootstrap's own mode with the shared tokens.
 
 ```yaml
 chulapa-skin:
