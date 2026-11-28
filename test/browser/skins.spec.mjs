@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { expect, test } from "@playwright/test";
 import { colorMode } from "./color-mode-control.mjs";
-import { readContrasts } from "./contrast.mjs";
+import { readContrast, readContrasts } from "./contrast.mjs";
 
 const authored = JSON.parse(readFileSync(new URL("./skin-identity.json", import.meta.url)));
 const navbarIdentity = JSON.parse(readFileSync(new URL("./skin-navbar-identity.json", import.meta.url)));
@@ -211,6 +211,30 @@ test("keeps the original primary link color where Chulapa used it", async ({ pag
   ]) {
     await page.goto(`test/skins/${skin}/`);
     await expect(page.locator('[data-contrast="article-link"]'), skin).toHaveCSS("color", color);
+  }
+});
+
+test("keeps the primary hue in generated variant links and navigation", async ({ page }) => {
+  // Generated variants adjust only the primary's OKLCH lightness for their surface.
+  const srgb = (locator) => locator.evaluate((element) => {
+    const context = document.createElement("canvas").getContext("2d");
+    context.fillStyle = getComputedStyle(element).color;
+    context.fillRect(0, 0, 1, 1);
+    return [...context.getImageData(0, 0, 1, 1).data].slice(0, 3);
+  });
+  for (const [skin, variant, color] of [
+    ["listen", "light", [0, 96, 25]],
+    ["academia", "dark", [121, 186, 255]],
+  ]) {
+    await page.goto(`test/skins/${skin}/`);
+    await colorMode(page).choose(variant);
+    await expect(page.locator("html")).toHaveCSS("color-scheme", variant);
+    const navigation = page.getByRole("navigation", { name: "Primary", exact: true });
+    const active = navigation.locator(".nav-link[aria-current]").first();
+    for (const target of [active, page.locator('[data-contrast="article-link"]')]) {
+      expect(await srgb(target), skin).toEqual(color);
+      expect((await readContrast(target)).text, skin).toBeGreaterThanOrEqual(4.5);
+    }
   }
 });
 
