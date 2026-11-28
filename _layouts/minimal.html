@@ -11,7 +11,7 @@
     {%- unless layout.main_content or page.main_content %}
     <div id="main-content" tabindex="-1"></div>
     {%- endunless %}
-    {%- if page.show_header == true and layout.main_content != true and page.main_content != true %}
+    {%- if page.show_header == true and layout.main_content != true %}
       {% include components/headers.html %}
     {%- endif %}
     {{ content }}

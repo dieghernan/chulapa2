@@ -71,6 +71,13 @@ test("supports desktop keyboard navigation and skips to the main content", async
   await expect(page).toHaveURL(/#about$/);
 });
 
+test("keeps the header on minimal pages that supply their own main element", async ({ page }) => {
+  await page.goto("test/minimal-header/");
+  await expect(page.locator(".chulapa-header").getByRole("heading", { level: 1 }))
+    .toHaveText("Minimal page with a header");
+  await expect(page.locator("#main-content")).toHaveCount(1);
+});
+
 test("emits a readable head and footer", async ({ request }) => {
   // The html-style rule: one element per line, indented by nesting, no blank lines.
   for (const path of ["", "test/markdown/", "test/tokens/", "test/dual/test/headers/hero-photo/"]) {
