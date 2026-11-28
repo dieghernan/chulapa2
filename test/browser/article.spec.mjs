@@ -9,7 +9,7 @@ for (const width of [390, 1280]) {
     // Breadcrumb: listed parents, skipping entries without a URL, then the page.
     const crumbs = page.getByRole("navigation", { name: "Breadcrumb" });
     await expect(crumbs.getByRole("link")).toHaveText(["Articles", "A full article header"]);
-    await expect(crumbs.getByRole("link", { name: "A full article header" })).toHaveAttribute("aria-current", "page");
+    await expect(crumbs.locator("li[aria-current=\"page\"]")).toHaveText("A full article header");
     expect((await readContrast(crumbs.getByRole("link", { name: "Articles" }))).text).toBeGreaterThanOrEqual(4.5);
 
     // Dates: the modified date first, then the struck-through publication date.
@@ -50,6 +50,14 @@ for (const width of [390, 1280]) {
       expect(column.x).toBeCloseTo(article.x, 0);
     } else {
       expect(aside.y + aside.height).toBeLessThanOrEqual(article.y + 1);
+      // As in Chulapa: avatar and name on one line, location and links on the next.
+      const name = await author.getByRole("link", { name: "Guest Author" }).boundingBox();
+      const avatar = await author.locator(".avatar").boundingBox();
+      const location = await author.getByRole("link", { name: "Santiago de Compostela" }).boundingBox();
+      const github = await author.getByRole("link", { name: "GitHub" }).boundingBox();
+      expect(name.y).toBeLessThan(avatar.y + avatar.height);
+      expect(location.y).toBeGreaterThanOrEqual(avatar.y + avatar.height);
+      expect(Math.abs(github.y + github.height / 2 - (location.y + location.height / 2))).toBeLessThan(6);
     }
   });
 }

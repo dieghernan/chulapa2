@@ -5,7 +5,8 @@
 {%- assign document_site_title = site.title | strip_html | strip -%}
 {%- assign document_page_title = page.title | strip_html | strip -%}
 {%- assign load_icons = false -%}
-{%- if show_color_mode_selector or page.show_date or page.show_sociallinks or page.show_author or page.project_links.size > 0 -%}
+{%- assign footer_icons = site.footer.links | map: 'icon' | join: ' ' -%}
+{%- if show_color_mode_selector or page.show_date or page.show_sociallinks or page.show_author or page.project_links.size > 0 or footer_icons contains 'bi-' -%}
   {%- assign load_icons = true -%}
 {%- endif -%}
 <head>

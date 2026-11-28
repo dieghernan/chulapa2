@@ -154,6 +154,10 @@ test("renders the minimal shell with a configured classic navbar and footer", as
   await expect(footer.getByRole("link", { name: "Fixture home" }))
     .toHaveAttribute("href", /\/chulapa2\/test\/tokens\/$/);
   await expect(footer.getByRole("link", { name: "Email" })).toHaveAttribute("href", "mailto:fixture@example.com");
+  // Footer icons: Bootstrap Icons render, Font Awesome falls back to the label.
+  await expect(footer.getByRole("link", { name: "Fixture home" }).locator(".bi-house-door")).toBeVisible();
+  await expect(footer.getByRole("link", { name: "Email" }).locator("[data-chulapa-missing-icon]"))
+    .toHaveText("Email");
   const navbarBackground = () => navbar.evaluate((nav) => getComputedStyle(nav).backgroundColor);
   await expect(footer).toHaveCSS("background-color", "rgb(13, 17, 23)");
   await colorMode(page).choose("dark");

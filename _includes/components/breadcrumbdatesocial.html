@@ -19,7 +19,7 @@
 <div class="row my-1 small">
       <div class="col{% if page.show_sociallinks %} lg:col-5{% else %} lg:col-8{% endif %} lg:offset-2">
         {%- if show_crumbs %}
-        <nav aria-label="Breadcrumb">
+        <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             {%- if crumb_items.size > 0 %}
             {%- for item in crumb_items %}
@@ -30,7 +30,7 @@
             <li class="breadcrumb-item"><a class="breadcrumb-link" href="{{ '/' | absolute_url | escape }}">{{ crumb_home | escape_once }}</a></li>
             <li class="breadcrumb-divider" aria-hidden="true"></li>
             {%- endif %}
-            <li class="breadcrumb-item"><a class="breadcrumb-link active" href="{{ page.url | absolute_url | escape }}" aria-current="page">{{ crumb_page | escape_once }}</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a class="breadcrumb-link active" href="{{ page.url | absolute_url | escape }}">{{ crumb_page | escape_once }}</a></li>
           </ol>
         </nav>
         {%- endif %}

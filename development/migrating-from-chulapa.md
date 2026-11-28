@@ -98,9 +98,9 @@ Set them through `vars` or the custom properties in the
 
 - The other chulapa layouts, such as `archive`, `landingpage` and `search`.
 - Font Awesome, which becomes opt-in. Until then, an `icon` in
-  `project_links` or `author.links` renders as its label, or nothing on a
-  button that already shows one. Use a Bootstrap Icons class such as
-  `bi bi-github` to show an icon now. The page source marks each missing
+  `project_links`, `author.links` or `footer.links` renders as its
+  label, or nothing on a button that already shows one. Use a Bootstrap
+  Icons class such as `bi bi-github` to show an icon now. The page source marks each missing
   icon with a comment and a `data-chulapa-missing-icon` attribute.
 - Microformats2 and Schema.org markup in the article header, which the
   metadata audit will decide.

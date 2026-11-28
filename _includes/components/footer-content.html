@@ -10,7 +10,11 @@
                   {%- assign target = target | prepend: 'mailto:' %}
                 {%- endunless %}
               {%- endif %}
+            {%- if link.icon %}
+            <li><a href="{{ target | absolute_url | escape }}" title="{{ link.label | escape }}" aria-label="{{ link.label | escape }}">{% include snippets/icon.html icon=link.icon label=link.label class="fs-xl" %}</a></li>
+            {%- else %}
             <li><a href="{{ target | absolute_url | escape }}">{{ link.label | escape }}</a></li>
+            {%- endif %}
             {%- endunless %}
             {%- endfor %}
           </ul>
