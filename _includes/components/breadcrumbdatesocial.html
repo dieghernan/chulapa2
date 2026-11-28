@@ -19,18 +19,18 @@
 <div class="row my-1 small">
       <div class="col{% if page.show_sociallinks %} lg:col-5{% else %} lg:col-8{% endif %} lg:offset-2">
         {%- if show_crumbs %}
-        <nav aria-label="breadcrumb">
+        <nav class="chulapa-breadcrumb" aria-label="breadcrumb">
           <ol class="breadcrumb">
             {%- if crumb_items.size > 0 %}
             {%- for item in crumb_items %}
-            <li class="breadcrumb-item"><a class="breadcrumb-link" href="{{ item.url | strip | absolute_url | escape }}">{{ item.label | strip_html | strip | default: item.url | escape_once }}</a></li>
-            <li class="breadcrumb-divider" aria-hidden="true"></li>
+            <li class="breadcrumb-item"><a class="breadcrumb-link px-0" href="{{ item.url | strip | absolute_url | escape }}">{{ item.label | strip_html | strip | default: item.url | escape_once }}</a></li>
+            <li class="breadcrumb-divider mx-3" aria-hidden="true"></li>
             {%- endfor %}
             {%- else %}
-            <li class="breadcrumb-item"><a class="breadcrumb-link" href="{{ '/' | absolute_url | escape }}">{{ crumb_home | escape_once }}</a></li>
-            <li class="breadcrumb-divider" aria-hidden="true"></li>
+            <li class="breadcrumb-item"><a class="breadcrumb-link px-0" href="{{ '/' | absolute_url | escape }}">{{ crumb_home | escape_once }}</a></li>
+            <li class="breadcrumb-divider mx-3" aria-hidden="true"></li>
             {%- endif %}
-            <li class="breadcrumb-item" aria-current="page"><a class="breadcrumb-link active" href="{{ page.url | absolute_url | escape }}">{{ crumb_page | escape_once }}</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a class="breadcrumb-link active px-0" href="{{ page.url | absolute_url | escape }}">{{ crumb_page | escape_once }}</a></li>
           </ol>
         </nav>
         {%- endif %}
@@ -55,7 +55,7 @@
       {%- assign share_text = share_title | append: ' ' | append: share_url %}
       {%- assign share_tags = page.tags | join: ',' | remove: ' ' | remove: '-' %}
       {%- capture bluesky_text %}{{ share_text }}{% for tag in page.tags %} #{{ tag | remove: ' ' | remove: '-' }}{% endfor %}{% endcapture %}
-      <div class="col-auto lg:col-3 d-flex flex-wrap justify-content-end align-self-start gap-2 fs-lg">
+      <div class="col-auto lg:col-3 d-flex flex-wrap justify-content-end align-self-start gap-3 fs-lg chulapa-share-links">
         <a href="https://twitter.com/intent/tweet?url={{ share_url | url_encode }}&amp;text={{ share_title | url_encode }}{% if site.twitter_site %}&amp;via={{ site.twitter_site | url_encode }}{% endif %}{% unless share_tags == empty %}&amp;hashtags={{ share_tags | url_encode }}{% endunless %}" title="Share on X" aria-label="Share on X"><i class="bi bi-twitter-x" aria-hidden="true"></i></a>
         <a href="https://bsky.app/intent/compose?text={{ bluesky_text | url_encode }}" title="Share on Bluesky" aria-label="Share on Bluesky"><i class="bi bi-bluesky" aria-hidden="true"></i></a>
         <a class="d-none sm:d-inline" href="https://www.facebook.com/sharer.php?u={{ share_url | url_encode }}" title="Share on Facebook" aria-label="Share on Facebook"><i class="bi bi-facebook" aria-hidden="true"></i></a>

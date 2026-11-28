@@ -1,10 +1,9 @@
 ---
 layout: minimal
 title: chulapa2
-main_content: true
 ---
 
-<main id="main-content" class="container py-5" tabindex="-1" markdown="1">
+<main class="container py-5" markdown="1">
 
 # <span class="chulapa">chulapa2</span>
 

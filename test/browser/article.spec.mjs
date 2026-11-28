@@ -72,3 +72,19 @@ test("translates the date and falls back to the site author", async ({ page }) =
   await expect(author.locator("img")).toHaveCount(0);
   await expect(page.getByRole("link", { name: /^Share on/ })).toHaveCount(0);
 });
+
+test("wraps a long breadcrumb without overflowing on mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 900 });
+  await page.goto("test/article/long/");
+  const crumbs = page.getByRole("navigation", { name: "Breadcrumb" });
+  await expect(crumbs.getByRole("link")).toHaveCount(5);
+  const list = crumbs.locator("ol");
+  expect(await list.evaluate((ol) => ol.scrollWidth <= ol.clientWidth)).toBe(true);
+  expect((await list.boundingBox()).height).toBeGreaterThan(60);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  // As in Chulapa, the links are inline text: no padding and no hover background.
+  const first = crumbs.getByRole("link", { name: "Madrid" });
+  await expect(first).toHaveCSS("padding-left", "0px");
+  await first.hover();
+  await expect(first).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+});

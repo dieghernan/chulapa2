@@ -17,7 +17,8 @@ These settings and front matter keys behave as in chulapa:
 - The legacy `vars` names `font-family-base`, `headings-font-family`,
   `hero-chulapa-bg-color` and `hero-chulapa-text-color`.
 - `googlefonts`, `navbar` and `footer`.
-- The `default` and `minimal` layouts.
+- The `default` and `minimal` layouts, and `header_in_content: true` for
+  custom layouts that render their own header.
 - The `base`, `post`, `image`, `hero` and `splash` values of `header_type`, with
   `title`, `subtitle`, `header_img`, `header_img_alt` and `project_links`.
 - The Kramdown callout classes, such as `{: .callout-note}`.

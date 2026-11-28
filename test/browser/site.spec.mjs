@@ -61,7 +61,7 @@ test("supports desktop keyboard navigation and skips to the main content", async
   await page.keyboard.press("Tab");
   await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(page.getByRole("main")).toBeFocused();
+  await expect(page.locator("#chulapa-content")).toBeFocused();
 
   const nav = page.getByRole("navigation", { name: "Primary" });
   await expect(nav.getByRole("button", { name: "Toggle navigation" })).toBeHidden();
@@ -75,7 +75,13 @@ test("keeps the header on minimal pages that supply their own main element", asy
   await page.goto("test/minimal-header/");
   await expect(page.locator(".chulapa-header").getByRole("heading", { level: 1 }))
     .toHaveText("Minimal page with a header");
-  await expect(page.locator("#main-content")).toHaveCount(1);
+  await expect(page.locator("#chulapa-content")).toHaveCount(1);
+});
+
+test("renders one header when a layout sets header_in_content", async ({ page }) => {
+  await page.goto("test/default-show-header/");
+  await expect(page.locator(".chulapa-header")).toHaveCount(1);
+  await expect(page.locator("#chulapa-content")).toHaveCount(1);
 });
 
 test("emits a readable head and footer", async ({ request }) => {
@@ -109,7 +115,7 @@ test("renders the minimal shell with a configured classic navbar and footer", as
   await page.keyboard.press("Tab");
   await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(page.locator("#main-content")).toBeFocused();
+  await expect(page.locator("#chulapa-content")).toBeFocused();
 
   const navbar = page.getByRole("navigation", { name: "Primary", exact: true });
   const brand = navbar.getByRole("link", { name: "Demo brand" });

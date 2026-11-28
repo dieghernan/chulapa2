@@ -39,13 +39,23 @@ The home page kitchen sink uses `minimal` and keeps the full container width.
 The article options in `default` keep Chulapa's placement. The breadcrumb
 and dates sit above the reading column, and the share links sit at its right
 edge. The author card sits to the left from `lg` and above the article on
-smaller screens. The breadcrumb uses Bootstrap 6's native component, so its
-links have the component's padding, colors and divider instead of Chulapa's
-inline links. Dates keep Chulapa's lower-case format, and `<s>` marks the
+smaller screens. The breadcrumb uses Bootstrap 6's native component with
+`px-0` links and no hover background, so it reads as Chulapa's inline links
+and aligns with the dates. Share links and author links keep the text color
+until hovered. Dates keep Chulapa's lower-case format, and `<s>` marks the
 publication date when `last_modified_at` is set. Share and author icons use
 Bootstrap Icons, without Chulapa's square brand variants. The author avatar
 uses Bootstrap's `avatar-xl` (4rem) instead of Chulapa's `8vmax`, and
 `.chulapa-author` keeps its links in the text color until hovered.
+
+The article column does not use Bootstrap 6's `.prose`. `.prose` is a flex
+column, so inline content that Markdown or an include leaves at the top
+level, such as text next to an image, splits into separate rows. The article
+uses Bootstrap's base typography instead, as Chulapa did with Bootstrap 4.
+
+The skip link targets `#chulapa-content`, which `minimal` inserts before the
+content, as in Chulapa. Layouts that render their own page header set
+`header_in_content: true`, so `minimal` does not add another one.
 
 The `image` header centers the uncropped image above the title and keeps its
 intrinsic aspect ratio. Bootstrap 6's `lg` breakpoint switches the maximum

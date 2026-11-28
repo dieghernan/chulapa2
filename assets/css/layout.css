@@ -176,8 +176,14 @@
   outline-offset: 0.2em;
 }
 
-/* Chulapa's author card keeps links in the text color until hovered. */
-.chulapa-author a:not(:hover, :focus-visible) {
+/* Chulapa's author card and share links keep links in the text color until hovered. */
+.chulapa-author a:not(:hover, :focus-visible),
+.chulapa-share-links a:not(:hover, :focus-visible) {
   color: inherit;
   text-decoration: none;
+}
+
+/* Chulapa's breadcrumb links are inline text, without the pill hover. */
+.chulapa-breadcrumb .breadcrumb {
+  --bs-breadcrumb-link-hover-bg: transparent;
 }
