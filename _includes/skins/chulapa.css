@@ -26,7 +26,7 @@ color-scheme: light;
 --chulapa-skin-nav-disabled: #c0a194;
 {% include skins/navbar.css %}
 
-& :where(h1, h2, h3, h4, footer, blockquote, button:not(.nav-link), legend, label, .alert, .card-header, .nav-tabs, .nav-pills, .badge, .breadcrumb, .pagination, .chulapa-navbar) {
+& :where(h1, h2, h3, h4, footer, blockquote, button:not(.nav-link), legend, label, .alert, .card-header, .nav-tabs, .nav-pills, .badge, .breadcrumb, .pagination) {
   font-family: var(--bs-heading-font-family);
   font-variant-ligatures: common-ligatures discretionary-ligatures;
 }

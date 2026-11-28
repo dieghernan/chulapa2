@@ -34,7 +34,7 @@ color-scheme: light;
   --bs-table-color: black;
 }
 
-& :where(.nav, .card-header, .badge, .pagination, .breadcrumb, .footnotes, label, .navbar-brand) {
+& :where(.chulapa-navbar, .nav, .card-header, .badge, .pagination, .breadcrumb, .footnotes, label, .navbar-brand) {
   font-family: var(--bs-heading-font-family);
 }
 

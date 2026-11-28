@@ -24,7 +24,7 @@
 {%- endcase %}
 <nav class="chulapa-navbar navbar{{ nav_expand }} bg-1 border-bottom" aria-label="Primary">
   <div class="container">
-    <a class="navbar-brand d-inline-flex align-items-center gap-2" href="{{ brand_url | absolute_url | escape }}">
+    <a class="navbar-brand fs-lg fw-bold d-inline-flex align-items-center gap-2" href="{{ brand_url | absolute_url | escape }}">
       {% if site.navbar.brand.img %}
       <img src="{{ site.navbar.brand.img | absolute_url | escape }}" width="30" height="30" alt="">
       {% endif %}
@@ -49,7 +49,7 @@
             {% if child_path == page_path %}{% assign child_active = true %}{% endif %}
           {% endfor %}
           <li class="nav-item position-relative">
-            <button class="nav-link{% if child_active %} active{% endif %}" type="button" data-bs-toggle="menu"
+            <button class="nav-link{% if child_active %} active fw-bold{% endif %}" type="button" data-bs-toggle="menu"
                     data-bs-placement="bottom-end" aria-expanded="false" id="primary-submenu-{{ forloop.index }}"
                     aria-controls="primary-submenu-{{ forloop.index }}-items">
               {{ item.title }} <span aria-hidden="true">▾</span>
@@ -64,7 +64,7 @@
           {% elsif item.url %}
           {% assign item_path = item.url | remove: '.html' | append: '/' | replace: '//', '/' %}
           <li class="nav-item">
-            <a class="nav-link{% if item_path == page_path %} active{% endif %}" href="{{ item.url | absolute_url | escape }}"{% if item_path == page_path %} aria-current="page"{% endif %}>{{ item.title }}</a>
+            <a class="nav-link{% if item_path == page_path %} active fw-bold{% endif %}" href="{{ item.url | absolute_url | escape }}"{% if item_path == page_path %} aria-current="page"{% endif %}>{{ item.title }}</a>
           </li>
           {% endif %}
           {% endfor %}
