@@ -244,10 +244,11 @@ Listen, Towards and Twitter Lights Out leave it unset, so their links use
 the original primary color in chulapa2 as well. Each pair already
 measures at least 5.7:1 on its page background.
 
-Generated variants keep the primary's OKLCH hue and chroma, capped at
-0.14, for body links and the navbar's hover and active links. Only the
-lightness changes: at most 0.42 on a light surface and at least 0.78 on a
-dark one, as in the Auto Themer. Listen's light variant uses green and
+Generated variants keep each role's OKLCH hue and chroma, capped at 0.14,
+for role foregrounds, body links and the navbar's hover and active links.
+Only the lightness changes: at most 0.42 on a light surface and at least
+0.78 on a dark one, as in the Auto Themer. Hover uses 0.34 and 0.86,
+since Bootstrap underlines links in every state. Listen's light variant uses green and
 Academia's dark variant uses blue. Skins with a gray primary keep gray
 links. Academia's original navbar accent is its secondary color, and the
 variant uses the closely matching primary instead.

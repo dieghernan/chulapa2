@@ -13,7 +13,8 @@ color-scheme: {{ include.scheme }};
 {%- endif -%}
 {%- endfor %}
 --bs-link-color: var(--bs-primary-fg);
---bs-link-hover-color: var(--bs-link-color);
+/* Bootstrap underlines links in every state, so hover needs its own color. */
+--bs-link-hover-color: var(--bs-primary-fg-emphasis);
 --chulapa-skin-nav-bg: var(--bs-bg-body);
 --chulapa-skin-nav-fg: var(--bs-fg-body);
 --chulapa-skin-nav-brand: initial;

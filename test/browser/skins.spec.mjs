@@ -255,10 +255,16 @@ test("keeps the primary hue in generated variant links and navigation", async ({
     await expect(page.locator("html")).toHaveCSS("color-scheme", variant);
     const navigation = page.getByRole("navigation", { name: "Primary", exact: true });
     const active = navigation.locator(".nav-link[aria-current]").first();
-    for (const target of [active, page.locator('[data-contrast="article-link"]')]) {
+    const article = page.locator('[data-contrast="article-link"]');
+    for (const target of [active, article]) {
       expect(await srgb(target), skin).toEqual(color);
       expect((await readContrast(target)).text, skin).toBeGreaterThanOrEqual(4.5);
     }
+    // Bootstrap underlines links in every state, so hover must change color.
+    await article.hover();
+    await expect.poll(() => srgb(article), skin).not.toEqual(color);
+    expect((await readContrast(article)).text, skin).toBeGreaterThanOrEqual(4.5);
+    await page.mouse.move(0, 0);
   }
 });
 
