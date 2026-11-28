@@ -175,3 +175,9 @@
   outline: var(--bs-focus-ring-width) solid var(--_hero-color);
   outline-offset: 0.2em;
 }
+
+/* Chulapa's author card keeps links in the text color until hovered. */
+.chulapa-author a:not(:hover, :focus-visible) {
+  color: inherit;
+  text-decoration: none;
+}

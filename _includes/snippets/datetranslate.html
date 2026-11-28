@@ -1,0 +1,54 @@
+{%- comment -%}
+  Public include kept from Chulapa: {% include snippets/datetranslate.html date=formatted lang="es" %}
+  Returns the date in lower case with English day and month names, full or
+  abbreviated, translated into Spanish, French, German or Italian.
+{%- endcomment -%}
+{%- assign date_text = include.date | downcase -%}
+{%- assign date_lang = include.lang | default: site.locale | default: site.lang | default: 'en' | downcase | slice: 0, 2 -%}
+{%- assign date_days = nil -%}
+{%- case date_lang -%}
+  {%- when 'es' -%}
+    {%- assign date_days = 'lunes,martes,miércoles,jueves,viernes,sábado,domingo' | split: ',' -%}
+    {%- assign date_months = 'enero,febrero,marzo,abril,mayo,junio,julio,agosto,septiembre,octubre,noviembre,diciembre' | split: ',' -%}
+  {%- when 'fr' -%}
+    {%- assign date_days = 'lundi,mardi,mercredi,jeudi,vendredi,samedi,dimanche' | split: ',' -%}
+    {%- assign date_months = 'janvier,février,mars,avril,mai,juin,juillet,août,septembre,octobre,novembre,décembre' | split: ',' -%}
+  {%- when 'de' -%}
+    {%- assign date_days = 'montag,dienstag,mittwoch,donnerstag,freitag,samstag,sonntag' | split: ',' -%}
+    {%- assign date_months = 'januar,februar,märz,april,mai,juni,juli,august,september,oktober,november,dezember' | split: ',' -%}
+  {%- when 'it' -%}
+    {%- assign date_days = 'lunedì,martedì,mercoledì,giovedì,venerdì,sabato,domenica' | split: ',' -%}
+    {%- assign date_months = 'gennaio,febbraio,marzo,aprile,maggio,giugno,luglio,agosto,settembre,ottobre,novembre,dicembre' | split: ',' -%}
+{%- endcase -%}
+{%- if date_days -%}
+  {%- assign date_en_days = 'monday,tuesday,wednesday,thursday,friday,saturday,sunday' | split: ',' -%}
+  {%- assign date_en_months = 'january,february,march,april,may,june,july,august,september,october,november,december' | split: ',' -%}
+  {%- assign date_words = date_text | split: ' ' -%}
+  {%- assign date_output = '' | split: ',' -%}
+  {%- for word in date_words -%}
+    {%- assign date_word = word | remove: ',' | remove: '.' -%}
+    {%- assign date_translation = date_word -%}
+    {%- for i in (0..11) -%}
+      {%- assign en_month = date_en_months[i] -%}
+      {%- assign en_month_short = en_month | slice: 0, 3 -%}
+      {%- if date_word == en_month -%}
+        {%- assign date_translation = date_months[i] -%}
+      {%- elsif date_word == en_month_short -%}
+        {%- assign date_translation = date_months[i] | slice: 0, 3 -%}
+      {%- endif -%}
+      {%- if i < 7 -%}
+        {%- assign en_day = date_en_days[i] -%}
+        {%- assign en_day_short = en_day | slice: 0, 3 -%}
+        {%- if date_word == en_day -%}
+          {%- assign date_translation = date_days[i] -%}
+        {%- elsif date_word == en_day_short -%}
+          {%- assign date_translation = date_days[i] | slice: 0, 3 -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- assign date_translated = word | replace: date_word, date_translation -%}
+    {%- assign date_output = date_output | push: date_translated -%}
+  {%- endfor -%}
+  {%- assign date_text = date_output | join: ' ' -%}
+{%- endif -%}
+{{- date_text -}}

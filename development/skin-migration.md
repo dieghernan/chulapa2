@@ -36,6 +36,17 @@ column. The `default` layout centers this column at eight Bootstrap grid
 columns from `lg` and uses the full container width below that breakpoint.
 The home page kitchen sink uses `minimal` and keeps the full container width.
 
+The article options in `default` keep Chulapa's placement. The breadcrumb
+and dates sit above the reading column, and the share links sit at its right
+edge. The author card sits to the left from `lg` and above the article on
+smaller screens. The breadcrumb uses Bootstrap 6's native component, so its
+links have the component's padding, colors and divider instead of Chulapa's
+inline links. Dates keep Chulapa's lower-case format, and `<s>` marks the
+publication date when `last_modified_at` is set. Share and author icons use
+Bootstrap Icons, without Chulapa's square brand variants. The author avatar
+uses Bootstrap's `avatar-xl` (4rem) instead of Chulapa's `8vmax`, and
+`.chulapa-author` keeps its links in the text color until hovered.
+
 The `image` header centers the uncropped image above the title and keeps its
 intrinsic aspect ratio. Bootstrap 6's `lg` breakpoint switches the maximum
 image height from 30% to 25% of the viewport. Chulapa interpolated the

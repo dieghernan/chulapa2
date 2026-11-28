@@ -11,8 +11,17 @@ main_content: true
 <main id="main-content" tabindex="-1">
   {{ page_header }}
   <div class="container">
-    <div class="row justify-content-center">
-      <article class="col-12 lg:col-8 prose py-5">
+    {%- if page.show_breadcrumb or page.show_date or page.show_sociallinks %}
+    {% include components/breadcrumbdatesocial.html %}
+    {%- endif %}
+    <div class="row{% unless page.show_author %} justify-content-center{% endunless %}">
+      {%- if page.show_author %}
+      <aside class="col-12 lg:col-2 pt-5" aria-label="Author">
+        {% include components/author.html %}
+      </aside>
+      {%- endif %}
+      {%- comment -%} .prose centers itself with auto margins; beside the author column it starts at the column edge. {%- endcomment %}
+      <article class="col-12 lg:col-8{% if page.show_author %} ms-0{% endif %} prose py-5">
         {% if page_header == empty and page.title %}<h1>{{ page.title | escape }}</h1>{% endif %}
         {{ content }}
       </article>

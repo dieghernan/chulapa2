@@ -18,3 +18,13 @@ auto-themer-preview:
     autothemer: true
     vars:
       link-color: "#ffd9a8"
+
+# Site author for the article header fixtures.
+author:
+  name: Fixture Author
+  url: /test/article/
+  location: Madrid
+  links:
+    - url: https://github.com/dieghernan/chulapa2
+      icon: bi bi-github
+      label: GitHub
