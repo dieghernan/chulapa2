@@ -2,6 +2,8 @@
 {% include skins/tophat-license.txt %}
 */
 --bs-inverse-base: light-dark(var(--tophat-dark), var(--tophat-light));
+/* The inverse surface flips with the mode, so its fallback label does too. */
+--tophat-inverse-label: light-dark(white, black);
 --bs-link-color: var(--bs-primary-fg);
 --bs-link-hover-color: var(--bs-primary-fg-emphasis);
 --chulapa-skin-nav-bg: var(--bs-primary-base);

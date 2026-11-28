@@ -2,22 +2,21 @@
   {%- include snippets/theme-options.html -%}
 {%- endif -%}
 {% if show_color_mode_selector %}
-{% assign main_mode_icon = 'bi-sun-fill' %}
-{% assign main_mode_label = 'Light theme' %}
-{% if main_skin_scheme == 'dark' %}
-  {% assign main_mode_icon = 'bi-moon-stars-fill' %}
-  {% assign main_mode_label = 'Primary theme' %}
-{% endif %}
-{% assign alternate_mode_icon = 'bi-moon-stars-fill' %}
-{% assign alternate_mode_label = 'Dark theme' %}
+{% comment %}
+  Icons follow each appearance's scheme. Labels name the scheme, or the role
+  when both appearances share one.
+{% endcomment %}
 {% assign alternate_scheme = dark_skin_scheme | default: alternate_mode %}
-{% if alternate_scheme == 'light' %}
-  {% assign alternate_mode_icon = 'bi-sun-fill' %}
-  {% if automatic_variant %}
-    {% assign alternate_mode_label = 'Light theme' %}
-  {% else %}
-    {% assign alternate_mode_label = 'Alternate theme' %}
-  {% endif %}
+{% assign main_mode_icon = 'bi-sun-fill' %}
+{% if main_mode == 'dark' %}{% assign main_mode_icon = 'bi-moon-stars-fill' %}{% endif %}
+{% assign alternate_mode_icon = 'bi-sun-fill' %}
+{% if alternate_scheme == 'dark' %}{% assign alternate_mode_icon = 'bi-moon-stars-fill' %}{% endif %}
+{% if main_mode == alternate_scheme %}
+  {% assign main_mode_label = 'Primary theme' %}
+  {% assign alternate_mode_label = 'Alternate theme' %}
+{% else %}
+  {% assign main_mode_label = main_mode | capitalize | append: ' theme' %}
+  {% assign alternate_mode_label = alternate_scheme | capitalize | append: ' theme' %}
 {% endif %}
 <li class="nav-item position-relative" id="site-color-mode-control" hidden>
   <button class="nav-link" type="button" id="site-color-mode" data-bs-toggle="menu"

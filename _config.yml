@@ -9,7 +9,6 @@ googlefonts:
 
 chulapa-skin:
   skin: auto
-  autothemer: true
   use-dual-mode: true
   vars:
     font-mono: "Fira Code, ui-monospace, monospace"

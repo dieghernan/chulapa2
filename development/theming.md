@@ -199,7 +199,7 @@ the alternate appearance, never as the primary one.
 ## Bundled skins
 
 The catalog includes the 16 skins attributed to `dieghernan` in the
-[original Chulapa skin collection](https://github.com/dieghernan/chulapa/tree/3984fa552/docs/collections/_skins).
+[original Chulapa skin collection](https://github.com/dieghernan/chulapa/tree/main/docs/collections/_skins).
 
 | Family | Names | Automatic choice with dual mode |
 | --- | --- | --- |
@@ -211,9 +211,9 @@ The catalog includes the 16 skins attributed to `dieghernan` in the
 
 Each name resolves through one catalog entry to a CSS fragment and its font
 stylesheet. The fragments keep the authored base colors and set Bootstrap
-tokens for typography, semantic colors and rendered components. Footer and
-hero options from the original skins will apply as those Chulapa layouts
-are rebuilt.
+tokens for typography, semantic colors and rendered components, including
+the footer and hero surfaces described in the
+[skin migration guide](skin-migration.md).
 
 ### TopHat
 
@@ -237,7 +237,7 @@ including full-color alerts and themed table rows. Its generated light
 variant keeps the same palette and typography and uses light component
 surfaces. The adapters use Jekyll and CSS.
 [Pinned TopHat sources](https://github.com/ThemesGuide/top-hat/tree/2274176073d2e4783c78df080c6c3396e2abc2b4)
-· [Chulapa integration](https://github.com/dieghernan/chulapa/tree/3984fa552/_sass/vendor/tophat)
+· [Chulapa integration](https://github.com/dieghernan/chulapa/tree/main/_sass/vendor/tophat)
 
 Some retained light-mode combinations fall below the contrast thresholds.
 The test baseline records their measured ratios and detects regressions.

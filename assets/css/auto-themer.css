@@ -1,6 +1,15 @@
 ---
 ---
 {%- include snippets/theme-options.html -%}
+{%- assign requested_skins = main_skin_name | append: '|' | append: dark_skin_name | split: '|' -%}
+{%- for requested in requested_skins -%}
+  {%- assign requested = requested | strip -%}
+  {%- if requested == empty or requested == 'auto' -%}{%- continue -%}{%- endif -%}
+  {%- include skins/resolve.html name=requested -%}
+  {%- unless resolved_skin %}
+/* Unknown skin "{{ requested | replace: '*/', '' | escape }}": no skin declarations applied. */
+  {% endunless -%}
+{%- endfor -%}
 {%- assign light_generate = main_theme_settings.autothemer -%}
 {%- if main_skin_name == 'auto' -%}
   {%- assign light_generate = true -%}
@@ -36,12 +45,6 @@
       {%- if slot == 'alternate' -%}{%- assign mode = alternate_mode -%}{%- endif %}
 :root:where([data-bs-theme="{{ mode }}"]) {
   {{ declarations }}
-}
-
-@media (prefers-color-scheme: {{ mode }}) {
-  :root:where(:not([data-bs-theme])) {
-    {{ declarations }}
-  }
 }
     {% endunless -%}
   {%- endfor -%}

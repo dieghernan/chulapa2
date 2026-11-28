@@ -10,10 +10,10 @@ color-scheme: light;
 --bs-info-base: #A2D5F2;
 --bs-warning-base: #FF7E67;
 
-{% include skins/tophat.css labels='white,black,black,black,black,black,white' %}
+{% include skins/tophat.css labels='white,black,black,black,black,black,var(--tophat-inverse-label)' %}
 
 {% unless include.variant_scheme %}
-{% include skins/tophat-buttons.css labels='' outlines='secondary:#6f767b,success:#0a7f71,info:#597585,warning:#b25848,danger:#b85660' vars=include.vars %}
+{% include skins/tophat-buttons.css labels='' outlines='secondary:#6f767b,success:#0a7f71,info:#597585,warning:#b25848,danger:#b85660' vars=include.vars variant_scheme=include.variant_scheme %}
 {% endunless %}
 
 & :where(.card.bg-primary) {

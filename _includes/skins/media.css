@@ -34,7 +34,9 @@ color-scheme: light;
   --bs-table-color: black;
 }
 
-& :where(.chulapa-navbar, .nav, .card-header, .badge, .pagination, .breadcrumb, .footnotes, label, .navbar-brand) {
+/* Chulapa sets these interface elements in the heading face as well. */
+& :where(nav, footer, header, aside, form, button, input, label, legend, table, #markdown-toc,
+  .chulapa-navbar, .nav, .card-header, .badge, .pagination, .breadcrumb, .footnotes, .navbar-brand) {
   font-family: var(--bs-heading-font-family);
 }
 

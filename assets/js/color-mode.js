@@ -1,15 +1,18 @@
 (() => {
   const root = document.documentElement;
   const storageKey = "chulapa2-color-mode";
+  const prefersDark = matchMedia("(prefers-color-scheme: dark)");
   let mode = root.dataset.bsTheme || "light";
 
+  // System mode still sets data-bs-theme so Bootstrap's mode rules apply.
   function applyMode() {
-    if (mode === "system") {
-      delete root.dataset.bsTheme;
-    } else {
-      root.dataset.bsTheme = mode;
-    }
+    const system = prefersDark.matches ? "dark" : "light";
+    root.dataset.bsTheme = mode === "system" ? system : mode;
   }
+
+  prefersDark.addEventListener("change", () => {
+    if (mode === "system") applyMode();
+  });
 
   try {
     const stored = localStorage.getItem(storageKey);

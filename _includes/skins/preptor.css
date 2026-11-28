@@ -11,10 +11,10 @@ color-scheme: light;
 --bs-info-base: #00BBF0;
 --bs-warning-base: #f4f133;
 
-{% include skins/tophat.css labels='white,black,black,black,black,black,white' %}
+{% include skins/tophat.css labels='white,black,black,black,black,black,var(--tophat-inverse-label)' %}
 
 {% unless include.variant_scheme %}
-{% include skins/tophat-buttons.css labels='info:#ffffff,danger:#ffffff' outlines='secondary:#6e6e6e,success:#2b841e,info:#007a9c,warning:#7a781a,danger:#c83b4a' vars=include.vars %}
+{% include skins/tophat-buttons.css labels='info:#ffffff,danger:#ffffff' outlines='secondary:#6e6e6e,success:#2b841e,info:#007a9c,warning:#7a781a,danger:#c83b4a' vars=include.vars variant_scheme=include.variant_scheme %}
 {% endunless %}
 
 & :where(blockquote) {

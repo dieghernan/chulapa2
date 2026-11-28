@@ -1,12 +1,18 @@
 color-scheme: {{ include.scheme }};
 {% include auto-themer/surfaces.css %}
 --bs-fg-3: color-mix(in srgb, var(--bs-fg-body) 72%, var(--bs-bg-body));
-/* Keep the primary hue and adjust only lightness, as the Auto Themer does. */
-{% if include.scheme == 'dark' -%}
---bs-link-color: oklch(from var(--bs-primary-base) max(l, 0.78) min(c, 0.14) h);
-{%- else -%}
---bs-link-color: oklch(from var(--bs-primary-base) min(l, 0.42) min(c, 0.14) h);
-{%- endif %}
+/* Keep each role's hue and adjust only lightness, as the Auto Themer does. */
+{%- assign adapted_roles = 'primary,secondary,success,warning,danger,info' | split: ',' -%}
+{%- for role in adapted_roles -%}
+{%- if include.scheme == 'dark' %}
+--bs-{{ role }}-fg: oklch(from var(--bs-{{ role }}-base) max(l, 0.78) min(c, 0.14) h / 1);
+--bs-{{ role }}-fg-emphasis: oklch(from var(--bs-{{ role }}-base) max(l, 0.86) min(c, 0.14) h / 1);
+{%- else %}
+--bs-{{ role }}-fg: oklch(from var(--bs-{{ role }}-base) min(l, 0.42) min(c, 0.14) h / 1);
+--bs-{{ role }}-fg-emphasis: oklch(from var(--bs-{{ role }}-base) min(l, 0.34) min(c, 0.14) h / 1);
+{%- endif -%}
+{%- endfor %}
+--bs-link-color: var(--bs-primary-fg);
 --bs-link-hover-color: var(--bs-link-color);
 --chulapa-skin-nav-bg: var(--bs-bg-body);
 --chulapa-skin-nav-fg: var(--bs-fg-body);

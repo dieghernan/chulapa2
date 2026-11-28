@@ -11,12 +11,12 @@ color-scheme: light;
 --bs-info-base: #63e792;
 --bs-warning-base: #FFE869;
 
-{% include skins/tophat.css labels='black,black,black,white,black,black,white' %}
+{% include skins/tophat.css labels='black,black,black,white,black,black,var(--tophat-inverse-label)' %}
 --bs-primary-bg: #517e77;
 --chulapa-hero-color: #000000;
 
 {% unless include.variant_scheme %}
-{% include skins/tophat-buttons.css labels='primary:#fff' outlines='primary:#4e7a72,secondary:#837632,success:#8c6a00,info:#367f50,warning:#807434' vars=include.vars %}
+{% include skins/tophat-buttons.css labels='primary:#fff' outlines='primary:#4e7a72,secondary:#837632,success:#8c6a00,info:#367f50,warning:#807434' vars=include.vars variant_scheme=include.variant_scheme %}
 {% endunless %}
 
 & :where(.card.bg-primary, .card.bg-secondary) {

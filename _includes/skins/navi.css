@@ -1,7 +1,7 @@
 color-scheme: light;
 --bs-fg-body: #23263b;
---bs-body-font-family: "Sora", "Roboto";
---bs-heading-font-family: "Sora", "Roboto";
+--bs-body-font-family: "Sora", "Roboto", sans-serif;
+--bs-heading-font-family: "Sora", "Roboto", sans-serif;
 --bs-link-color: #285bdb;
 --bs-primary-base: #457aff;
 --bs-secondary-base: #000033;

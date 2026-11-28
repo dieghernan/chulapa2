@@ -107,6 +107,45 @@ in the [site migration guide](migrating-from-chulapa.md#update-custom-css).
 YAML options such as `hero-chulapa-bg-color` and `navbar-chulapa-bg-color`
 are configuration, not classes, and keep their names.
 
+## Unsupported Chulapa skins
+
+chulapa2 bundles the 16 skins by dieghernan and the 12 TopHat skins. A
+`skin` name outside the catalog adds no skin declarations, and the
+generated `auto-themer.css` starts with a comment naming it. Rebuild these
+Chulapa skins from their palette with the Auto Themer:
+
+```yaml
+chulapa-skin:
+  skin: auto
+  vars:
+    primary-base: "#2c3e50"   # Flatly
+```
+
+| Chulapa skin | `primary-base` | Also set |
+| --- | --- | --- |
+| `cerulean` | `#2fa4e7` | |
+| `cyborg` | `#2a9fd6` | `bg-body: "#060606"` |
+| `darkly` | `#375a7f` | `bg-body: "#222"` |
+| `flatly` | `#2c3e50` | |
+| `journal` | `#eb6864` | |
+| `litera` | `#4582ec` | |
+| `lux` | `#1a1a1a` | |
+| `materia` | `#2196f3` | |
+| `minty` | `#78c2ad` | |
+| `pulse` | `#593196` | |
+| `sketchy` | `#333` | |
+| `slate` | `#3a3f44` | `bg-body: "#272b30"` |
+| `solar` | `#b58900` | `bg-body: "#002b36"` |
+| `united` | `#e95420` | |
+| `universal` | `#986dbd` | |
+| `yeti` | `#008cba` | |
+
+The primaries come from the Bootswatch 4.6 variables and the Bootstrapious
+wrapper bundled with Chulapa. Dark themes also need a readable `fg-body`
+for their background. Bootswatch's typography and component styles are
+not reproduced. For `none`, omit `skin`. For `dark-bg`, set
+`bg-body: "#000"`, `fg-body: "#fff"` and `code-color: "#e9468e"`.
+
 ## Contrast rules for maintainer-authored skins
 
 Look for an import of `chulapa/skins/authored-contrast` in the original skin.

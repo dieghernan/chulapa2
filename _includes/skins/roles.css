@@ -1,3 +1,7 @@
+{%- comment -%}
+  Authored skins keep these sRGB mixes: their measured contrast exceptions
+  depend on them. Generated variants replace the foregrounds in OKLCH.
+{%- endcomment -%}
 {%- assign skin_roles = include.names | split: ',' -%}
 {%- assign skin_labels = include.labels | split: ',' -%}
 {% for role in skin_roles %}

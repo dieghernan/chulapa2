@@ -1,3 +1,4 @@
 chulapa-skin:
+  skin: flatly          # Not bundled: adds no skin declarations
   autothemer: false
   use-dual-mode: true

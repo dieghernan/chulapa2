@@ -262,6 +262,39 @@ test("keeps the primary hue in generated variant links and navigation", async ({
   }
 });
 
+test("sets Media's interface elements in its heading face", async ({ page }) => {
+  await page.goto("test/skins/media/");
+  const main = page.getByRole("main");
+  for (const target of [
+    main.locator('[data-contrast="solid-primary"]'),
+    page.locator("#skin-field"),
+    page.getByRole("contentinfo"),
+  ]) {
+    await expect(target).toHaveCSS("font-family", /^"Mona Sans"/);
+  }
+  await expect(main.locator("p").first()).toHaveCSS("font-family", /^"Source Serif 4"/);
+});
+
+test("keeps fallback role labels aligned with contrast-color()", async ({ page }) => {
+  // Browsers without contrast-color() use the fixed labels passed to roles.css.
+  const topHatRoles = "primary,secondary,success,danger,info,warning,inverse".split(",");
+  for (const [skin] of catalog) {
+    const source = readFileSync(new URL(`../../_includes/skins/${skin}.css`, import.meta.url), "utf8");
+    const own = source.match(/skins\/roles\.css names='([^']*)' labels='([^']*)'/);
+    const topHat = source.match(/skins\/tophat\.css labels='([^']*)'/);
+    if (!own && !topHat) continue;
+    const names = own ? own[1].split(",") : topHatRoles;
+    const labels = (own ? own[2] : topHat[1]).split(",");
+    await page.goto(`test/skins/${skin}/`);
+    const mismatches = await page.evaluate((roles) => {
+      const probe = document.body.appendChild(document.createElement("span"));
+      const resolve = (value) => { probe.style.color = value; return getComputedStyle(probe).color; };
+      return roles.filter(([role, label]) => resolve(label) !== resolve(`var(--bs-${role}-contrast)`)).map(([role]) => role);
+    }, names.map((name, index) => [name, labels[index]]));
+    expect(mismatches, skin).toEqual([]);
+  }
+});
+
 test("applies Bootstrap's dark rules to a dark primary skin", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "light" });
   await page.goto("test/skins/listen/");

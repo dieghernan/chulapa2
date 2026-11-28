@@ -10,7 +10,7 @@ color-scheme: light;
 --bs-info-base: #515151;
 --bs-warning-base: #5f5f5f;
 
-{% include skins/tophat.css labels='white,white,white,white,white,white,white' navbar_hover=true %}
+{% include skins/tophat.css labels='white,white,white,white,white,white,var(--tophat-inverse-label)' navbar_hover=true %}
 --chulapa-skin-nav-fg: color-mix(in srgb, var(--bs-primary-contrast) 50%, var(--chulapa-skin-nav-bg));
 
 & :where(.card.bg-primary, .card.bg-secondary) {

@@ -14,6 +14,8 @@
   {% endunless %}
 {% endfor %}
 
+{% comment %} Outline labels were measured on the original page surface. Generated variants use their adapted role foregrounds. {% endcomment %}
+{% unless include.variant_scheme %}
 {% assign outlines = include.outlines | split: ',' %}
 {% for entry in outlines %}
   {% assign pair = entry | split: ':' %}
@@ -27,3 +29,4 @@
 }
   {% endunless %}
 {% endfor %}
+{% endunless %}

@@ -15,14 +15,12 @@ color-scheme: light;
 {% include skins/roles.css names='primary,secondary,success,warning,danger,info' labels='white,white,black,black,white,black' %}
 --bs-success-bg: #008756;
 
-{% unless include.variant_scheme %}
 --chulapa-skin-nav-bg: var(--bs-primary-base);
 --chulapa-skin-nav-fg: #c2cdd6;
 --chulapa-skin-nav-hover: #e2e7eb;
 --chulapa-skin-nav-active: #ffffff;
 --chulapa-skin-nav-brand: #ffffff;
 --chulapa-skin-nav-disabled: #5d7991;
-{% endunless %}
 {% include skins/navbar.css %}
 
 & :where(a:not([class])) {

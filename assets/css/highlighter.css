@@ -36,11 +36,5 @@ Rouge palettes from chulapa's _sass/highlight directory.
 :root:where([data-bs-theme="{{ mode }}"]) {
   {{ rules }}
 }
-
-@media (prefers-color-scheme: {{ mode }}) {
-  :root:where(:not([data-bs-theme])) {
-    {{ rules }}
-  }
-}
   {% endfor %}
 {% endif %}
