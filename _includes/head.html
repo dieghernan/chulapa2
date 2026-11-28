@@ -4,6 +4,11 @@
 {%- endif -%}
 {%- assign document_site_title = site.title | strip_html | strip -%}
 {%- assign document_page_title = page.title | strip_html | strip -%}
+{%- assign load_icons = false -%}
+{%- assign footer_icons = site.footer.links | map: 'icon' | join: ' ' -%}
+{%- if show_color_mode_selector or page.show_date or page.show_sociallinks or page.show_author or page.project_links.size > 0 or footer_icons contains 'bi-' -%}
+  {%- assign load_icons = true -%}
+{%- endif -%}
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +18,7 @@
     {%- endif %}
     <link rel="stylesheet" href="{{ bootstrap_dist }}/css/bootstrap.min.css"
           integrity="sha384-MKn5NWVBEuQXJE7TSKSgPUmMiSCmVTfCsR+VSSeQpHnoyJQZZFn/kBn+Ht5jZDPQ" crossorigin="anonymous">
-    {%- if show_color_mode_selector %}
+    {%- if load_icons %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.2/font/bootstrap-icons.min.css"
           integrity="sha384-nWN3KqaaVcbEsCjLSV+2jMjh62Iny/+mN3srM8TZeM8N6aj7eDl5wwYggjAJ4/sJ" crossorigin="anonymous">
     {%- endif %}

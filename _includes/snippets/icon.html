@@ -1,0 +1,21 @@
+{%- comment -%}
+  Renders a Bootstrap Icons class such as "bi bi-github". Other icon classes,
+  such as Chulapa's Font Awesome values, need Font Awesome, which is not
+  available yet: they render the label instead, or nothing when the caller
+  already shows it (label_shown=true), plus a source comment and a
+  data-chulapa-missing-icon attribute for the site author.
+{%- endcomment -%}
+{%- assign icon_class = include.icon | strip -%}
+{%- assign icon_tokens = icon_class | split: ' ' -%}
+{%- if icon_class == empty -%}
+  {%- unless include.label_shown -%}{{ include.label | escape }}{%- endunless -%}
+{%- elsif icon_tokens contains 'bi' -%}
+  <i class="{{ icon_class | escape }}{% if include.class %} {{ include.class | escape }}{% endif %}" aria-hidden="true"></i>
+{%- else -%}
+  <!-- Icon "{{ icon_class | escape }}" needs Font Awesome, which is not enabled. -->
+  {%- if include.label_shown -%}
+  <span data-chulapa-missing-icon="{{ icon_class | escape }}" hidden></span>
+  {%- else -%}
+  <span data-chulapa-missing-icon="{{ icon_class | escape }}">{{ include.label | default: icon_class | escape }}</span>
+  {%- endif -%}
+{%- endif -%}

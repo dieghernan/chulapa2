@@ -1,0 +1,66 @@
+{%- comment -%}
+  Breadcrumb, publication dates and share links above the article, as in
+  Chulapa. Enabled by show_breadcrumb, show_date and show_sociallinks.
+{%- endcomment -%}
+{%- include snippets/page-language.html -%}
+{%- assign crumb_site = site.title | strip_html | strip | default: 'Home' -%}
+{%- assign crumb_home = site.navbar.brand.title | strip_html | strip | default: crumb_site -%}
+{%- assign crumb_page = page.title | markdownify | strip_html | strip | default: crumb_site -%}
+{%- assign crumb_items = '' | split: ',' -%}
+{%- for item in page.breadcrumb_list -%}
+  {%- assign crumb_url = item.url | strip -%}
+  {%- unless crumb_url == empty -%}{%- assign crumb_items = crumb_items | push: item -%}{%- endunless -%}
+{%- endfor -%}
+{%- assign show_crumbs = false -%}
+{%- if page.show_breadcrumb and page.url != '/' -%}{%- assign show_crumbs = true -%}{%- endif -%}
+{%- if page.show_breadcrumb and crumb_items.size > 0 -%}{%- assign show_crumbs = true -%}{%- endif -%}
+{%- assign show_dates = false -%}
+{%- if page.show_date and page.date -%}{%- assign show_dates = true -%}{%- endif -%}
+<div class="row my-1 small">
+      <div class="col{% if page.show_sociallinks %} lg:col-5{% else %} lg:col-8{% endif %} lg:offset-2">
+        {%- if show_crumbs %}
+        <nav class="chulapa-breadcrumb" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            {%- if crumb_items.size > 0 %}
+            {%- for item in crumb_items %}
+            <li class="breadcrumb-item"><a class="breadcrumb-link px-0" href="{{ item.url | strip | absolute_url | escape }}">{{ item.label | strip_html | strip | default: item.url | escape_once }}</a></li>
+            <li class="breadcrumb-divider mx-3" aria-hidden="true"></li>
+            {%- endfor %}
+            {%- else %}
+            <li class="breadcrumb-item"><a class="breadcrumb-link px-0" href="{{ '/' | absolute_url | escape }}">{{ crumb_home | escape_once }}</a></li>
+            <li class="breadcrumb-divider mx-3" aria-hidden="true"></li>
+            {%- endif %}
+            <li class="breadcrumb-item" aria-current="page"><a class="breadcrumb-link active px-0" href="{{ page.url | absolute_url | escape }}">{{ crumb_page | escape_once }}</a></li>
+          </ol>
+        </nav>
+        {%- endif %}
+        {%- if show_dates %}
+        {%- assign published = page.date | date_to_string %}
+        {%- assign modified = page.last_modified_at | default: '' | strip %}
+        <p class="mb-0">
+          {%- if modified != empty %}
+          {%- assign modified = page.last_modified_at | date_to_string %}
+          <time datetime="{{ page.last_modified_at | date_to_xmlschema }}">{% include snippets/datetranslate.html date=modified lang=page_language %}</time>
+          <i class="bi bi-arrow-repeat" aria-hidden="true"></i><br>
+          <s class="fw-light"><time datetime="{{ page.date | date_to_xmlschema }}">{% include snippets/datetranslate.html date=published lang=page_language %}</time></s>
+          {%- else %}
+          <time datetime="{{ page.date | date_to_xmlschema }}">{% include snippets/datetranslate.html date=published lang=page_language %}</time>
+          {%- endif %}
+        </p>
+        {%- endif %}
+      </div>
+      {%- if page.show_sociallinks %}
+      {%- assign share_title = page.title | default: site.title | markdownify | strip_html | normalize_whitespace | strip %}
+      {%- assign share_url = page.url | absolute_url %}
+      {%- assign share_text = share_title | append: ' ' | append: share_url %}
+      {%- assign share_tags = page.tags | join: ',' | remove: ' ' | remove: '-' %}
+      {%- capture bluesky_text %}{{ share_text }}{% for tag in page.tags %} #{{ tag | remove: ' ' | remove: '-' }}{% endfor %}{% endcapture %}
+      <div class="col-auto lg:col-3 d-flex flex-wrap justify-content-end align-self-start gap-3 fs-lg chulapa-share-links">
+        <a href="https://twitter.com/intent/tweet?url={{ share_url | url_encode }}&amp;text={{ share_title | url_encode }}{% if site.twitter_site %}&amp;via={{ site.twitter_site | url_encode }}{% endif %}{% unless share_tags == empty %}&amp;hashtags={{ share_tags | url_encode }}{% endunless %}" title="Share on X" aria-label="Share on X"><i class="bi bi-twitter-x" aria-hidden="true"></i></a>
+        <a href="https://bsky.app/intent/compose?text={{ bluesky_text | url_encode }}" title="Share on Bluesky" aria-label="Share on Bluesky"><i class="bi bi-bluesky" aria-hidden="true"></i></a>
+        <a class="d-none sm:d-inline" href="https://www.facebook.com/sharer.php?u={{ share_url | url_encode }}" title="Share on Facebook" aria-label="Share on Facebook"><i class="bi bi-facebook" aria-hidden="true"></i></a>
+        <a class="d-none sm:d-inline" href="https://api.whatsapp.com/send?text={{ share_text | url_encode }}" title="Share on WhatsApp" aria-label="Share on WhatsApp"><i class="bi bi-whatsapp" aria-hidden="true"></i></a>
+        <a class="d-none sm:d-inline" href="https://www.linkedin.com/shareArticle?url={{ share_url | url_encode }}&amp;title={{ share_title | url_encode }}" title="Share on LinkedIn" aria-label="Share on LinkedIn"><i class="bi bi-linkedin" aria-hidden="true"></i></a>
+      </div>
+      {%- endif %}
+    </div>{%- comment -%} The caller indents the first line and ends the last one. {%- endcomment -%}

@@ -22,8 +22,10 @@ footer:
   links:
     - label: Fixture home
       url: /
+      icon: bi bi-house-door
     - label: Email
       url: fixture@example.com
+      icon: fas fa-envelope
   copyright: "Fixture &copy; <strong>Chulapa</strong>"
 
 chulapa-skin:

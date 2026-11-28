@@ -1,0 +1,43 @@
+{%- comment -%}
+  Author card beside the article, as in Chulapa. Uses the page author or the
+  site author. Link icons follow snippets/icon.html.
+{%- endcomment -%}
+{%- if page.author.name -%}
+  {%- assign author = page.author -%}
+{%- else -%}
+  {%- assign author = site.author -%}
+{%- endif -%}
+{%- assign author_name = author.name | default: site.github.owner_name | strip -%}
+{%- assign author_avatar = author.avatar | strip -%}
+{%- assign author_url = author.url | strip -%}
+<div class="chulapa-author d-flex flex-column gap-2 lg:text-center small">
+          <div class="d-flex lg:flex-column align-items-center gap-2">
+            {%- if author_avatar != empty %}
+            <span class="avatar avatar-xl"><img class="avatar-img" src="{{ author_avatar | absolute_url | escape }}" alt=""></span>
+            {%- endif %}
+            {%- if author_url != empty %}
+            <a class="fw-bold" href="{{ author_url | absolute_url | escape }}">{{ author_name | escape }}</a>
+            {%- else %}
+            <span class="fw-bold">{{ author_name | escape }}</span>
+            {%- endif %}
+          </div>
+          {%- if author.location or author.links.size > 0 %}
+          <div class="d-flex lg:flex-column flex-wrap align-items-center gap-2">
+            {%- if author.location %}
+            <a href="https://www.google.com/maps/search/?api=1&amp;query={{ author.location | url_encode }}"><i class="bi bi-geo-alt-fill me-1" aria-hidden="true"></i>{{ author.location | escape }}</a>
+            {%- endif %}
+            {%- if author.links.size > 0 %}
+            <ul class="list-unstyled d-flex flex-wrap lg:justify-content-center gap-2 mb-0">
+              {%- for link in author.links %}
+              {%- assign link_url = link.url | strip %}
+              {%- if link_url contains '@' %}
+                {%- unless link_url contains ':' or link_url contains '/' %}{%- assign link_url = link_url | prepend: 'mailto:' %}{%- endunless %}
+              {%- endif %}
+              {%- assign link_label = link.label | default: link.icon | strip %}
+              <li><a href="{{ link_url | escape }}"{% unless link_url contains 'mailto:' %} rel="me"{% endunless %} title="{{ link_label | escape }}" aria-label="{{ link_label | escape }}">{% include snippets/icon.html icon=link.icon label=link_label %}</a></li>
+              {%- endfor %}
+            </ul>
+            {%- endif %}
+          </div>
+          {%- endif %}
+        </div>{%- comment -%} The caller indents the first line and ends the last one. {%- endcomment -%}

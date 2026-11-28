@@ -33,7 +33,7 @@
             {% for project in header_projects %}
             {% if project.url and project.label %}
             <a class="btn btn-outline btn-lg chulapa-btn-project" href="{{ project.url | absolute_url | escape_once }}">
-              {% if project.icon %}<i class="{{ project.icon | escape }} me-1" aria-hidden="true"></i>{% endif %}
+              {% include snippets/icon.html icon=project.icon class="me-1" label_shown=true %}
               {{ project.label | escape }}
             </a>
             {% endif %}
@@ -45,7 +45,7 @@
             {% if project.url and project.label %}
             <li>
               <a class="btn btn-solid theme-primary btn-sm" href="{{ project.url | absolute_url | escape_once }}">
-                {% if project.icon %}<i class="{{ project.icon | escape }} me-1" aria-hidden="true"></i>{% endif %}
+                {% include snippets/icon.html icon=project.icon class="me-1" label_shown=true %}
                 {{ project.label | escape }}
               </a>
             </li>

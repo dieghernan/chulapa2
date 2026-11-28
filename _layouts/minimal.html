@@ -4,16 +4,15 @@
 <html lang="{{ page_language | escape }}" data-bs-theme="{{ main_mode }}">
   {% include head.html %}
   <body class="d-flex flex-column min-vh-100">
-    <a class="visually-hidden-focusable" href="#main-content">Skip to content</a>
+    <a class="visually-hidden-focusable" href="#chulapa-content">Skip to content</a>
     <header class="sticky-top" id="site-header">
       {% include navbar.html %}
     </header>
-    {%- unless layout.main_content or page.main_content %}
-    <div id="main-content" tabindex="-1"></div>
-    {%- endunless %}
-    {%- if page.show_header == true and layout.main_content != true %}
+    {%- comment -%} As in Chulapa, layouts that render their own header set header_in_content. {%- endcomment %}
+    {%- if page.show_header == true and layout.header_in_content != true %}
       {% include components/headers.html %}
     {%- endif %}
+    <div id="chulapa-content" tabindex="-1"></div>
     {{ content }}
     {% include footer.html %}
     {% include components/scripts.html theme=true %}
