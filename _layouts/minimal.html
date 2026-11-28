@@ -8,14 +8,12 @@
     <header class="sticky-top" id="site-header">
       {% include navbar.html %}
     </header>
-    {% unless layout.main_content %}
-    {% unless page.main_content %}
+    {%- unless layout.main_content or page.main_content %}
     <div id="main-content" tabindex="-1"></div>
-    {% endunless %}
-    {% if page.show_header == true %}
+    {%- endunless %}
+    {%- if page.show_header == true and layout.main_content != true and page.main_content != true %}
       {% include components/headers.html %}
-    {% endif %}
-    {% endunless %}
+    {%- endif %}
     {{ content }}
     {% include footer.html %}
     {% include components/scripts.html theme=true %}
