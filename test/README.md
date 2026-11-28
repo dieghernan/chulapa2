@@ -10,16 +10,19 @@ npx playwright install chromium
 npm test
 ```
 
-Playwright builds and serves the fixtures through `npm run preview:test`.
-Stop an existing preview on port 4173 before running the suite so Playwright
-can start its own server. To run just the skin and Kitchen Sink tests, use
+Playwright builds and serves the fixtures through `npm run preview:test` on a
+free port, so a running preview or another checkout's test run does not
+interfere. Set `CHULAPA2_TEST_PORT` to choose the port. To run just the skin
+and Kitchen Sink tests, use
 `npm test -- test/browser/skins.spec.mjs test/browser/kitchen-sink.spec.mjs`.
 
 ## Preview the fixtures
 
 Run `npm run preview:test` to build drafts and unpublished fixtures in
-`_site_test/` and preview them at port 4173. Restart the preview after
-changing sources or configuration.
+`_site_test/` and preview them at port 4173, or at `CHULAPA2_TEST_PORT` when
+set. The port is written into the fixtures' absolute URLs, so preview and
+test runs in the same checkout rebuild `_site_test/`. Restart the preview
+after changing sources or configuration.
 
 | Preview | What to check |
 | --- | --- |

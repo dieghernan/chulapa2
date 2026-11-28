@@ -12,6 +12,8 @@ skins.each do |skin|
     "source" => root,
     "destination" => File.join(root, "_site_test", "test", "skins", skin),
     "baseurl" => "#{preview_path}/#{skin}",
+    # scripts/preview-test.mjs passes the URL for the configured test port.
+    "url" => ENV.fetch("CHULAPA2_TEST_URL", "http://127.0.0.1:4173"),
     "skin_preview_path" => preview_path,
     "chulapa-skin" => { "skin" => skin, "use-dual-mode" => true },
     "color-mode-selector" => true,
