@@ -1,26 +1,22 @@
 (() => {
   const root = document.documentElement;
   const storageKey = "chulapa2-color-mode";
-  const reversed = root.hasAttribute("data-color-mode-reversed");
+  const prefersDark = matchMedia("(prefers-color-scheme: dark)");
   let mode = root.dataset.bsTheme || "light";
 
-  function swapMode(value) {
-    // The primary appearance uses the light slot even when the skin is dark.
-    if (!reversed || (value !== "light" && value !== "dark")) return value;
-    return value === "light" ? "dark" : "light";
+  // System mode still sets data-bs-theme so Bootstrap's mode rules apply.
+  function applyMode() {
+    const system = prefersDark.matches ? "dark" : "light";
+    root.dataset.bsTheme = mode === "system" ? system : mode;
   }
 
-  function applyMode() {
-    if (mode === "system") {
-      delete root.dataset.bsTheme;
-    } else {
-      root.dataset.bsTheme = mode;
-    }
-  }
+  prefersDark.addEventListener("change", () => {
+    if (mode === "system") applyMode();
+  });
 
   try {
     const stored = localStorage.getItem(storageKey);
-    if (stored === "light" || stored === "dark") mode = swapMode(stored);
+    if (stored === "light" || stored === "dark") mode = stored;
     if (stored === "system" || stored === "auto") mode = "system";
   } catch {
     // Keep the site's primary mode when storage is unavailable.
@@ -52,7 +48,7 @@
         applyMode();
         updateMenu();
         try {
-          localStorage.setItem(storageKey, swapMode(mode));
+          localStorage.setItem(storageKey, mode);
         } catch {
           // The selected mode still applies to the current page.
         }

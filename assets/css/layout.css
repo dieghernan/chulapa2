@@ -1,3 +1,7 @@
+/* ==========================================================================
+   Navbar
+   ========================================================================== */
+
 :root {
   scroll-padding-block-start: var(--chulapa-navbar-height, 4rem);
 }
@@ -27,6 +31,11 @@
   outline-offset: calc(-1 * var(--bs-focus-ring-width));
 }
 
+/* Opinionated: don't change color when hovering brand */
+.chulapa-navbar .navbar-brand:hover,
+.chulapa-navbar .navbar-brand:focus {
+  color: var(--bs-theme-fg, var(--bs-navbar-brand-color));
+}
 @supports (color: contrast-color(white)) {
   @media (forced-colors: none) {
     :where(.chulapa-navbar .menu-item:focus-visible:not(.disabled, :disabled)) {
@@ -34,6 +43,10 @@
     }
   }
 }
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
 
 .chulapa-footer {
   --_footer-bg: var(--chulapa-footer-bg, var(--chulapa-skin-nav-bg, var(--bs-bg-1)));
@@ -68,6 +81,10 @@
 .chulapa-footer-brand {
   font-size: calc(var(--bs-body-font-size) * 0.8);
 }
+
+/* ==========================================================================
+   Headers
+   ========================================================================== */
 
 .chulapa-header {
   overflow-wrap: anywhere;
