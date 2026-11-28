@@ -5,7 +5,6 @@ include:
 # Start the browser fixtures from Bootstrap defaults.
 chulapa-skin: false
 chulapa-skin-dark: false
-color-mode-selector: false
 googlefonts: []
 
 auto-themer-preview:

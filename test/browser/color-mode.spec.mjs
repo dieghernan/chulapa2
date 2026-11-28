@@ -80,17 +80,14 @@ test("keeps a single primary configuration fixed even with a stored dark prefere
 
 test("applies an explicit primary without generating a palette", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "light" });
-  await page.goto("test/selector/");
+  await page.goto("test/explicit-primary/");
   const root = page.locator("html");
   const link = page.getByRole("main").getByRole("link", { name: "chulapa", exact: true });
+  await expect(page.locator("#site-color-mode")).toHaveCount(0);
   await expect(root).toHaveCSS("--bs-primary-base", "#285d70");
   await expect(root).toHaveCSS("--bs-primary-bg", "#285d70");
   await expect(root).toHaveCSS("--auto-themer-primary", "");
   await expect(link).toHaveCSS("color", "rgb(40, 93, 112)");
-  await colorMode(page).choose("dark");
-  await expect(root).toHaveCSS("color-scheme", "dark");
-  await expect(root).not.toHaveCSS("--bs-primary-base", "#285d70");
-  await expect(root).toHaveCSS("--auto-themer-primary", "");
 });
 
 test("uses the primary color for an explicitly requested dark variant", async ({ page }) => {
@@ -145,9 +142,9 @@ test("shares configured tokens except body colors with the automatic dark varian
   }
 });
 
-test("shows the selector with two configurations even when explicitly disabled", async ({ page }) => {
+test("shows the selector with an explicit dark configuration", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "dark" });
-  await page.goto("test/hide-selector/");
+  await page.goto("test/explicit-dark/");
   const themeMenu = colorMode(page);
   const root = page.locator("html");
   await expect(themeMenu.trigger).toBeVisible();
@@ -165,7 +162,7 @@ test("uses Bootstrap's primary when the explicit dark configuration has no prima
   );
   expect(bootstrapPrimary).not.toBe("");
 
-  await page.goto("test/hide-selector/");
+  await page.goto("test/explicit-dark/");
   await expect(root).toHaveCSS("--auto-themer-primary", "#285d70");
   await colorMode(page).choose("dark");
   await expect(root).toHaveCSS("--auto-themer-primary", bootstrapPrimary);

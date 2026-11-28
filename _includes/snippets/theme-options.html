@@ -37,6 +37,6 @@
   {%- assign alternate_mode = 'light' -%}
 {%- endif -%}
 {%- assign show_color_mode_selector = false -%}
-{%- if dark_skin_enabled or site['color-mode-selector'] == true -%}
+{%- if dark_skin_enabled or use_dual_mode == true -%}
   {%- assign show_color_mode_selector = true -%}
 {%- endif -%}

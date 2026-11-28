@@ -87,9 +87,10 @@ Use a component class under `vars` for that scope.
 | `highlight` | Selects `default`, `github` or `github.dark`. An omitted or unsupported dark value uses the main palette. |
 | `use-dual-mode` | Goes under `chulapa-skin` and enables the other appearance. A separate dark configuration takes precedence. |
 
-The top-level `color-mode-selector` option shows the selector when set to
-`true`. An explicit dark configuration always shows it. The top-level
-`googlefonts` list loads fonts available to either mode.
+The color mode selector appears when the site has an alternate appearance:
+`use-dual-mode: true` or a `chulapa-skin-dark` configuration. Without
+either, the site uses a single appearance and loads no selector or script.
+The top-level `googlefonts` list loads fonts available to either mode.
 
 ## Configure tokens
 
@@ -175,7 +176,6 @@ and primary color in the automatic dark variant. Chulapa2 generates its
 dark surfaces and adapts the default text and links. For example:
 
 ```yaml
-color-mode-selector: true
 chulapa-skin:
   skin: focal
   use-dual-mode: true

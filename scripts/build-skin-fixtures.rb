@@ -16,7 +16,6 @@ skins.each do |skin|
     "url" => ENV.fetch("CHULAPA2_TEST_URL", "http://127.0.0.1:4173"),
     "skin_preview_path" => preview_path,
     "chulapa-skin" => { "skin" => skin, "use-dual-mode" => true },
-    "color-mode-selector" => true,
     "unpublished" => true,
     "quiet" => true
   )
